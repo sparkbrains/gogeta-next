@@ -1,0 +1,110 @@
+header {
+    width: 100%;
+    border-bottom: 1px solid var(--borderColor);
+    height: 90px;
+    position: relative;
+    background: var(--white);
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+
+    @include respond-from(md) {
+        height: 60px;
+    }
+    .logo{
+        @include respond-from(xs-small-sm) {
+            img{
+                width: 100px;
+            }
+        }
+    }
+    .search-header {
+        background: var(--secondary);
+    }
+
+    .main-navigation {
+
+        ul {
+            margin: 0;
+
+            li {
+                list-style: none;
+                padding: 0 25px;
+
+                a {
+                    display: block;
+                    color: var(--black);
+                    font-weight: 500;
+                    font-size: 0.938rem;
+                    transition: all .15s ease-out;
+
+                    &:hover {
+                        color: var(--primary);
+                    }
+                }
+
+                &.has-dropdown {
+                    a {
+                        padding: 0 22px 0 0;
+                        background: url(/assets/header/chevron-blue.svg) 100% 52% no-repeat;
+                        background-size: 15px;
+                    }
+                }
+
+                &.login {
+                    a {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border: 1px solid var(--primary);
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+
+        ul.main-navigation-mobile {
+            position: absolute;
+            left: 0;
+            top: 60px;
+            padding: 0;
+            width: 100%;
+            padding: 0 20px;
+            background-color: var(--white);
+            li {
+                padding: 0;
+                border-bottom: 1px solid #e9e9e9;
+
+                a {
+                    display: flex !important;
+                    align-items: center;
+                    justify-content: space-between;
+                    line-height: 40px;
+                    font-weight: 700;
+                    font-size: 0.75rem;
+
+                    .nav-count {
+                        font-weight: 300;
+                        font-size: 0.75rem;
+                        line-height: normal;
+                    }
+                }
+                &.login a{
+                    border: 0;
+                }
+            }
+            
+        }
+
+        .search-toggle {
+            &-desktop {
+                background: #09c5d6;
+                border-radius: 10px;
+                padding: 13px 35px;
+            }
+        }
+    }
+}
