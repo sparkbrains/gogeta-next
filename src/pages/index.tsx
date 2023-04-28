@@ -46,7 +46,7 @@ function Product({ user }: any) {
         }
         setSortBy(val?.sort_by || '')
         setParam(data)
-        setResult(user, data)
+        setResult(user,page, data)
     }, [router.query])
     const fetchAllData = (page: number, search = '') => {
         let searchParams: any = new URLSearchParams(search)
@@ -55,24 +55,25 @@ function Product({ user }: any) {
         Fetch(`products/?page=${page}&portalDomain=gogeta.dev&listing_type=ebikes${search}`).then(d => {
             if (d?.status) {
                 setIsLoading(false)
-                setResult(d.data, val)
+                setResult(d.data,page, val)
             } else {
                 setIsLoading(false)
             }
         })
     }
-    const setResult = (d: any, val: any) => {
+    const setResult = (d: any,page:number, val: any) => {
         let result = d?.results
         if (Object.keys(val)?.length && val?.showCyclePrice === "on" && val?.salary?.length) {
             result = priceCalculator(val?.salary, d?.results)
         }
-        setProductList({
+        const data = {
             ...d,
             results: page > 1 ? [
                 ...productList?.results,
                 ...result,
             ] : result
-        })
+        }
+        setProductList(data)
     }
     const applyFilter = (stateParam: any) => {
         const val = queryParam(stateParam)
@@ -151,7 +152,7 @@ function Product({ user }: any) {
 export async function getServerSideProps(context: any) {
     const search = context?.resolvedUrl.replace('/?', '&')
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const response = await fetch(baseURL + `products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search}`, {
+    const response = await fetch(baseURL + `products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice')?search:'&showCyclePrice=off'}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',
