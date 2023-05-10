@@ -1,3 +1,3 @@
-export default function Image({ src, width, height, alt,className }) {
+export default function Image({ src, width, height, alt,className }:any) {
     return <img src={src} width={width} height={height} alt={alt} className={className}/>
 }

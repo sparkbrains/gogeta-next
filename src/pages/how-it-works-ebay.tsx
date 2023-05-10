@@ -17,8 +17,8 @@ export default function HowItWorksEbay() {
                             navbarScroll
                         >
                             <div className='d-flex align-items-center d-block d-lg-none'>
-                                <Nav.Link href="#action4"><Image width="" height="" className="" alt="" src='/assets/img/interface_search_square.svg' /></Nav.Link>
-                                <Nav.Link href="#action4"><Image width="" height="" className="" alt="" src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
+                                <Nav.Link href="#action4"><Image src='/assets/img/interface_search_square.svg' /></Nav.Link>
+                                <Nav.Link href="#action4"><Image src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
                             </div>
                             <Nav.Link className='d-block d-lg-none' href="#action4">Find Bikes <i className="fa-solid fa-angle-right"></i></Nav.Link>
                             <Nav.Link className='d-block d-lg-none' href="#action4">Help <i className="fa-solid fa-angle-right"></i></Nav.Link>
@@ -26,8 +26,8 @@ export default function HowItWorksEbay() {
                         <div className=" align-items-center navbar-nav d-none d-lg-flex">
                             <Nav.Link className='d-none d-lg-block' href="#action4">Find Bikes <i className="fa-solid fa-angle-right"></i></Nav.Link>
                             <Nav.Link className='d-none d-lg-block' href="#action4">Help <i className="fa-solid fa-angle-right"></i></Nav.Link>
-                            <Nav.Link className='d-none d-lg-block' href="#action4"><Image width="" height="" className="" alt="" src='/assets/img/interface_search_square.svg' /></Nav.Link>
-                            <Nav.Link className='d-none d-lg-block' href="#action4"><Image width="" height="" className="" alt="" src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
+                            <Nav.Link className='d-none d-lg-block' href="#action4"><Image src='/assets/img/interface_search_square.svg' /></Nav.Link>
+                            <Nav.Link className='d-none d-lg-block' href="#action4"><Image src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
                         </div>
                     </Navbar.Collapse>
                     <div className='mbo_lef d-flex align-items-center'>
@@ -69,7 +69,7 @@ export default function HowItWorksEbay() {
                             <div className='d-block d-sm-none mb-4'>
                                 <MainHead title='Save up to 48%' />
                             </div>
-                            <Image width="" height="" className="" alt="" src='/assets/img/Illustration-Piggybank.svg' />
+                            <Image src='/assets/img/Illustration-Piggybank.svg' />
                         </Col>
                         <Col md={6} >
                             <div className='d-none d-sm-block'>
@@ -167,28 +167,28 @@ export default function HowItWorksEbay() {
                                 <Row>
                                     <Col xs={12} md={6} lg={3} className='mb-4 mb-sm-3'>
                                         <div className='list listpack'>
-                                            <Image width="" height="" alt="" src="/assets/img/Money_cashier_price_tag_euro.svg" className="mb-4" />
+                                            <Image src="/assets/img/Money_cashier_price_tag_euro.svg" className="mb-4" />
                                             <p>Total package value</p>
                                             <h3>£3,500</h3>
                                         </div>
                                     </Col>
                                     <Col xs={12} md={6} lg={3} className='mb-4 mb-sm-3'>
                                         <div className='list listOnepay'>
-                                            <Image width="" height="" alt="" src="/assets/img/money_currency_euro_circle.svg" className="mb-4" />
+                                            <Image src="/assets/img/money_currency_euro_circle.svg" className="mb-4" />
                                             <p>One-off initial payment</p>
                                             <h3>£500</h3>
                                         </div>
                                     </Col>
                                     <Col xs={12} md={6} lg={3} className='mb-4 mb-sm-3'>
                                         <div className='list listMonthPay'>
-                                            <Image width="" height="" alt="" src="/assets/img/interface_calendar_mark.svg" className="mb-4" />
+                                            <Image src="/assets/img/interface_calendar_mark.svg" className="mb-4" />
                                             <p>Your monthly payments</p>
                                             <h3>£128.13</h3>
                                         </div>
                                     </Col>
                                     <Col xs={12} md={6} lg={3} className='mb-4 mb-sm-3'>
                                         <div className='list listEffSav'>
-                                            <Image width="" height="" alt="" src="/assets/img/shopping_store_discount_percent_bag.svg" className="mb-4" />
+                                            <Image src="/assets/img/shopping_store_discount_percent_bag.svg" className="mb-4" />
                                             <p>Effective saving</p>
                                             <h3>48%</h3>
                                         </div>
@@ -205,22 +205,22 @@ export default function HowItWorksEbay() {
                         <MainHead title='The process' />
                         <Row className='rowLineBef'>
                             <Col lg={3} md={6}>
-                                <Image width="" height="" alt="" src="/assets/img/browse-process.svg" className='mb-3' />
+                                <Image src="/assets/img/browse-process.svg" className='mb-3' />
                                 <MainHeadSub title="1. Browse" />
                                 <p>Find your bike or ebike. You can use our <a>marketplace</a> to explore an extensive range from the best brands and retailers. Or visit any of our <a>participating retailers</a> to get a quote.</p>
                             </Col>
                             <Col lg={3} md={6}>
-                                <Image width="" height="" alt="" src="/assets/img/process-choose.svg" className='mb-3' />
+                                <Image src="/assets/img/process-choose.svg" className='mb-3' />
                                 <MainHeadSub title="2. Choose" />
                                 <p>Choose an offer from your preferred bike retailer and complete the salary sacrifice agreement, or <a>apply now</a> if you are using a local bike shop.</p>
                             </Col>
                             <Col lg={3} md={6}>
-                                <Image width="" height="" alt="" src="/assets/img/process-approval.svg" className='mb-3' />
+                                <Image src="/assets/img/process-approval.svg" className='mb-3' />
                                 <MainHeadSub title="3. Approval" />
                                 <p>The eBay People team will review and approve your application, and set-up your salary sacrifice</p>
                             </Col>
                             <Col lg={3} md={6}>
-                                <Image width="" height="" alt="" src="/assets/img/process-ride.svg" className='mb-3' />
+                                <Image src="/assets/img/process-ride.svg" className='mb-3' />
                                 <MainHeadSub title="4. Ride" />
                                 <p>As soon as you are approved you will receive your gogeta voucher to enable you to get your new bike.</p>
                             </Col>

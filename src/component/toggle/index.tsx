@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../button";
 import Image from "../image";
 
-export default function Toggle({ title,children }) {
+export default function Toggle({ title,children }:any) {
     const [open, setOpen] = useState(false)
     return <Button className="toggle-card mb-3" onClick={()=>setOpen(!open)}>
         <div className="d-flex align-center justify-content-between">
