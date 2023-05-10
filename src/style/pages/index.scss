@@ -1,6 +1,137 @@
 .main {
     margin-top: 90px;
     padding-top: 50px;
+
+    .ebay {
+        &-plp {
+            .check-input {
+                label{
+                    color: var(--p-color-new);
+                }
+                span{
+                    color: var(--backColor);
+                    font-size: 11px;
+                }
+            }
+            .product-sort-list {
+                color: var(--p-color-new);
+
+                select {
+                    color: var(--p-color-new);
+                    background-image: url('../../../public/assets/arrow-down.svg');
+                    background-size: 26px 20px;
+                    font-weight: 600;
+                }
+            }
+
+            .filter-dropdown button {
+                border-color: var(--primary-new);
+
+                &.clearAll {
+                    background-color: var(--primary-new);
+                }
+            }
+
+            .box-search .form-input {
+                border-color: var(--secondary-new-two);
+            }
+
+            .filter .badge {
+                background: var(--secondary-new-two);
+                border-radius: 0;
+
+                &-text {
+                    color: var(--backColor);
+                }
+            }
+
+            .card-footer {
+                background-color: var(--p-color-two);
+                color: var(--p-color-new);
+                border-radius: 0px 0px 25px 25px;
+                border: 0;
+            }
+
+            .check-input .form-check-input {
+                border-color: var(--secondary-new-two);
+
+                &:checked[type=checkbox] {
+                    background-image: url('../../../public/checkbox_ico.svg');
+                }
+            }
+
+            .primary-color {
+                color: var(--primary-new) !important;
+            }
+
+            .card {
+                border-radius: 25px;
+                box-shadow: unset;
+
+                &.like-buy h5 {
+                    border-radius: 25px 25px 0px 0px;
+                    // background-color: var(--primary-new);
+                    // background-color: var(--p-color-two);
+                }
+
+                &-body {
+                    p {
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+
+            .slider-range .range-slider .range-slider__range {
+                background-color: var(--p-color-new);
+            }
+
+            .slider-range .range-slider .range-slider__thumb {
+                background-color: var(--primary-new);
+                border: unset;
+                width: 14px;
+                height: 14px;
+            }
+        }
+    }
+
+    &-back {
+        &::after {
+            content: '';
+            background-image: url('../../../public/assets/img/shape-left.png');
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 1890px;
+            width: 50%;
+            background-repeat: no-repeat;
+            background-position: left bottom;
+            z-index: -1;
+
+            @include respond-from(md-xxl) {
+                left: -224px;
+                height: 1798px;
+                width: 100%;
+            }
+
+            @include respond-from(sm) {
+                bottom: 50%;
+                left: -154px;
+            }
+        }
+
+        &::before {
+            content: '';
+            background-image: url('../../../public/assets/img/shape-right.png');
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50%;
+            background-position: bottom right;
+            height: 1598px;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+    }
 }
 
 .filter {
@@ -8,6 +139,7 @@
     // position: relative;
     &-dropdown {
         padding-bottom: 60px;
+
         button {
             list-style: none;
             color: var(--pColor);
@@ -28,7 +160,8 @@
             img {
                 margin-left: 5px;
             }
-            &.clearAll{
+
+            &.clearAll {
                 background-color: var(--primary);
                 float: left;
                 border: 1px solid var(--primary);
@@ -56,9 +189,11 @@
                 li {
                     list-style: none;
                     border: 0;
-                    button{
+
+                    button {
                         border: 0;
-                        .close{
+
+                        .close {
                             transform: translateY(-50%) rotate(45deg);
                             margin-top: 10px;
                         }
