@@ -44,7 +44,7 @@ export default function HowItWorksEbay() {
                         <Col md={6} >
                             <div className='bannerCont'>
                                 <h2 className='h2'>How it works</h2>
-                                <Image src="assets/img/Illustration-unicycle-mobile.svg" height={490} width={388} alt="img" className='img-fluid d-block d-sm-none' />
+                                <Image src="assets/how-it-works-ebay.svg" height={490} width={388} alt="img" className='img-fluid d-block d-sm-none mb-3' />
                                 <p>The Cycle to Work Scheme is a tax incentive aimed at getting more people active, by providing unbeatable savings on the cost of a new bike, or e-bike as well as cycling accessories such as a helmet, lights or a lock. </p>
                                 <div className='d-flex align-items-center'>
                                     <Button type="button" className='customSiteBtn me-2'>Speak to an expert <i className="fa-solid fa-angle-right"></i></Button>
@@ -53,9 +53,9 @@ export default function HowItWorksEbay() {
                             </div>
                         </Col>
                         <Col md={6} >
-                            <div className='d-none d-sm-block'>
+                            <div className='hitweb'>
                                 <div className='imgcell'>
-                                    <Image src="assets/how-it-works-ebay.svg" height={606} width={547} alt="img" className='img-fluid' />
+                                    <Image src="assets/how-it-works-ebay.svg" height={606} width={547} alt="img" className='img-fluid d-none d-sm-block' />
                                 </div>
                             </div>
                         </Col>
@@ -63,7 +63,7 @@ export default function HowItWorksEbay() {
                 </Container>
             </section>
             <Container>
-                <section className='save-up'>
+                <section className='save-up svNup'>
                     <Row className="align-items-center">
                         <Col md={6} >
                             <div className='d-block d-sm-none mb-4'>
@@ -76,25 +76,31 @@ export default function HowItWorksEbay() {
                                 <MainHead title='Save up to 48%' />
                             </div>
                             <p className='pt-3'>By reducing your gross pay before tax - known as Salary Sacrifice - you’ll not pay Income Tax, PRSI or USC on the value of the bike and accessories. Which means you can benefit from <strong>savings of up to 48%</strong>, and spread the cost interest free over 12 months. </p>
+                            <p className="mt-4"> At the end of 12 months you will have repaid your employer for the cost of the bike, and it will then become yours.</p>
                         </Col>
                     </Row>
                 </section>
             </Container>
-            <section className='employeSaving empsvto mt-hgs'>
+            <section className='employeSaving empsvto mt-hgs mt-3 mt-md-5'>
                 <Container>
-                    <div className='innerEmpSv empsvtoInner'>
-                        <Row>
-                            <Col lg={6} className='mb-4 mb-lg-0'>
-                                <div className='d-none d-sm-block'>
+                    <div className='innerEmpSv empsvtoInner justify-content-center'>
+                        <Row className='w-100 align-items-center'>
+                            <Col md={6} className=' mb-4 mb-md-0 mobor2'>
+                                <div className='d-none d-md-block mb-4'>
                                     <MainHead title='What can you get?' />
                                 </div>
-                                <p className='text-white'>Employees can benefit from tax savings on bikes and accessories. In our <a>marketplace</a> you’ll be able to see your exact savings on any bike. </p>
+                                <p className='text-white mx-wdt5'>In Ireland employees can benefit from tax savings up to certain limits, but can add their own funds if they wish to get a bike and accessories at a higher value. In our marketplace   <a>marketplace</a> you’ll be able to see your exact savings on any bike.</p>
+                                <ul className='dotlisting'>
+                                    <li><span></span>Cargo bikes & safety equipment, the limit is €3,000</li>
+                                    <li><span></span>Electric bikes & safety equipment, the limit is €1,500</li>
+                                    <li><span></span>Standard bikes & safety equipment, the limit is €1,250</li>
+                                </ul>
                             </Col>
-                            <Col lg={6}>
-                                <div className='d-block d-sm-none'>
+                            <Col md={6} className='mobor1'>
+                                <div className='d-block d-md-none mb-4'>
                                     <MainHead title='What can you get?' />
                                 </div>
-                                <div className='bgSvcontant my-4 mt-md-0'>
+                                <div className='bgSvcontant my-4 mt-md-0 text-center'>
                                     <img src="assets/market-place.svg" alt="img" className='img-fluid' />
                                 </div>
                             </Col>
@@ -104,7 +110,7 @@ export default function HowItWorksEbay() {
             </section>
             <section className='works-calculate'>
                 <Container>
-                    <div className='pt-5 pb-3'>
+                    <div className='pt-1 pb-3'>
                         <MainHead title="Calculate your Cycle Scheme package" />
                     </div>
                     <section className='cycling-saving mb-5'>
@@ -165,28 +171,28 @@ export default function HowItWorksEbay() {
                             </div>
                             <div className='cycling-saving-list'>
                                 <Row>
-                                    <Col xs={12} md={6} lg={3} className='mb-4 mb-sm-3'>
+                                    <Col xs={6} md={6} lg={3} className='mb-4 mb-sm-3'>
                                         <div className='list listpack'>
                                             <Image src="/assets/img/Money_cashier_price_tag_euro.svg" className="mb-4" />
                                             <p>Total package value</p>
                                             <h3>£3,500</h3>
                                         </div>
                                     </Col>
-                                    <Col xs={12} md={6} lg={3} className='mb-4 mb-sm-3'>
+                                    <Col xs={6} md={6} lg={3} className='mb-4 mb-sm-3'>
                                         <div className='list listOnepay'>
                                             <Image src="/assets/img/money_currency_euro_circle.svg" className="mb-4" />
                                             <p>One-off initial payment</p>
                                             <h3>£500</h3>
                                         </div>
                                     </Col>
-                                    <Col xs={12} md={6} lg={3} className='mb-4 mb-sm-3'>
+                                    <Col xs={6} md={6} lg={3} className='mb-4 mb-sm-3'>
                                         <div className='list listMonthPay'>
                                             <Image src="/assets/img/interface_calendar_mark.svg" className="mb-4" />
                                             <p>Your monthly payments</p>
                                             <h3>£128.13</h3>
                                         </div>
                                     </Col>
-                                    <Col xs={12} md={6} lg={3} className='mb-4 mb-sm-3'>
+                                    <Col xs={6} md={6} lg={3} className='mb-4 mb-sm-3'>
                                         <div className='list listEffSav'>
                                             <Image src="/assets/img/shopping_store_discount_percent_bag.svg" className="mb-4" />
                                             <p>Effective saving</p>
@@ -199,27 +205,27 @@ export default function HowItWorksEbay() {
                     </section>
                 </Container>
             </section>
-            <section className='mltSection theprocess pb-5 mb-5 mt-hgs'>
+            <section className='mltSection theprocess pb-0 pb-lg-5 mb-5 mt-hgs nobefSecl mt-4'>
                 <div className='howtheRide'>
                     <Container>
                         <MainHead title='The process' />
-                        <Row className='rowLineBef'>
-                            <Col lg={3} md={6}>
+                        <Row className='rowLineBef mt-5'>
+                            <Col lg={3} md={4} xs={6} className='mb-4 mb-lg-0'>
                                 <Image src="/assets/img/browse-process.svg" className='mb-3' />
                                 <MainHeadSub title="1. Browse" />
                                 <p>Find your bike or ebike. You can use our <a>marketplace</a> to explore an extensive range from the best brands and retailers. Or visit any of our <a>participating retailers</a> to get a quote.</p>
                             </Col>
-                            <Col lg={3} md={6}>
+                            <Col lg={3} md={4} xs={6} className='mb-4 mb-lg-0'>
                                 <Image src="/assets/img/process-choose.svg" className='mb-3' />
                                 <MainHeadSub title="2. Choose" />
                                 <p>Choose an offer from your preferred bike retailer and complete the salary sacrifice agreement, or <a>apply now</a> if you are using a local bike shop.</p>
                             </Col>
-                            <Col lg={3} md={6}>
+                            <Col lg={3} md={4} xs={6} className='mb-4 mb-lg-0'>
                                 <Image src="/assets/img/process-approval.svg" className='mb-3' />
                                 <MainHeadSub title="3. Approval" />
                                 <p>The eBay People team will review and approve your application, and set-up your salary sacrifice</p>
                             </Col>
-                            <Col lg={3} md={6}>
+                            <Col lg={3} md={4} xs={6} className='mb-4 mb-lg-0'>
                                 <Image src="/assets/img/process-ride.svg" className='mb-3' />
                                 <MainHeadSub title="4. Ride" />
                                 <p>As soon as you are approved you will receive your gogeta voucher to enable you to get your new bike.</p>

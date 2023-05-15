@@ -1,0 +1,149 @@
+.transitionMain{
+    .dealer-enquiry-progress-section {
+        background: #09c5d6;
+        background: linear-gradient(90deg, #0b395a 0%, #166082 100%);
+        padding: 120px 0px;
+         @media only screen and (max-width: 992px) {
+            padding: 60px 0;
+        }
+
+        @media only screen and (max-width: 568px) {
+                padding: 40px 0;
+            }
+            .dealer-enquiry-navigation-tagline {
+                margin: 0 0 120px;
+                @media only screen and (max-width: 992px) {
+                        margin: 0 0 60px
+                }
+
+                @media only screen and (max-width: 568px) {
+                        margin: 0 0 40px
+                }
+                    h3 {
+                    color: #fff;
+                    font-size: 28px;
+                    // line-height: 34px;
+                    font-weight: 700;
+                    margin: 0
+                }
+                p{
+                    color: #fff;
+                    font-size: 28px;
+                    // line-height: 34px;
+                    font-weight: 300;
+                    margin: 0
+                }
+            }
+            .animation {
+                width: 120px;
+                margin: 0 auto;
+                img {
+                    width: 100%;
+                    height: auto
+                }
+            }
+        }
+    .image-marquee .row > * {
+        padding: 0 15px
+    }
+
+    .image-marquee {
+        h2 {
+            margin: 0
+        }
+        p {
+            font-size: 18px;
+            font-size: 1.8rem;
+            display: inline-block;
+            font-weight: 300;
+            // background: url("/static/gogeta/img/triangle.png") 100% 50% no-repeat;
+            padding: 10px 30px 10px 0;
+            a {
+            color: #000;
+            text-decoration: none;
+            -webkit-transition: all .25s ease-out;
+            -moz-transition: all .25s ease-out;
+            -ms-transition: all .25s ease-out;
+            -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+            &:hover{
+                color: #09c5d6
+            }
+        }
+    }
+    .wrap1 {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+        .wrap2 {
+            width: 100%;
+            display: flex;
+            position: relative;
+            user-select: none
+        }
+
+        .wrap3 {
+            margin-bottom: 16px;
+            height: 170px;
+            overflow: hidden;
+            width: 100%;
+            display: flex
+        }
+
+    }
+    .scrolling-carousel-wrap {
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        .scrolling-carousel {
+            display: flex;
+            flex-direction: row;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 20px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            -webkit-animation: ScrollingCarousel linear infinite;
+            animation: ScrollingCarousel linear infinite;
+            z-index: 1;
+            animation-duration: 50s;
+            @keyframes ScrollingCarousel {
+                0% {
+                    transform: translate(0)
+                }
+                100% {
+                    transform: translate(-50%)
+                }
+            }
+        }
+        .ScrollingCard {
+            width: 100%;
+            height: 150px;
+            width: 230px;
+            background: #FFF;
+            margin: 0 12px;
+            display: flex;
+            flex-direction: column;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 0 20px;
+            border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -webkit-box-shadow: 0px 0px 17px 0px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0px 0px 17px 0px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 17px 0px rgba(0, 0, 0, 0.1);
+            .logo {
+                width: 180px
+            }
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain
+            }
+        }
+    }
+}

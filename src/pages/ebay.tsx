@@ -8,7 +8,6 @@ import Image from '../component/image';
 import { MainHead } from '../component/main-head';
 import { MainHeadSub } from '../component/main-head/sub-main';
 import { Bus, Car, Train } from '../component/svgIcon';
-//import { Link, useNavigate } from 'react-router-dom';
 import Link from 'next/link';
 import { useRouter } from "next/router";
 function EbayLp() {
