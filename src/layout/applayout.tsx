@@ -1,12 +1,12 @@
 import Footer from "../component/footer";
 import Header from "../component/header";
 
-export default function Applayout({children}:any) {
-    return <>
+export default function Applayout({children,className=''}:any) {
+    return <div className="gogetaMain ebay-header">
         <Header />
-        <div className="main">
+        <div className={`main ${className}`}>
             {children}
-        </div>
         <Footer/>
-    </>
+        </div>
+    </div>
 }
