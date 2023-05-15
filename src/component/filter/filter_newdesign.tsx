@@ -314,15 +314,14 @@ export default function Filter({ param, applyFilterSet, newDesign = false }:any)
                                                         <ReactSlider
                                                             className="range-slider"
                                                             thumbClassName="range-slider__thumb"
-                                                            trackClassName="range-slider1"
-                                                            defaultValue={[minMaxPrice[0], minMaxPrice[1]]}
-                                                            ariaLabel={['Lower thumb', 'Upper thumb']}
-                                                            ariaValuetext={state => `Thumb value ${state.valueNow}`}
+                                                            trackClassName="range-slider-range"
+                                                            value={stateParam[item.inputname]?.length ? stateParam[item.inputname] : minMaxPrice}
                                                             pearling
                                                             minDistance={minMaxPrice[0]}
                                                             min={minMaxPrice[0]} 
                                                             max={minMaxPrice[1]}
                                                             onChange={(val) => rangeFilter(val, item)} 
+                                                            onAfterChange={() => applyFilter(stateParam)}
                                                         />
 
 
@@ -340,7 +339,7 @@ export default function Filter({ param, applyFilterSet, newDesign = false }:any)
                                                         item.data?.length && Array.isArray(item.data) ?
                                                             item.data?.map((items:any, i:number) => items?.count ? 
                                                             <>
-                                                            {console.log(item,items,stateParam[item.inputname]?.includes(items[item.selected]),'selected==')}
+                                                            {/***console.log(item,items,stateParam[item.inputname]?.includes(items[item.selected]),'selected==')***/}
                                                             <RadioInput key={i} checked={item.inputname !=='listing_type' ? stateParam[item.inputname]?.includes(items[item.selected]):stateParam[item.inputname] === items[item.selected]} value={items[item.selected]} name={item.inputname} title={items.label === 'in_stock' ? 'In stock now' : items.label} onChange={(e:any)=>item.inputname !=='listing_type' ? onChange(e):onChangeWork(e)} count={items.count} id={items.label} /> 
                                                             </>: null)
                                                             : <>

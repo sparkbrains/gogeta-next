@@ -41,8 +41,8 @@ function EbayPLP({ user }: any) {
             brands: val?.brands?.split(',') || [],
             security: val?.security?.split(',') || [],
             wheel_size: val?.wheel_size?.split(',') || [],
-            price: val?.price?.split(',') || [],
-            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : "off",
+            price: val?.price?.split('-') || [],
+            showCyclePrice: val?.showCyclePrice?.length ?val?.showCyclePrice : "off",
             listing_type: val?.listing_type?.length ?val?.listing_type : "ebikes",
             salary: val?.salary || "",
         }
