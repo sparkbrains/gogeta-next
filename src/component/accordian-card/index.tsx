@@ -4,13 +4,14 @@ import Button from "../button";
 import Card from "../card";
 import Image from "next/image"
 
-export default function AccordianCard({ title='', children, toggleOpen = false }:any) {
+export default function AccordianCard({ title='',handleTab, children, toggleOpen = false }:any) {
     const [open, setOpen] = useState(false)
     useEffect(() => {
         setOpen(toggleOpen)
     }, [toggleOpen])
     const handleClick = () => {
-        setOpen(!open)
+        setOpen(!open);
+        handleTab && handleTab()
     }
     return <Card className='mb-3'>
         <Button type='button' onClick={handleClick} className='toggle-head'>
@@ -18,9 +19,9 @@ export default function AccordianCard({ title='', children, toggleOpen = false }
                 <h5>{title}</h5>
                 {
                     !open ?
-                        <Image src='/assets/plus.svg' alt='' width={13} height={13} />
+                        <Image src='/Icon-Expand.svg' alt='' width={13} height={13} />
                         :
-                        <Image src='/assets/minus.svg' alt='' width={13} height={12} />
+                        <Image src='/Icon-Collapse.svg' alt='' width={13} height={12} />
                 }
             </div>
         </Button>

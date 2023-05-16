@@ -79,9 +79,9 @@ export default function FilterSelected({ param, applyFilterSet }:any) {
                         {item.label === 'showCyclePrice' ? 'Cycle to Work' : item.label}
                         {
                             !open[key] ?
-                                <Image src='/assets/plus.svg' alt='' width={13} height={13} />
+                                <Image src='/Icon-Expand.svg' alt='' width={13} height={13} />
                                 :
-                                <Image src='/assets/minus.svg' alt='' width={13} height={12} />
+                                <Image src='/Icon-Collapse.svg' alt='' width={13} height={12} />
                         }
                         {open[key] ? <div className="filter-dropdown-menu">
                             <ul>

@@ -9,7 +9,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useRouter } from "next/router";
 import Filter from '../component/filter/filter_newdesign';
 import Filterselected from '../component/filter/filterselected';
-function EbayPLP({ user }: any) {    
+function EbayPLP({ user,filterRes }: any) {    
     const router = useRouter()
     const [productList, setProductList] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
@@ -115,7 +115,7 @@ function EbayPLP({ user }: any) {
         <Applayout ebay={true} className='m-0 plp-back'>
             <div className='container ebay-plp'>
                 <div className='row'>
-                    <Filter applyFilterSet={applyFilter} param={param} newDesign={true}/>
+                    <Filter filterRes={filterRes} applyFilterSet={applyFilter} param={param} newDesign={true}/>
                     <div className='col-xl-9 col-lg-8 col-md-12 col-sm-12 col-12 album-right'>
                         <div className='d-flex align-items-center justify-content-between product-sort'>
                             <p>{productList?.count || 0} models found</p>
@@ -151,7 +151,7 @@ function EbayPLP({ user }: any) {
     );
 }
 export async function getServerSideProps(context: any) {
-    const search = context?.resolvedUrl.replace('/?', '&')
+    const search = context?.resolvedUrl.replace('/bikes?', '&')
     const baseURL = process.env.NEXT_PUBLIC_API_URL
     const response = await fetch(baseURL + `products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice')?search:'&showCyclePrice=off'}`, {
         method: "get",
@@ -159,11 +159,20 @@ export async function getServerSideProps(context: any) {
             'Content-Type': 'application/json',
         },
     })
-
+    const responseFilter = await fetch(baseURL + `get-filter-count/?portalDomain=gogeta.dev${search?.includes('showCyclePrice')?search:'&showCyclePrice=off'}`, {
+        method: "get",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    console.log(responseFilter,search);
+    
     let data = await response.json()
+    let dataFilter = await responseFilter.json()
     return {
         props: {
             user: { ...data },
+            filterRes: {...dataFilter}
         },
     }
 }

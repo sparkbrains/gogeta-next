@@ -10,7 +10,7 @@ import { RadioInput } from "../form/inputs"
 import ReactSlider from 'react-slider';
 import { onKeyPress } from '../../common/utilits'
 import { useRouter } from "next/router"
-export default function Filter({ param, applyFilterSet, newDesign = false }:any) {
+export default function Filter({ param,filterRes, applyFilterSet, newDesign = false }:any) {
     const isMobile = useMediaQuery(900)
     const [filterOpen, setfilterOpen] = useState(false)
     const [moreFilter, setMoreFilter] = useState(newDesign)
@@ -18,7 +18,6 @@ export default function Filter({ param, applyFilterSet, newDesign = false }:any)
     const router = useRouter()
     const [minMaxPrice, setMinMaxPrice] = useState([500, 15000])
     const [filterData, setfilterData] = useState<any>([
-
         {
             name: 'Price',
             order: 2,
@@ -31,7 +30,7 @@ export default function Filter({ param, applyFilterSet, newDesign = false }:any)
             selected:'value',
             data:[
                 {label:'Electric bike',value:'ebikes',count:0},
-                {label:'Standard bike',value:'bike',count:0}
+                {label:'Standard bike',value:'bikes',count:0}
             ]
         },
         {
@@ -98,99 +97,102 @@ export default function Filter({ param, applyFilterSet, newDesign = false }:any)
     ])
     const [stateParam, setStateParam] = useState(param)
     useEffect(() => {
-        fetchFilterCount(location.search?.replace('?', '&'))
+        replaceFilterArray(filterRes)
         setStateParam({
             ...param,
         })
     }, [param])
+    const replaceFilterArray = (data:any)=>{
+        let priceR = data?.price_range?.length && data?.price_range[0]
+        setMinMaxPrice([priceR?.price_min ? priceR?.price_min : 500, priceR?.price_max ? priceR?.price_max : 15000])
+        const orderSet = [
+            {
+                name: 'Price',
+                order: 2,
+                type: 'range',
+                isAlwaysOpen: true,
+                inputname: 'price',
+                data: data.price_range
+            },
+            {
+                name: 'Electric assistance',
+                order: 2,
+                inputname: 'listing_type',
+                selected:'value',
+                data:[
+                    {label:'Electric bike',value:'ebikes',count:123},
+                    {label:'Standard bike',value:'bikes',count:123}
+                ]
+            },
+            {
+                name: 'Category',
+                selected: 'label',
+                order: 4,
+                data: data.category_types,
+                inputname: 'category_type'
+            },
+            {
+                name: 'Brand',
+                selected: 'brandCode',
+                order: 6,
+                inputname: 'brands',
+                data: {
+                    title: 'POPULAR BRANDS',
+                    ...data.brands,
+                }
+            },
+            {
+                name: 'Size',
+                order: 3,
+                type: 'select',
+                selected: 'cm_size',
+                data: data.size,
+                inputname: 'size'
+            },
+            {
+                name: 'Availability',
+                order: 1,
+                infoText: "See what's in stock from retailers across the country",
+                selected: 'label',
+                data: data.live_stock?.map((d:any) => { return { ...d, label: 'in_stock' } }),
+                inputname: 'live_stock'
+            },
+            {
+                name: 'Features',
+                selected: 'label',
+                order: 5,
+                data: data.features,
+                inputname: 'features'
+            },
+            {
+                name: 'Color',
+                inputname: 'colour',
+                selected: 'label',
+                order: 2,
+                data: data.colour_filter_type
+            },
+            {
+                name: 'Security',
+                inputname: 'security',
+                selected: 'label',
+                order: 2,
+                data: data.security
+            },
+            {
+                name: 'Wheel Size',
+                inputname: 'wheel_size',
+                selected: 'label',
+                order: 2,
+                data: data.wheel_size
+            },
+        ]
+        setfilterData(orderSet)
+    }
     const fetchFilterCount = (val:string) => {
         Fetch(`get-filter-count/?portalDomain=gogeta.dev${!val?.includes('listing_type')?val+`listing_type=ebikes`:val}`).then(d => {
             if (d.status) {
                 const { data } = d
-                let priceR = data?.price_range?.length && data?.price_range[0]
-                setMinMaxPrice([priceR?.price_min ? priceR?.price_min : 500, priceR?.price_max ? priceR?.price_max : 15000])
-                const orderSet = [
-                    {
-                        name: 'Price',
-                        order: 2,
-                        type: 'range',
-                        isAlwaysOpen: true,
-                        inputname: 'price',
-                        data: data.price_range
-                    },
-                    {
-                        name: 'Electric assistance',
-                        order: 2,
-                        inputname: 'listing_type',
-                        selected:'value',
-                        data:[
-                            {label:'Electric bike',value:'ebikes',count:123},
-                            {label:'Standard bike',value:'bike',count:123}
-                        ]
-                    },
-                    {
-                        name: 'Category',
-                        selected: 'label',
-                        order: 4,
-                        data: data.category_types,
-                        inputname: 'category_type'
-                    },
-                    {
-                        name: 'Brand',
-                        selected: 'brandCode',
-                        order: 6,
-                        inputname: 'brands',
-                        data: {
-                            title: 'POPULAR BRANDS',
-                            ...data.brands,
-                        }
-                    },
-                    {
-                        name: 'Size',
-                        order: 3,
-                        type: 'select',
-                        selected: 'cm_size',
-                        data: data.size,
-                        inputname: 'size'
-                    },
-                    {
-                        name: 'Availability',
-                        order: 1,
-                        infoText: "See what's in stock from retailers across the country",
-                        selected: 'label',
-                        data: data.live_stock?.map((d:any) => { return { ...d, label: 'in_stock' } }),
-                        inputname: 'live_stock'
-                    },
-                    {
-                        name: 'Features',
-                        selected: 'label',
-                        order: 5,
-                        data: data.features,
-                        inputname: 'features'
-                    },
-                    {
-                        name: 'Color',
-                        inputname: 'colour',
-                        selected: 'label',
-                        order: 2,
-                        data: data.colour_filter_type
-                    },
-                    {
-                        name: 'Security',
-                        inputname: 'security',
-                        selected: 'label',
-                        order: 2,
-                        data: data.security
-                    },
-                    {
-                        name: 'Wheel Size',
-                        inputname: 'wheel_size',
-                        selected: 'label',
-                        order: 2,
-                        data: data.wheel_size
-                    },
-                ]
-                setfilterData(orderSet)
+                replaceFilterArray(data)
             }
         })
     }
@@ -256,6 +258,7 @@ export default function Filter({ param, applyFilterSet, newDesign = false }:any)
         }
         setStateParam(param)
     }
+    console.log(moreFilterCount,moreFilter,'moreFilter===');
     
     return <div className={`col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 filter`}>
         {isMobile ? <Button onClick={handleFilterMobile} className="filter-selectlist">Filters</Button> : null}
