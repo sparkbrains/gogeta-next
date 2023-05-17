@@ -47,13 +47,6 @@
                 }
             }
 
-            .card-footer {
-                background-color: var(--p-color-two);
-                color: var(--p-color-new);
-                border-radius: 0px 0px 25px 25px;
-                border: 0;
-            }
-
             .check-input .form-check-input {
                 border-color: var(--secondary-new-two);
 
@@ -61,31 +54,6 @@
                     background-image: url('../../../public/checkbox_ico.svg');
                 }
             }
-
-            .primary-color {
-                color: var(--primary-new) !important;
-            }
-
-            .card {
-                border-radius: 25px;
-                box-shadow: unset;
-
-                &.like-buy h5 {
-                    border-radius: 25px 25px 0px 0px;
-                    // background-color: var(--primary-new);
-                    // background-color: var(--p-color-two);
-                }
-
-                &-body {
-                    p {
-                        font-size: 0.9rem;
-                    }
-                    p,s{
-                        color: var(--p-color-new);
-                    }
-                }
-            }
-
             .slider-range .range-slider .range-slider__range {
                 background-color: var(--p-color-new);
             }
@@ -99,7 +67,34 @@
             }
         }
     }
+    .card {
+        border-radius: 25px;
+        box-shadow: unset;
 
+        &.like-buy h5 {
+            border-radius: 25px 25px 0px 0px;
+            // background-color: var(--primary-new);
+            // background-color: var(--p-color-two);
+        }
+
+        &-body {
+            p {
+                font-size: 0.9rem;
+            }
+            p,s{
+                color: var(--p-color-new);
+            }
+        }
+        &-footer {
+            background-color: var(--p-color-two);
+            color: var(--p-color-new);
+            border-radius: 0px 0px 25px 25px;
+            border: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
     &-back {
         &::after {
             content: '';

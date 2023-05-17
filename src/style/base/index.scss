@@ -38,7 +38,7 @@ input:focus {
 }
 
 .primary-color {
-    color: var(--primary) !important;
+    color: var(--primary-new) !important;
 }
 
 .product {
@@ -123,7 +123,7 @@ text-transform: uppercase;
             margin-bottom: 0;
 
             span {
-                color: #b73024;
+                color: var(--primary-new);
             }
         }
 

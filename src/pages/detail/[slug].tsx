@@ -107,12 +107,19 @@ function Pdp({ detail }: any) {
                                 <h3>{data.productName}</h3>
                                 <div className='priceDetailoffer'>
                                     <span>{price}</span>
-                                    <p className='cyclePrice'>Cycle to Work price <b>€2,875.00</b></p>
-                                    <p className='payEmi'>Pay only €89.06 per month</p>
-                                    <p className='saveupto'>Save €1,625.00 (28.75%)</p>
+                                    {
+                                        data?.context && Object.keys(data?.context)?.length ?
+                                            <>
+                                                <p className='cyclePrice'>Cycle to Work price <b>{data.currencyProduct.currency.currencySymbol + (data.currencyProduct.unitSuggestedRetailPrice - Number(data?.context?.total_savings))}</b></p>
+                                                <p className='payEmi'>Pay only {data.currencyProduct.currency.currencySymbol + data?.context?.per_month} per month</p>
+                                                <p className='saveupto'>Save {data.currencyProduct.currency.currencySymbol + data?.context?.total_savings} ({data?.context?.saving_percentage})</p>
+                                            </>
+                                            : null
+                                    }
+
                                 </div>
                                 <div className='cycleColor'>
-                                    <b>Colour:</b> {selectColorProduct?.stockColourwayName}
+                                    <b>Colour:</b> {selectColorProduct?.colourwayName}
                                     <div className='colorPalette'>
                                         <ColorWay setselectColorProduct={setselectColorProduct} selectColorProduct={selectColorProduct} item={data} />
                                         {/* <Button type='button' className='color1 activebtn'></Button>
@@ -294,68 +301,15 @@ function Pdp({ detail }: any) {
             <section className='specification porezid'>
                 <Container>
                     <h4 className='commonInnheading'>Specifications</h4>
-                    <Row>
-                        <Col lg={6}>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                        </Col>
-                        <Col lg={6}>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                            <div className='d-flex specifiList'>
-                                <span className='bullet'></span>
-                                <p>Frame: E5 Aluminium, bottom bracket mount, integrated downtube battery</p>
-                            </div>
-                        </Col>
-                    </Row>
+                    <div className='specifiList' dangerouslySetInnerHTML={{ __html: detail.productSpecificationContent }}></div>
                 </Container>
             </section>
-            <section className='specializedOne porezid'>
+            <section className='specializedOne porezid' style={{ background: `url(${detail.brandBackground})` }}>
                 <Container>
                     <Col md={6}>
-                        <div className='speciContbx'>
-                            <img src="/assets/img/ic_spz-logo1.svg" alt="img" className='img-fluid brandLogo' />
-                            <p>Specialized are one of the few global bike brands big enough to develop their own motor and transmission systems. That allows them to create brilliantly well integrated bikes that can offer particularly good value. Proper bike fit and ergonomics are their hallmarks, and their comprehensive range of bikes is matched by a vast range containing everything from cycle clothing to water bottles and tools.</p>
+                        <div className='speciContbx' >
+                            <Image width={122} height={40} src={detail.brandLogo} alt="img" className='img-fluid brandLogo' />
+                            <p>{detail?.brandDescription}</p>
                         </div>
                     </Col>
                 </Container>
@@ -368,9 +322,9 @@ function Pdp({ detail }: any) {
                             {
                                 detail?.related_products?.map((item: any, key: number) => {
                                     return <div className='items' key={key}>
-                                        <button onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}`)} className='btn-trans w-100 text-start h-100'>
+                                        <div onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}`)} className='btn-trans w-100 text-start h-100'>
                                             <ProductList item={item} newDesign={true} />
-                                        </button>
+                                        </div>
                                     </div>
                                 })
                             }

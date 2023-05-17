@@ -80,6 +80,9 @@
                         display: flex;
                         gap: 12px;
                         margin-top: 14px;
+                        li{
+                            list-style: none;
+                        }
                         button{
                             width: 26px;
                             height: 26px;
@@ -87,6 +90,13 @@
                             background-color: #fff;
                             border-color: #fff;
                             position: relative;
+                            &.activebtn{
+                                &:before{
+                                    border: 1px solid #09c5d6;
+                                    top: -3px;
+    left: -3px;
+                                }
+                            }
                             &:before{
                                 content: '';
                                 border: 1px solid #ffffff;
@@ -361,13 +371,24 @@
                     margin-right: 16px;
                     border-radius: 50%;
                 }
-                p{
+                p,li{
                     margin-bottom: 0;
                     font-weight: 400;
                     font-size: 15px;
                     line-height: 24px;
                     color: #0A244B;
                 }
+                ul{
+                    padding-left: 20px;
+                    li{
+                        &::marker {
+                        color: #87F0C9;
+                        font-size: 18px;
+                        }
+                        margin-bottom: 30px;
+                        }
+                }
+                
             }
         }
         .specializedOne{
