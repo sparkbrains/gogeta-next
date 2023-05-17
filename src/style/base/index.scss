@@ -49,6 +49,11 @@ input:focus {
         display: block;
     }
 }
+.btn-trans{
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+}
 .range-slider-range-1{
     background-color: var(--secondary-new);
     height: 8px;
@@ -78,7 +83,13 @@ input:focus {
         color: #30BE73;
         border-top: 2px solid var(--borderColor3);
         padding: 10px 20px;
-
+        &.outStock{
+            background: #E2F1F0 !important;
+            font-weight: 600;
+font-size: 11px;
+line-height: 14px;
+text-transform: uppercase;
+        }
         img {
             margin-left: 5px;
         }

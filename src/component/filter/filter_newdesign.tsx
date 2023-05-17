@@ -236,7 +236,7 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
         let paramupdate = { ...param }
         if (paramupdate.showCyclePrice === "off") {
             delete paramupdate.salary
-        } else {
+        }else {
             paramupdate = {
                 ...paramupdate,
                 salary: '30000'
@@ -246,7 +246,7 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
         fetchFilterCount(val)
         applyFilterSet(paramupdate)
         handleFilterMobile()
-        router.replace(`${location.pathname}${val.replace('&', '?')}`);
+        router.replace(`${router.pathname}${val.replace('&', '?')}`);
     }
     const handleFilterMobile = () => {
         setfilterOpen(!filterOpen)

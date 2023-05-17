@@ -15,7 +15,7 @@ export default function FilterSelected({ param, applyFilterSet }:any) {
         let data = []
         for (let item in param) {
             if (param[item]?.length) {
-                if(param[item] !== 'off' && item.replaceAll('_', ' ') !== 'salary'){
+                if(param[item] !== 'ebikes' && param[item] !== 'bikes' && param[item] !== 'off' && item.replaceAll('_', ' ') !== 'salary'){
                 data.push({
                     name: item,
                     label: item === 'live_stock' ? 'in stock' : item === 'category_type' ? 'category' : item?.replaceAll('_', ' '),
@@ -64,19 +64,21 @@ export default function FilterSelected({ param, applyFilterSet }:any) {
         setStateParam(updateParam)
         const val = queryParam(updateParam)
         applyFilterSet(updateParam)
-        router.replace(`/${val.replace('&', '?')}`)
+        router.replace(`${router.pathname}${val.replace('&', '?')}`)
     }
     const clearAllFilter = () => {
         applyFilterSet({})
         setStateParam({})
-        router.replace(`/`)
+        router.replace(router.pathname)
     }
+    console.log(listFilter(stateParam),stateParam,'stateParam===');
+    
     return listFilter(stateParam)?.length ? <div className="filter-dropdown">
         <div className="d-flex">
             {
                 listFilter(stateParam)?.map((item, key) => {
                     return <Button key={key} onClick={() => handleOpen(key)}>
-                        {item.label === 'showCyclePrice' ? 'Cycle to Work' : item.label}
+                        {item.label === 'showCyclePrice' ? 'Cycle to Work' :item.name === 'listing_type' ? 'Electric assistance' : item.label}
                         {
                             !open[key] ?
                                 <Image src='/Icon-Expand.svg' alt='' width={13} height={13} />
@@ -86,6 +88,9 @@ export default function FilterSelected({ param, applyFilterSet }:any) {
                         {open[key] ? <div className="filter-dropdown-menu">
                             <ul>
                                 {
+                                        item.name === "listing_type" ? 
+                                        <li><Button onClick={() => removeFilter(null, 'listing_type')}>{item.data} <Image className='close' src='/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
+                                        :
                                         item.label === 'showCyclePrice' ? 
                                         <li><Button onClick={() => removeFilter(null, 'showCyclePrice')}>Cycle to Work <Image className='close' src='/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
                                         :

@@ -37,7 +37,7 @@ export const onKeyPress = (evt:any, reg = null) => {
     if (theEvent.preventDefault) theEvent.preventDefault();
   }
 };
-const calculatEbikePrice = (bike_price:number, grosssalary:number, product_categories:string) => {
+export const calculatEbikePrice = (bike_price:number, grosssalary:number, product_categories:string) => {
   let bike = bike_price;
   let initial_payment = 0;
   let limit = 1500;
@@ -48,7 +48,6 @@ const calculatEbikePrice = (bike_price:number, grosssalary:number, product_categ
   if (product_categories.includes("Cargo") || product_categories.includes("Light Utility")) {
     limit = 3000;
   }
-  console.log(bike > limit,bike,limit,'limit===');
   if (bike > limit) {
     bike = limit;
     initial_payment = bike_price - limit;
@@ -68,7 +67,7 @@ const calculatEbikePrice = (bike_price:number, grosssalary:number, product_categ
   }
   let totalsaving = incometax + prsi + usc;
   let finalcost = bike - totalsaving;
-  let netsalary = finalcost / 12;
+  let netsalary = bike / 12;
   let savingRRP = totalsaving / bike * 100;
   let netsalaryofbike = netsalary.toFixed(2);
   let context = {
@@ -93,4 +92,9 @@ export const priceCalculator = (salary:any, card:any) => {
     return d
   })
   return data
+}
+export const handleChangeSalary = (value:number) => {
+  const unformattedValue = value?.toString().replace(/,/g, "");
+  let formattedValue = Number(unformattedValue).toLocaleString();
+  return formattedValue
 }

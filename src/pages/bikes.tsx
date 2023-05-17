@@ -9,7 +9,9 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useRouter } from "next/router";
 import Filter from '../component/filter/filter_newdesign';
 import Filterselected from '../component/filter/filterselected';
-function EbayPLP({ user,filterRes }: any) {    
+import { Button } from 'react-bootstrap';
+import Link from 'next/link';
+function EbayPLP({ user, filterRes }: any) {
     const router = useRouter()
     const [productList, setProductList] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
@@ -27,7 +29,7 @@ function EbayPLP({ user,filterRes }: any) {
         price: [],
         wheel_size: [],
         showCyclePrice: 'off',
-        listing_type:'ebikes',
+        listing_type: 'ebikes',
         salary: ''
     })
     useEffect(() => {
@@ -42,28 +44,28 @@ function EbayPLP({ user,filterRes }: any) {
             security: val?.security?.split(',') || [],
             wheel_size: val?.wheel_size?.split(',') || [],
             price: val?.price?.split('-') || [],
-            showCyclePrice: val?.showCyclePrice?.length ?val?.showCyclePrice : "off",
-            listing_type: val?.listing_type?.length ?val?.listing_type : "ebikes",
+            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : "off",
+            listing_type: val?.listing_type?.length ? val?.listing_type : "ebikes",
             salary: val?.salary || "",
         }
         setSortBy(val?.sort_by || '')
         setParam(data)
-        setResult(user,page, data)
+        setResult(user, page, data)
     }, [router.query])
     const fetchAllData = (page: number, search = '') => {
         let searchParams: any = new URLSearchParams(search)
         const val = Object.fromEntries([...searchParams])
         setIsLoading(true)
-        Fetch(`products/?page=${page}&portalDomain=gogeta.dev&${!search?.includes('listing_type')?search+`listing_type=ebikes`:search}`).then(d => {
+        Fetch(`products/?page=${page}&portalDomain=gogeta.dev&${!search?.includes('listing_type') ? search + `listing_type=ebikes` : search}`).then(d => {
             if (d?.status) {
                 setIsLoading(false)
-                setResult(d.data,page, val)
+                setResult(d.data, page, val)
             } else {
                 setIsLoading(false)
             }
         })
-    }    
-    const setResult = (d: any,page:number, val: any) => {
+    }
+    const setResult = (d: any, page: number, val: any) => {
         let result = d?.results
         if (Object.keys(val)?.length && val?.showCyclePrice === "on" && val?.salary?.length) {
             result = priceCalculator(val?.salary, d?.results)
@@ -76,7 +78,7 @@ function EbayPLP({ user,filterRes }: any) {
             ] : result
         }
         setProductList(data)
-    }    
+    }
     const applyFilter = (stateParam: any) => {
         const val = queryParam(stateParam)
         setParam(Object.keys(stateParam)?.length ? stateParam : {
@@ -90,6 +92,7 @@ function EbayPLP({ user,filterRes }: any) {
             security: [],
             wheel_size: [],
             showCyclePrice: "off",
+            listing_type: "ebikes",
             salary: "",
         })
         fetchAllData(1, val)
@@ -103,19 +106,21 @@ function EbayPLP({ user,filterRes }: any) {
         setPage(i)
         const val = queryParam(param)
         fetchAllData(i, val)
-    } 
+    }
     const onChangeSort = (e: any) => {
         const { name, value } = e.target
         setSortBy(value)
         const val = queryParam({ ...param, [name]: value?.length ? [value] : [] })
         router.replace(`/ebay-plp${val.replace('&', '?')}`)
         fetchAllData(1, val)
-    }    
+    }
+    console.log(productList,'productList==');
+    
     return (
         <Applayout ebay={true} className='m-0 plp-back'>
             <div className='container ebay-plp'>
                 <div className='row'>
-                    <Filter filterRes={filterRes} applyFilterSet={applyFilter} param={param} newDesign={true}/>
+                    <Filter filterRes={filterRes} applyFilterSet={applyFilter} param={param} newDesign={true} />
                     <div className='col-xl-9 col-lg-8 col-md-12 col-sm-12 col-12 album-right'>
                         <div className='d-flex align-items-center justify-content-between product-sort'>
                             <p>{productList?.count || 0} models found</p>
@@ -125,7 +130,7 @@ function EbayPLP({ user,filterRes }: any) {
                                 <option value='high_to_low'>Price High to Low</option>
                             </select></div>
                         </div>
-                        <Filterselected param={param} applyFilterSet={applyFilter} newDesign={true}/>
+                        <Filterselected param={param} applyFilterSet={applyFilter} newDesign={true} />
                         <InfiniteScroll
                             dataLength={productList?.results?.length || 0}
                             next={scrollEnd}
@@ -141,7 +146,11 @@ function EbayPLP({ user,filterRes }: any) {
                             scrollableTarget="scrollableDiv"
                         >
                             {
-                                productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}><ProductList item={item} newDesign={true}/></div>)
+                                productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}>
+                                    <button onClick={()=>router.push(`/detail/${item.brandName.toLowerCase()+'-'+ item.productNameSlug}`)} className='btn-trans w-100 text-start h-100'>
+                                        <ProductList item={item} newDesign={true} />
+                                    </button>
+                                </div>)
                             }
                         </InfiniteScroll>
                     </div>
@@ -153,28 +162,27 @@ function EbayPLP({ user,filterRes }: any) {
 export async function getServerSideProps(context: any) {
     const search = context?.resolvedUrl.replace('/bikes?', '&')
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const response = await fetch(baseURL + `products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice')?search:'&showCyclePrice=off'}`, {
+    const response = await fetch(baseURL + `products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice') ? search : '&showCyclePrice=off'}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',
         },
     })
-    const responseFilter = await fetch(baseURL + `get-filter-count/?portalDomain=gogeta.dev${search?.includes('showCyclePrice')?search:'&showCyclePrice=off'}`, {
+    const responseFilter = await fetch(baseURL + `get-filter-count/?portalDomain=gogeta.dev${search?.includes('showCyclePrice') ? search : '&showCyclePrice=off'}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',
         },
     })
-    console.log(responseFilter,search);
-    
+    console.log(responseFilter, search);
+
     let data = await response.json()
     let dataFilter = await responseFilter.json()
     return {
         props: {
             user: { ...data },
-            filterRes: {...dataFilter}
+            filterRes: { ...dataFilter }
         },
     }
 }
-
 export default EbayPLP;

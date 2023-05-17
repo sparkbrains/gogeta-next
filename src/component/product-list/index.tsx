@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState,MouseEvent } from "react";
 import Button from "../button";
 import Card from "../card";
 import Image from "next/image"
+import ColorWay from "./colorway";
 
 export default function ProductList({ item }: any) {
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
@@ -14,9 +15,7 @@ export default function ProductList({ item }: any) {
             <div className="d-flex align-items-center justify-content-between">
                 <Image width={80} height={26} src={item.brandImage} alt={item.brandName} />
                 <ul className="color_palette">
-                    {
-                        item.colourway?.map((imgItem: any, i: number) => <li key={i}><Button className={selectColorProduct?.colourwayID === imgItem?.colourwayID ? 'activebtn' : ""} onClick={() => { setselectColorProduct(imgItem) }} type='button' style={{ background: `${imgItem?.colourway_secondary_detail ? `linear-gradient(to right bottom, #${imgItem?.colourway_primary_detail?.colourHue} 50%,#${imgItem?.colourway_secondary_detail?.colourHue} 50%)` : `#${imgItem?.colourway_primary_detail?.colourHue}`}` }}></Button></li>)
-                    }
+                    <ColorWay setselectColorProduct={setselectColorProduct} selectColorProduct={selectColorProduct} item={item}/>
                 </ul>
             </div>
             <h5>{item.productName}</h5>
@@ -37,9 +36,14 @@ export default function ProductList({ item }: any) {
                 </>
             }
         </div>
-        <div className="card-footer">
-            In stock now
+        <div className={`card-footer ${!item.stockReport?'outStock':''}`}>
+            {
+                !item.stockReport ? 'ENQUIRE FOR AVAILABILITY':<>
+                In stock now
             <Image src='/assets/speedybike_electric.svg' width={25} height={14} alt='speedybike_electric' />
+                </>
+            }
+            
         </div>
     </Card>
 }

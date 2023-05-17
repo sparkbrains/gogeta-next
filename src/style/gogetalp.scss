@@ -62,7 +62,8 @@
     .cycling-saving {
         background: var(--white);
         border-radius: 50px;
-        @media(max-width:575px){
+
+        @media(max-width:575px) {
             border-radius: 30px;
         }
 
@@ -81,7 +82,7 @@
                 line-height: 26px;
                 color: var(--p-color-new);
                 margin-bottom: 10px;
-            
+
             }
 
             .form-input {
@@ -200,6 +201,33 @@
                     li {
                         margin-right: 10px;
                         list-style: none;
+
+                        button {
+                            background: var(--white);
+                            border-radius: 15px;
+                            padding: 6px;
+                            border: 0;
+                        }
+
+                        &.active {
+                            button {
+                                background-color: var(--p-color-new);
+
+                                path {
+                                    fill: var(--white);
+                                }
+                            }
+                        }
+
+                        &.activeGreen {
+                            button {
+                                background-color: var(--p-color-two);
+
+                                path {
+                                    fill: var(--backColor);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -241,17 +269,21 @@
         background: var(--secondary-new-two);
         border-radius: 50px;
         padding: 40px 50px;
-        @media(max-width:575px){
+
+        @media(max-width:575px) {
             padding: 20px 20px;
             border-radius: 30px;
         }
-        &.svNup{
+
+        &.svNup {
             position: relative;
             top: -44px;
         }
+
         @include respond-from(sm) {
             margin-top: 60px;
         }
+
         img {
             // margin-top: -79px;
 
@@ -266,6 +298,7 @@
             font-size: 20px;
             line-height: 30px;
             color: var(--secondary-new);
+
             @include respond-from(sm) {
                 font-size: 16px;
                 line-height: 24px;
@@ -273,7 +306,8 @@
         }
     }
 
-    .theProcess, .theprocess {
+    .theProcess,
+    .theprocess {
         padding: 80px 0;
 
         p {
@@ -398,9 +432,11 @@
                     padding-top: 80px;
                     z-index: 2;
                     position: relative;
-                    @include respond-from(sm){
+
+                    @include respond-from(sm) {
                         padding-top: 20px;
                     }
+
                     .cycling-saving-calclulate {
                         background-color: var(--backColor);
 
@@ -408,14 +444,15 @@
                             label {
                                 color: var(--white);
                             }
+
                             li {
                                 input:checked~label {
                                     background-color: var(--p-color-two);
                                 }
-                                
+
                                 label {
                                     color: var(--p-color-new);
-                                        padding: 5px 15px;
+                                    padding: 5px 15px;
                                 }
                             }
                         }
@@ -432,10 +469,12 @@
 
                             .form-input {
                                 border-radius: 0px 15px 15px 0px;
+
                                 @include respond-from(sm) {
                                     width: 100%;
                                 }
                             }
+
                             @include respond-from(sm) {
                                 margin-bottom: 20px;
                             }
@@ -516,14 +555,16 @@
         }
 
         .gogetaBannerCell {
-            .row{
-                @media(max-width:475px){
+            .row {
+                @media(max-width:475px) {
                     flex-flow: column-reverse;
                 }
             }
-            .hitweb{
+
+            .hitweb {
                 position: relative;
             }
+
             &.perfectBike {
                 position: relative;
 
@@ -1323,9 +1364,11 @@ button.customSiteBtn.transpBtn {
         // height: 440px;
         align-items: center;
         display: flex;
-        .main-head h3{
+
+        .main-head h3 {
             color: var(--white);
         }
+
         @media(max-width:991px) {
             height: auto;
             border-radius: 20px;
@@ -1399,7 +1442,8 @@ button.customSiteBtn.transpBtn {
         .rowLineBef {
             position: relative;
             overflow: hidden;
-            .col-md-6{
+
+            .col-md-6 {
                 z-index: 2;
             }
 
@@ -1454,25 +1498,30 @@ button.customSiteBtn.transpBtn {
     }
 
 }
+
 .gogetaMain .main .mltSection.afterBef:before {
     height: 999px;
     width: 300px;
     background-size: cover;
 }
-.nobefSecl{
-    &:after{
+
+.nobefSecl {
+    &:after {
         content: none !important;
     }
 }
-.dotlisting{
+
+.dotlisting {
     padding-left: 5px;
     margin-top: 30px;
-    li{
+
+    li {
         display: flex;
         // align-items: center;
         color: #fff;
         gap: 10px;
-        span{
+
+        span {
             width: 6px;
             min-width: 6px;
             height: 6px;
@@ -1482,57 +1531,68 @@ button.customSiteBtn.transpBtn {
         }
     }
 }
-p.mx-wdt5{
-        max-width: 640px;
+
+p.mx-wdt5 {
+    max-width: 640px;
 }
-.innerEmpSv.empsvtoInner.justify-content-center{
-    .row{
-        @media(max-width:575px){
+
+.innerEmpSv.empsvtoInner.justify-content-center {
+    .row {
+        @media(max-width:575px) {
             margin: 0;
         }
     }
 }
-.mobor1{
-    @media(max-width:575px){
+
+.mobor1 {
+    @media(max-width:575px) {
         order: 1;
     }
 }
-.mobor2{
-    @media(max-width:575px){
+
+.mobor2 {
+    @media(max-width:575px) {
         order: 2;
     }
 }
-.cycling-saving-list{
-    @media(max-width:575px){
+
+.cycling-saving-list {
+    @media(max-width:575px) {
         padding: 20px 20px 0 !important;
     }
-    .row{
-        .col-6{
-            @media(max-width:575px){
+
+    .row {
+        .col-6 {
+            @media(max-width:575px) {
                 padding: 0 5px;
             }
-            .list{
-                 @media(max-width:575px){
+
+            .list {
+                @media(max-width:575px) {
                     padding: 14px;
                     height: 100%;
-                 }
-                 img{
-                    @media(max-width:575px){
+                }
+
+                img {
+                    @media(max-width:575px) {
                         width: 37px;
                     }
-                 }
-                  p{
-                    @media(max-width:575px){
-                            font-size: 14px;
+                }
+
+                p {
+                    @media(max-width:575px) {
+                        font-size: 14px;
                     }
-                 }
-                 h3{
-                    @media(max-width:575px){
-                            font-size: 30px;
+                }
+
+                h3 {
+                    @media(max-width:575px) {
+                        font-size: 30px;
                     }
-                 }
+                }
             }
         }
     }
 }
+
 // end

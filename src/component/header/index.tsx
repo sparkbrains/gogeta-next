@@ -22,7 +22,7 @@ export default function Header() {
     return <header className="header border-0">
     <Navbar expand="lg">
         <Container className='mob_re_non'>
-            <Link href="/"><img src="assets/logo/eBay_logo.svg" alt="Gogeta Logo" /></Link>
+            <Link href="/"><img src="/assets/logo/eBay_logo.svg" alt="Gogeta Logo" /></Link>
             <Navbar.Collapse id="navbarScroll">
                 <Nav
                     className="me-auto ms-lg-5 my-2 my-lg-0"
