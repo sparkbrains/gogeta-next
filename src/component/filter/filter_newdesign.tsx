@@ -236,11 +236,6 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
         let paramupdate = { ...param }
         if (paramupdate.showCyclePrice === "off") {
             delete paramupdate.salary
-        }else {
-            paramupdate = {
-                ...paramupdate,
-                salary: '30000'
-            }
         }
         const val = queryParam(paramupdate)
         fetchFilterCount(val)
@@ -266,7 +261,7 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
                 {
                     filterData?.slice(0, moreFilterCount)?.map((item:any, key:number) => {
                         return <>
-                            {key === 1 && !newDesign ? <Card key={key + 'buy'} className='like-buy mb-3'>
+                            {key === 1 ? <Card key={key + 'buy'} className='like-buy mb-3'>
                                 <h5>How would you like to buy?</h5>
                                 <div className='filter-list border-0'>
                                     <RadioInput title='Cash/Card' id='showCyclePrice' value='off' checked={stateParam.showCyclePrice === "off"} name='showCyclePrice' onChange={onChangeWork} />

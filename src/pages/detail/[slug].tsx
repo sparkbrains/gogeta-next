@@ -2,17 +2,19 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import React, { useState,ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import Slider from "react-slick";
 import Applayout from '<prefix>/layout/applayout';
 import Image from 'next/image';
 import ProductList from '<prefix>/component/product-list';
 import { useRouter } from 'next/router';
 import ColorWay from '<prefix>/component/product-list/colorway';
+import { priceCalculator } from '<prefix>/common/utilits';
 
 function Pdp({ detail }: any) {
     const router = useRouter()
-    const [selectColorProduct, setselectColorProduct] = useState<any>(detail.initProductDetail || {})
+    const [data, setData] = useState<any>({})
+    const [selectColorProduct, setselectColorProduct] = useState<any>(detail.colourway[0] || {})
     var settings = {
         dots: true,
         infinite: true,
@@ -61,11 +63,23 @@ function Pdp({ detail }: any) {
             },
         ],
     };
+    useEffect(() => {
+        if (router?.query?.price?.length) {
+            setData(priceCalculator(router?.query?.price, [detail])[0])
+        } else {
+            setData(detail)
+        }
+        // detail.colourway?.map((item:any)=>{
+        //     if(detail.initProductDetail[item.colourwayName])
+        // })
+    }, [router])
     let price = `${'SRP ' + detail?.currencyProduct.currency?.currencySymbol + detail?.currencyProduct.unitSuggestedRetailPrice}`
-    const handleSize =(event:any)=>{
-        const {value}:any = event.target
+    const handleSize = (event: any) => {
+        const { value }: any = event.target
         const val = JSON.parse(value)
     }
+    console.log(detail, 'detail===');
+
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <section className='turboBnr porezid'>
@@ -73,26 +87,24 @@ function Pdp({ detail }: any) {
                     <Row>
                         <Col lg={6}>
                             <div className='cycleImg'>
-                                <img src="/assets/img/img_Como-SL-1.svg" alt="img" className='img-fluid' />
+                                <Image src={selectColorProduct?.colourwayImage[0]} width={576} height={370} alt={data?.productName} className='img-fluid' />
                             </div>
-                            <div className='thumbnailSlide'>
-                                <div className='thumbImg current'>
-                                    <img src="/assets/img/img_Como-SL-1.svg" alt="img" className='img-fluid' />
-                                </div>
-                                <div className='thumbImg'>
-                                    <img src="/assets/img/img_Como-SL-1.svg" alt="img" className='img-fluid' />
-                                </div>
-                                <div className='thumbImg'>
-                                    <img src="/assets/img/img_Como-SL-1.svg" alt="img" className='img-fluid' />
-                                </div>
-
-                            </div>
+                            {selectColorProduct?.colourwayImage > 1 ? <div className='thumbnailSlide'>
+                                {
+                                    selectColorProduct?.colourwayImage?.map((item: string, index: number) => {
+                                        // for selection image add 'current' class in main div
+                                        return <div className={`thumbImg`} key={index}>
+                                            <Image src={item} width={576} height={370} alt={data?.productName} className='img-fluid' />
+                                        </div>
+                                    })
+                                }
+                            </div> : null}
                             <p className='interction'>Images are for illustration only. Please see product description and specifications for details of this model build.</p>
                         </Col>
                         <Col lg={6}>
                             <div className='cycleDetail'>
-                                <Image src={detail.brandLogo} width={122} height={40} alt="img" className='img-fluid brandLogo' />
-                                <h3>{detail.productName}</h3>
+                                <Image src={data.brandLogo} width={122} height={40} alt="img" className='img-fluid brandLogo' />
+                                <h3>{data.productName}</h3>
                                 <div className='priceDetailoffer'>
                                     <span>{price}</span>
                                     <p className='cyclePrice'>Cycle to Work price <b>€2,875.00</b></p>
@@ -102,7 +114,7 @@ function Pdp({ detail }: any) {
                                 <div className='cycleColor'>
                                     <b>Colour:</b> {selectColorProduct?.stockColourwayName}
                                     <div className='colorPalette'>
-                    <ColorWay setselectColorProduct={setselectColorProduct} selectColorProduct={selectColorProduct} item={detail}/>
+                                        <ColorWay setselectColorProduct={setselectColorProduct} selectColorProduct={selectColorProduct} item={data} />
                                         {/* <Button type='button' className='color1 activebtn'></Button>
                                         <Button type='button' className='color2'></Button> */}
                                     </div>
@@ -111,9 +123,9 @@ function Pdp({ detail }: any) {
                                     <div className='form-field col-md-6 mb-4 mb-md-0'>
                                         <label>Choose size</label>
                                         <select onChange={handleSize}>
-                                        <option selected disabled>Select your size</option>
+                                            <option selected disabled>Select your size</option>
                                             {
-                                                Object.values(detail.colourwaySizes[selectColorProduct?.stockColourwayName || selectColorProduct?.colourwayName])?.map((item:any,key:number)=>{
+                                                data?.colourwaySizes && Object.values(data?.colourwaySizes[selectColorProduct?.colourwayName])?.map((item: any, key: number) => {
                                                     return <option key={key} value={JSON.stringify(item)}>{item.mapped} - {item.stock_status}</option>
                                                 })
                                             }
@@ -137,7 +149,7 @@ function Pdp({ detail }: any) {
                                 </div>
                                 <div className='inStockStatus'>
                                     <p>In stock now</p>
-                                    <button type="button" className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
+                                    <button type="button" onClick={() => router.push('/my-offers')} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
                                 </div>
                             </div>
                         </Col>

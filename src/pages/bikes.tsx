@@ -28,7 +28,7 @@ function EbayPLP({ user, filterRes }: any) {
         security: [],
         price: [],
         wheel_size: [],
-        showCyclePrice: 'off',
+        showCyclePrice: 'on',
         listing_type: 'ebikes',
         salary: ''
     })
@@ -44,9 +44,9 @@ function EbayPLP({ user, filterRes }: any) {
             security: val?.security?.split(',') || [],
             wheel_size: val?.wheel_size?.split(',') || [],
             price: val?.price?.split('-') || [],
-            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : "off",
+            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : "on",
             listing_type: val?.listing_type?.length ? val?.listing_type : "ebikes",
-            salary: val?.salary || "",
+            salary: val?.salary || "30000",
         }
         setSortBy(val?.sort_by || '')
         setParam(data)
@@ -91,7 +91,7 @@ function EbayPLP({ user, filterRes }: any) {
             price: [],
             security: [],
             wheel_size: [],
-            showCyclePrice: "off",
+            showCyclePrice: "on",
             listing_type: "ebikes",
             salary: "",
         })
@@ -111,7 +111,7 @@ function EbayPLP({ user, filterRes }: any) {
         const { name, value } = e.target
         setSortBy(value)
         const val = queryParam({ ...param, [name]: value?.length ? [value] : [] })
-        router.replace(`/ebay-plp${val.replace('&', '?')}`)
+        router.replace(`${router.pathname}${val.replace('&', '?')}`)
         fetchAllData(1, val)
     }
     return (
@@ -145,7 +145,7 @@ function EbayPLP({ user, filterRes }: any) {
                         >
                             {
                                 productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}>
-                                    <button onClick={()=>router.push(`/detail/${item.brandName.toLowerCase()+'-'+ item.productNameSlug}`)} className='btn-trans w-100 text-start h-100'>
+                                    <button onClick={()=>router.push(`/detail/${item.brandName.toLowerCase()+'-'+ item.productNameSlug}${param.showCyclePrice === 'on'? `?price=${param.salary}`:''}`)} className='btn-trans w-100 text-start h-100'>
                                         <ProductList item={item} newDesign={true} />
                                     </button>
                                 </div>)
@@ -160,13 +160,13 @@ function EbayPLP({ user, filterRes }: any) {
 export async function getServerSideProps(context: any) {
     const search = context?.resolvedUrl.replace('/bikes?', '&')
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const response = await fetch(baseURL + `products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice') ? search : '&showCyclePrice=off'}`, {
+    const response = await fetch(baseURL + `products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',
         },
     })
-    const responseFilter = await fetch(baseURL + `get-filter-count/?portalDomain=gogeta.dev${search?.includes('showCyclePrice') ? search : '&showCyclePrice=off'}`, {
+    const responseFilter = await fetch(baseURL + `get-filter-count/?portalDomain=gogeta.dev${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',

@@ -1,14 +1,13 @@
 import { useState } from "react"
 import { useCallback, useEffect } from "react"
 
-export const useMediaQuery = (width:number) =>{
+export const useMediaQuery = (width: number) => {
   const [targetReached, setTargetReached] = useState(false)
-  const updateTarget = useCallback((e:any) =>{
+  const updateTarget = useCallback((e: any) => {
     if (e.matches) setTargetReached(true)
     else setTargetReached(false)
   }, [])
-  useEffect(() =>
-  {
+  useEffect(() => {
     const media = window.matchMedia(`(max-width: ${width}px)`)
     media.addEventListener('change', updateTarget)
     if (media.matches) setTargetReached(true)
@@ -18,16 +17,16 @@ export const useMediaQuery = (width:number) =>{
 
   return targetReached
 }
-export const queryParam =(val:any)=>{
+export const queryParam = (val: any) => {
   var str = ''
-  for(let item in val){
-  const value = Array.isArray(val[item]) ? item === 'price' ? val[item].join('-'): val[item].join(','):val[item]
+  for (let item in val) {
+    const value = Array.isArray(val[item]) ? item === 'price' ? val[item].join('-') : val[item].join(',') : val[item]
     str = val[item]?.length ? str + `&${item}=${value}` : str
   }
-  
+
   return str
 }
-export const onKeyPress = (evt:any, reg = null) => {
+export const onKeyPress = (evt: any, reg = null) => {
   var theEvent = evt || window.event;
   var key = theEvent.keyCode || theEvent.which;
   key = String.fromCharCode(key);
@@ -37,10 +36,12 @@ export const onKeyPress = (evt:any, reg = null) => {
     if (theEvent.preventDefault) theEvent.preventDefault();
   }
 };
-export const calculatEbikePrice = (bike_price:number, grosssalary:number, product_categories:string) => {
+export const calculatEbikePrice = (bike_price: number, grosssalary: number, product_categories: string, limitPrice: number = 1500) => {
+  console.log(limitPrice,'limitPrice===');
+  
   let bike = bike_price;
   let initial_payment = 0;
-  let limit = 1500;
+  let limit = limitPrice;
   let incometax = 0;
   let prsi = 0;
   let usc = 0;
@@ -79,21 +80,23 @@ export const calculatEbikePrice = (bike_price:number, grosssalary:number, produc
   };
   return context;
 }
-export const priceCalculator = (salary:any, card:any) => {
+export const priceCalculator = (salary: any, card: any) => {
   let context = {}
-  let data =  card?.map((d:any) => {
+  let data = card?.map((d: any) => {
     if (d.listing_type === "ebikes") {
       context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories)
+    } else if (d.listing_type === "bikes") {
+      context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories, 1250)
     }
     d = {
       ...d,
-      context:context
+      context: context
     }
     return d
   })
   return data
 }
-export const handleChangeSalary = (value:number) => {
+export const handleChangeSalary = (value: number) => {
   const unformattedValue = value?.toString().replace(/,/g, "");
   let formattedValue = Number(unformattedValue).toLocaleString();
   return formattedValue

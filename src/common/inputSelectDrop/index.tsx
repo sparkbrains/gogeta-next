@@ -19,6 +19,8 @@ export const InputSelectDrop = ({ selectParam = 'name', onChangeSearch, onChange
                     setInputText(d.label)
                 }
             })
+        }else{
+            setInputText('')
         }
     },[defaultValue])
     useEffect(() => {

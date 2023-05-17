@@ -8,7 +8,7 @@ export default function Footer(){
             <Row>
                 <Col sm={12} md={3} lg={2} className="mb-4 mb-lg-0">
                     <div className='ftlogo'>
-                        <img src="assets/logo/eBay_logo.svg" alt="Gogeta Logo" />
+                        <img src="/assets/logo/eBay_logo.svg" alt="Gogeta Logo" />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={2} className="mb-4 mb-lg-0">
@@ -63,10 +63,10 @@ export default function Footer(){
                     <div className='footer-col socialIcons'>
                         <ul className='list-unstyled d-flex align-items-center'>
                             <li className="nav-leisure-ebike"><a href="/">
-                                <img src="assets/img/sm-instagram.svg" alt="img" className='img-fluid' /></a></li>
-                            <li className="nav-endurance-ebike"><a href="mailto:hello@gogeta.bike"><img src="assets/img/sm-youtube.svg" alt="img" className='img-fluid' /></a></li>
+                                <img src="/assets/img/sm-instagram.svg" alt="img" className='img-fluid' /></a></li>
+                            <li className="nav-endurance-ebike"><a href="mailto:hello@gogeta.bike"><img src="/assets/img/sm-youtube.svg" alt="img" className='img-fluid' /></a></li>
                             <li className="nav-cargo-ebike"><a href="/">
-                                <img src="assets/img/sm-strava.svg" alt="img" className='img-fluid' /></a></li>
+                                <img src="/assets/img/sm-strava.svg" alt="img" className='img-fluid' /></a></li>
                         </ul>
                     </div>
                 </Col>
