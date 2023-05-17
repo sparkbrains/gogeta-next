@@ -258,8 +258,6 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
         }
         setStateParam(param)
     }
-    console.log(moreFilterCount,moreFilter,'moreFilter===');
-    
     return <div className={`col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 filter`}>
         {isMobile ? <Button onClick={handleFilterMobile} className="filter-selectlist">Filters</Button> : null}
         <div className={isMobile ? `filter-mobile ${filterOpen ? 'show' : 'hide'}` : ''}>
@@ -342,7 +340,6 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
                                                         item.data?.length && Array.isArray(item.data) ?
                                                             item.data?.map((items:any, i:number) => items?.count ? 
                                                             <>
-                                                            {/***console.log(item,items,stateParam[item.inputname]?.includes(items[item.selected]),'selected==')***/}
                                                             <RadioInput key={i} checked={item.inputname !=='listing_type' ? stateParam[item.inputname]?.includes(items[item.selected]):stateParam[item.inputname] === items[item.selected]} value={items[item.selected]} name={item.inputname} title={items.label === 'in_stock' ? 'In stock now' : items.label} onChange={(e:any)=>item.inputname !=='listing_type' ? onChange(e):onChangeWork(e)} count={items.count} id={items.label} /> 
                                                             </>: null)
                                                             : <>

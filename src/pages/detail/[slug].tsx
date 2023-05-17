@@ -61,12 +61,10 @@ function Pdp({ detail }: any) {
             },
         ],
     };
-    console.log(detail, 'detail===');
     let price = `${'SRP ' + detail?.currencyProduct.currency?.currencySymbol + detail?.currencyProduct.unitSuggestedRetailPrice}`
     const handleSize =(event:any)=>{
         const {value}:any = event.target
         const val = JSON.parse(value)
-        console.log(val,'value===');
     }
     return (
         <Applayout className='pdpMain w-100 mt-2'>

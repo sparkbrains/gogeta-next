@@ -71,8 +71,6 @@ export default function FilterSelected({ param, applyFilterSet }:any) {
         setStateParam({})
         router.replace(router.pathname)
     }
-    console.log(listFilter(stateParam),stateParam,'stateParam===');
-    
     return listFilter(stateParam)?.length ? <div className="filter-dropdown">
         <div className="d-flex">
             {

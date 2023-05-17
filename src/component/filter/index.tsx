@@ -84,7 +84,6 @@ export default function Filter({ param, applyFilterSet }:any) {
     ])
     const [stateParam, setStateParam] = useState(param)
     useEffect(() => {
-        console.log(router);
         fetchFilterCount('')
         setStateParam({
             ...param,

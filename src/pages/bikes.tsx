@@ -114,8 +114,6 @@ function EbayPLP({ user, filterRes }: any) {
         router.replace(`/ebay-plp${val.replace('&', '?')}`)
         fetchAllData(1, val)
     }
-    console.log(productList,'productList==');
-    
     return (
         <Applayout ebay={true} className='m-0 plp-back'>
             <div className='container ebay-plp'>
@@ -174,8 +172,6 @@ export async function getServerSideProps(context: any) {
             'Content-Type': 'application/json',
         },
     })
-    console.log(responseFilter, search);
-
     let data = await response.json()
     let dataFilter = await responseFilter.json()
     return {
