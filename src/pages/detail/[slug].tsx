@@ -14,8 +14,17 @@ import { priceCalculator } from '<prefix>/common/utilits';
 function Pdp({ detail }: any) {
     const router = useRouter()
     const [data, setData] = useState<any>({})
-    const [relatedProducts, setRelatedProducts] = useState<any>([])
-    const [selectColorProduct, setselectColorProduct] = useState<any>(detail.colourway[0] || {})
+    const [selectColorProduct, setselectColorProduct] = useState<any>({})
+    const [heightList,setHeightList] = useState([])
+    const [calculateState,setcalculateState] = useState({
+        cost_bike:0,
+        accessories_val:0,
+        total_val:0,
+        initial_payment:0,
+        salary:0,
+        total_salary_amt:0,
+        monthly_salary_amt:0,
+    })
     var settings = {
         dots: true,
         infinite: true,
@@ -65,21 +74,57 @@ function Pdp({ detail }: any) {
         ],
     };
     useEffect(() => {
-        if (router?.query?.price?.length) {
-            setData(priceCalculator(router?.query?.price, [detail])[0])
+        let updateRes = priceCalculator(router?.query?.salary || 0, [detail])[0]
+        if (router?.query?.salary?.length) {
+            setData(updateRes)
         } else {
             setData(detail)
         }
-        // detail.colourway?.map((item:any)=>{
-        //     if(detail.initProductDetail[item.colourwayName])
-        // })
-    }, [router])
-    let price = `${'SRP ' + detail?.currencyProduct.currency?.currencySymbol + detail?.currencyProduct.unitSuggestedRetailPrice}`
+        let list:any = []
+        for(let item in detail?.heightDropdown){
+            list.push({
+                label:item,
+                value:detail?.heightDropdown[item]
+            })
+        }
+        setHeightList(list)
+        detail.colourway?.map((item: any) => {
+            handleColor(item,updateRes)
+        })
+    }, [router, detail])
+    let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     const handleSize = (event: any) => {
         const { value }: any = event.target
         const val = JSON.parse(value)
+        setselectColorProduct({
+            ...selectColorProduct,
+            size: val
+        })
     }
-    console.log(detail, 'detail===');
+    const handleColor = (item: any,data:any) => {
+        if (data.colourwaySizes[item.colourwayName]) {
+            Object.values(data.colourwaySizes[item.colourwayName])?.map((itemSize: any) => {
+                if (itemSize.stock_status === 'In stock now') {
+                    let colorObj = {
+                        size: itemSize,
+                        ...item
+                    }
+                    setcalculateState({
+                        ...calculateState,
+                        cost_bike:colorObj.size?.unitSuggestedRetailPrice,
+                        total_val:colorObj.size?.unitSuggestedRetailPrice + calculateState.accessories_val,
+                        salary:Number(router?.query?.salary) || 0,
+                        monthly_salary_amt:data?.context?.per_month,
+                        total_salary_amt:data?.context?.limit,
+                        initial_payment:data?.context?.initial_payment
+                    })
+                    setselectColorProduct(colorObj)
+                }
+            })
+
+        }
+    }
+    console.log(data, 'detail==');
 
     return (
         <Applayout className='pdpMain w-100 mt-2'>
@@ -88,7 +133,7 @@ function Pdp({ detail }: any) {
                     <Row>
                         <Col lg={6}>
                             <div className='cycleImg'>
-                                <Image src={selectColorProduct?.colourwayImage[0]} width={576} height={370} alt={data?.productName} className='img-fluid' />
+                                <Image src={selectColorProduct?.colourwayImage?.length && selectColorProduct?.colourwayImage[0]} width={576} height={370} alt={data?.productName} className='img-fluid' />
                             </div>
                             {selectColorProduct?.colourwayImage > 1 ? <div className='thumbnailSlide'>
                                 {
@@ -111,7 +156,7 @@ function Pdp({ detail }: any) {
                                     {
                                         data?.context && Object.keys(data?.context)?.length ?
                                             <>
-                                                <p className='cyclePrice'>Cycle to Work price <b>{data.currencyProduct.currency.currencySymbol + (data.currencyProduct.unitSuggestedRetailPrice - Number(data?.context?.total_savings))}</b></p>
+                                                <p className='cyclePrice'>Cycle to Work price <b>{data.currencyProduct.currency.currencySymbol + (selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings))}</b></p>
                                                 <p className='payEmi'>Pay only {data.currencyProduct.currency.currencySymbol + data?.context?.per_month} per month</p>
                                                 <p className='saveupto'>Save {data.currencyProduct.currency.currencySymbol + data?.context?.total_savings} ({data?.context?.saving_percentage})</p>
                                             </>
@@ -122,7 +167,7 @@ function Pdp({ detail }: any) {
                                 <div className='cycleColor'>
                                     <b>Colour:</b> {selectColorProduct?.colourwayName}
                                     <div className='colorPalette'>
-                                        <ColorWay setselectColorProduct={setselectColorProduct} selectColorProduct={selectColorProduct} item={data} />
+                                        <ColorWay setselectColorProduct={(val: any) => { handleColor(val,data) }} selectColorProduct={selectColorProduct} item={data} />
                                         {/* <Button type='button' className='color1 activebtn'></Button>
                                         <Button type='button' className='color2'></Button> */}
                                     </div>
@@ -130,7 +175,7 @@ function Pdp({ detail }: any) {
                                 <div className='chooseSize row'>
                                     <div className='form-field col-md-6 mb-4 mb-md-0'>
                                         <label>Choose size</label>
-                                        <select onChange={handleSize}>
+                                        <select onChange={handleSize} value={JSON.stringify(selectColorProduct.size)}>
                                             <option selected disabled>Select your size</option>
                                             {
                                                 data?.colourwaySizes && Object.values(data?.colourwaySizes[selectColorProduct?.colourwayName])?.map((item: any, key: number) => {
@@ -145,19 +190,18 @@ function Pdp({ detail }: any) {
                                         </select>
                                     </div>
                                     <div className='form-field col-md-6 mb-4 mb-md-0'>
-                                        <label>What is my size?</label>
+                                        <label>What is my height?</label>
                                         <select>
                                             <option selected disabled>Enter your height</option>
-                                            <option>M - In stock now</option>
-                                            <option>L - In stock now</option>
-                                            <option>XL - In stock now</option>
-                                            <option>XXL - In stock now</option>
+                                            {
+                                                heightList?.map((item:any,key:number)=><option key={key} value={item.value}>{item.label}</option>)
+                                            }
                                         </select>
                                     </div>
                                 </div>
                                 <div className='inStockStatus'>
-                                    <p>In stock now</p>
-                                    <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?color=${selectColorProduct?.colourwayName}${router?.query?.price?.length ? `&price=${router?.query?.price}`:''}`)} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
+                                    <p>{selectColorProduct?.size?.stock_status}</p>
+                                    <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?color=${selectColorProduct?.colourwayName}${router?.query?.salary?.length ? `&salary=${router?.query?.salary}` : ''}`)} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
                                 </div>
                             </div>
                         </Col>
@@ -168,7 +212,7 @@ function Pdp({ detail }: any) {
                 <Container>
                     <div className='workScheme'>
                         <div className='d-flex align-items-center justify-content-between schemeHead'>
-                            <h5>Save up to 47% with the Cycle to Work scheme</h5>
+                            <h5>Save up to 52% with the Cycle to Work scheme</h5>
                             <img src="/assets/img/ic_plus-Open.svg" alt="img" className='img-fluid' />
                         </div>
                         <div className='scmBodyamin'>
@@ -176,86 +220,60 @@ function Pdp({ detail }: any) {
                                 <Col md={6} lg={7}>
                                     <div className='schemeForm'>
                                         <div className='inline-field'>
-                                            <label>Scheme provider</label>
+                                            <label>Cost of bike</label>
                                             <div className='bkrig'>
-                                                <select>
-                                                    <option>gogeta</option>
-                                                    <option>gogeta</option>
-                                                    <option>gogeta</option>
-                                                    <option>gogeta</option>
-                                                </select>
+                                                <input type='text' name='cost_bike' placeholder='Cost of bike' value={calculateState.cost_bike}/>
                                             </div>
                                         </div>
                                         <div className='inline-field'>
-                                            <label>Country</label>
+                                            <label>Accessories amount</label>
                                             <div className='bkrig'>
-                                                <select>
-                                                    <option selected disabled>Select country</option>
-                                                    <option>country</option>
-                                                    <option>country</option>
-                                                    <option>country</option>
-                                                </select>
+                                                <input type='text' name='accessories_val' placeholder='Accessories amount' value={calculateState.accessories_val}/>
                                             </div>
                                         </div>
                                         <div className='inline-field'>
-                                            <label>Salary</label>
+                                            <label>Total Bike + Accessories</label>
                                             <div className='bkrig'>
-                                                <input type='text' name='name' placeholder='Salary' />
+                                                <input type='text' name='name' disabled value={calculateState.total_val}/>
                                             </div>
                                         </div>
                                         <div className='inline-field'>
-                                            <label>Repayment period</label>
+                                            <label>Make initial payment one-off payment of</label>
                                             <div className='bkrig'>
-                                                <select>
-                                                    <option selected disabled>Repayment period</option>
-                                                    <option>12 months</option>
-                                                </select>
+                                                <input type='text' name='name' disabled value={calculateState.initial_payment}/>
                                             </div>
                                         </div>
-                                        <div className='inline-field'>
-                                            <label>Effective product price</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='name' placeholder='Price' />
+                                        <div className='schemeForm_calculate'>
+                                            <h5>Pay the balance of €{calculateState.total_salary_amt} via Salary Sacrifice</h5>
+                                            <div>
+                                                <h3>Calculate your repayments:</h3>
+                                                <div className='inline-field'>
+                                                    <label>My Salary before tax</label>
+                                                    <div className='bkrig me-2'>
+                                                        <input type='text' name='salary' placeholder='Salary' value={calculateState.salary}/>
+                                                    </div>
+                                                </div>
+                                                <div className='inline-field'>
+                                                    <label>Total Salary Sacrifice amount</label>
+                                                    <div className='bkrig'>
+                                                        <input type='text' name='name' placeholder='Salary' value={calculateState.total_salary_amt} disabled />
+                                                    </div>
+                                                </div>
+                                                <div className='inline-field'>
+                                                    <label>Monthly Salary Sacrifice amount</label>
+                                                    <div className='bkrig'>
+                                                        <input type='text' name='name' placeholder='Salary' value={calculateState.monthly_salary_amt} disabled />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className='inline-field'>
-                                            <label>Accessories</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='name' placeholder='Accessories' />
-                                            </div>
-                                        </div>
-                                        <div className='inline-field'>
-                                            <label>Total savings</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='name' placeholder='Total savings' />
-                                            </div>
-                                        </div>
-                                        <div className='inline-field'>
-                                            <label>Monthly salary sacrifice</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='name' placeholder='Monthly salary' />
-                                            </div>
-                                        </div>
-                                        <div className='inline-field'>
-                                            <label>Saving percentage</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='name' placeholder='Saving percentage' />
-                                            </div>
-                                        </div>
-                                        <div className='inline-field'>
-                                            <label>Ownership transfer charge</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='name' placeholder='Ownership transfer' />
-                                            </div>
+                                        <div className='text-center mt-5'>
+                                        <button type="button" className="customSiteBtn btn btn-primary px-4">Recalculate savings <i className="fa-solid fa-angle-right"></i></button>
                                         </div>
                                     </div>
                                 </Col>
                                 <Col md={6} lg={5}>
                                     <div className='scmRight'>
-                                        <div className='d-flex flex-column btngrpDt'>
-                                            <button type="button" className="customSiteBtn btn btn-primary px-4">Recalculate savings <i className="fa-solid fa-angle-right"></i></button>
-                                            <button type="button" className="customSiteBtn btn btn-primary px-4">Find the best dealer <i className="fa-solid fa-angle-right"></i></button>
-                                        </div>
                                         <div className='totalSavingbx'>
                                             <div className='bxts'>
                                                 <img src="/assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
@@ -271,34 +289,22 @@ function Pdp({ detail }: any) {
                     </div>
                 </Container>
             </section>
-            <section className='keyFeatures porezid'>
+            {data?.feature?.length ?<section className='keyFeatures porezid'>
                 <Container>
                     <h4 className='mdheading'>Key features</h4>
                     <Row>
-                        <Col md="6" lg={4} className='mb-4 mb-lg-0'>
+                        {
+                            data?.feature?.map((item:any,key:number)=> <Col key={key} md="6" lg={4} className='mb-4 mb-lg-0'>
                             <div className='singlekeyFeature'>
-                                <img src="/assets/img/Feature image-1.svg" alt="img" className='img-fluid' />
-                                <h6>A ride for all seasons</h6>
-                                <p>The Como Super Light isn’t slowed down by bad weather. Specialized designed this bike for all seasons.</p>
+                                <Image src={item.featureImage[0]} width={409} height={400} alt="img" className='img-fluid' />
+                                <h6>{item.featureName}</h6>
+                                <p>{item.featureContent}</p>
                             </div>
-                        </Col>
-                        <Col md="6" lg={4} className='mb-4 mb-lg-0'>
-                            <div className='singlekeyFeature'>
-                                <img src="/assets/img/Feature image-2.svg" alt="img" className='img-fluid' />
-                                <h6>More riding, less maintaining</h6>
-                                <p>The Como Super Light isn’t slowed down by bad weather. Specialized designed this bike for all seasons.</p>
-                            </div>
-                        </Col>
-                        <Col md="6" lg={4} className='mb-4 mb-lg-0'>
-                            <div className='singlekeyFeature'>
-                                <img src="/assets/img/Feature image-3.svg" alt="img" className='img-fluid' />
-                                <h6>Need more juice?</h6>
-                                <p>The Como Super Light isn’t slowed down by bad weather. Specialized designed this bike for all seasons.</p>
-                            </div>
-                        </Col>
+                        </Col>)
+                        }
                     </Row>
                 </Container>
-            </section>
+            </section>:null}
             <section className='specification porezid'>
                 <Container>
                     <h4 className='commonInnheading'>Specifications</h4>
@@ -428,7 +434,7 @@ function Pdp({ detail }: any) {
 }
 export async function getServerSideProps(context: any) {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const response = await fetch(baseURL + `products/${context.query.slug}/`, {
+    const response = await fetch(baseURL + `test-products/${context.query.slug}/?portalDomain=gogeta.dev`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',

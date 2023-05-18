@@ -145,7 +145,7 @@ function EbayPLP({ user, filterRes }: any) {
                         >
                             {
                                 productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}>
-                                    <button onClick={()=>router.push(`/detail/${item.brandName.toLowerCase()+'-'+ item.productNameSlug}${param.showCyclePrice === 'on'? `?price=${param.salary}`:''}`)} className='btn-trans w-100 text-start h-100'>
+                                    <button onClick={()=>router.push(`/detail/${item.brandName.toLowerCase()+'-'+ item.productNameSlug}${param.showCyclePrice === 'on'? `?salary=${param.salary}`:''}`)} className='btn-trans w-100 text-start h-100'>
                                         <ProductList item={item} newDesign={true} />
                                     </button>
                                 </div>)
@@ -160,7 +160,7 @@ function EbayPLP({ user, filterRes }: any) {
 export async function getServerSideProps(context: any) {
     const search = context?.resolvedUrl.replace('/bikes?', '&')
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const response = await fetch(baseURL + `products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
+    const response = await fetch(baseURL + `test-products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',

@@ -47,6 +47,7 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
   if (product_categories.includes("Cargo") || product_categories.includes("Light Utility")) {
     limit = 3000;
   }
+  
   if (bike > limit) {
     bike = limit;
     initial_payment = bike_price - limit;
@@ -81,9 +82,9 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
 export const priceCalculator = (salary: any, card: any) => {
   let context = {}
   let data = card?.map((d: any) => {
-    if (d.listing_type === "ebikes") {
+    if (d.bicycleAssisted === "ebikes") {
       context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories)
-    } else if (d.listing_type === "bikes") {
+    } else if (d.bicycleAssisted === "bikes") {
       context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories, 1250)
     }
     d = {
