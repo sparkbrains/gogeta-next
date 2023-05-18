@@ -1,8 +1,9 @@
 import { Button, Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
-import Image from '../component/image';
-import Toggle from '../component/toggle';
+import Image from '../../component/image';
+import Toggle from '../../component/toggle';
 
 import Applayout from '<prefix>/layout/applayout';
+import StoreFinder from '<prefix>/component/storefinder';
 export default function MyOffers() {
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
         <div className='pt-5 pb-4'>
@@ -52,7 +53,7 @@ export default function MyOffers() {
                     <div className='workScheme'>
                         <div className="d-flex align-items-center justify-content-between schemeHead">
                             <h5>Cycle to Work Scheme costs & savings</h5>
-                            <img src="assets/img/ic_plus-Open.svg" alt="img" className="img-fluid" /></div>
+                            <img src="/assets/img/ic_plus-Open.svg" alt="img" className="img-fluid" /></div>
                         <div className='scmBodyamin'>
                             <Row>
                                 <Col md={7} lg={8}>
@@ -119,7 +120,7 @@ export default function MyOffers() {
                                 <Col md={5} lg={4}>
                                     <div className='scmRight'>
                                         <div className='singleSaving'>
-                                            <img src="assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
+                                            <img src="/assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
                                             <div className='savingSrc'>
                                                 <div className='bxts'>
                                                     <p>Income tax saving</p>
@@ -136,7 +137,7 @@ export default function MyOffers() {
                                             </div>
                                         </div>
                                         <div className='singleSaving blueBx mt-3'>
-                                            <img src="assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
+                                            <img src="/assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
                                             <div className='savingSrc'>
                                                 <div className='bxts'>
                                                     <h5>Total savings</h5>
@@ -239,9 +240,7 @@ export default function MyOffers() {
                 <div className='bikeFindMap poreZindex'>
                     <h3>Find your local bike shop</h3>
                     <div className='mapInner'>
-                        <div id="storepoint-container" data-tags="ireland" data-map-id="163d501120d560">
-
-                        </div>
+                        <StoreFinder/>
                     </div>
                 </div>
             </Container>

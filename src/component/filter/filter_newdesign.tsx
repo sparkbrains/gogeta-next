@@ -1,4 +1,4 @@
-import React,{ useEffect, useState, Component } from "react"
+import React, { useEffect, useState, Component } from "react"
 import Fetch from "../../common/fetch"
 import { InputSelectDrop } from "../../common/inputSelectDrop"
 import { queryParam, useMediaQuery } from "../../common/utilits"
@@ -10,7 +10,8 @@ import { RadioInput } from "../form/inputs"
 import ReactSlider from 'react-slider';
 import { onKeyPress } from '../../common/utilits'
 import { useRouter } from "next/router"
-export default function Filter({ param,filterRes, applyFilterSet, newDesign = false }:any) {
+import { Form } from "react-bootstrap"
+export default function Filter({ param, filterRes, applyFilterSet, newDesign = false }: any) {
     const isMobile = useMediaQuery(900)
     const [filterOpen, setfilterOpen] = useState(false)
     const [moreFilter, setMoreFilter] = useState(newDesign)
@@ -27,10 +28,10 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
             name: 'Electric assistance',
             order: 2,
             inputname: 'listing_type',
-            selected:'value',
-            data:[
-                {label:'Electric bike',value:'ebikes',count:0},
-                {label:'Standard bike',value:'bikes',count:0}
+            selected: 'value',
+            data: [
+                { label: 'Electric bike', value: 'ebikes', count: 0 },
+                { label: 'Standard bike', value: 'bikes', count: 0 }
             ]
         },
         {
@@ -102,7 +103,7 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
             ...param,
         })
     }, [param])
-    const replaceFilterArray = (data:any)=>{
+    const replaceFilterArray = (data: any) => {
         let priceR = data?.price_range?.length && data?.price_range[0]
         setMinMaxPrice([priceR?.price_min ? priceR?.price_min : 500, priceR?.price_max ? priceR?.price_max : 15000])
         const orderSet = [
@@ -118,10 +119,10 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
                 name: 'Electric assistance',
                 order: 2,
                 inputname: 'listing_type',
-                selected:'value',
-                data:[
-                    {label:'Electric bike',value:'ebikes',count:123},
-                    {label:'Standard bike',value:'bikes',count:123}
+                selected: 'value',
+                data: [
+                    { label: 'Electric bike', value: 'ebikes', count: 123 },
+                    { label: 'Standard bike', value: 'bikes', count: 123 }
                 ]
             },
             {
@@ -154,7 +155,7 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
                 order: 1,
                 infoText: "See what's in stock from retailers across the country",
                 selected: 'label',
-                data: data.live_stock?.map((d:any) => { return { ...d, label: 'in_stock' } }),
+                data: data.live_stock?.map((d: any) => { return { ...d, label: 'in_stock' } }),
                 inputname: 'live_stock'
             },
             {
@@ -188,23 +189,23 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
         ]
         setfilterData(orderSet)
     }
-    const fetchFilterCount = (val:string) => {
-        Fetch(`get-filter-count/?portalDomain=gogeta.dev${!val?.includes('listing_type')?val+`listing_type=ebikes`:val}`).then(d => {
+    const fetchFilterCount = (val: string) => {
+        Fetch(`get-filter-count/?portalDomain=gogeta.dev${!val?.includes('listing_type') ? val + `listing_type=ebikes` : val}`).then(d => {
             if (d.status) {
                 const { data } = d
                 replaceFilterArray(data)
             }
         })
     }
-    const onChange = (e:any) => {
+    const onChange = (e: any) => {
         const { name, value, checked } = e.target
         if (name) {
-            let data:any = [...stateParam[name]]
+            let data: any = [...stateParam[name]]
             if (checked) {
                 data.push(value)
                 data = new Set([...data])
             } else {
-                data = data?.filter((d:any) => d !== value)
+                data = data?.filter((d: any) => d !== value)
             }
             const param = {
                 ...stateParam,
@@ -214,7 +215,7 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
             applyFilter(param)
         }
     }
-    const onChangeSelect = (e:any) => {
+    const onChangeSelect = (e: any) => {
         const { name, value } = e.target
         const param = {
             ...stateParam,
@@ -223,7 +224,7 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
         setStateParam(param)
         applyFilter(param)
     }
-    const onChangeWork = (e:any) => {
+    const onChangeWork = (e: any) => {
         const { name, value } = e.target
         const param = {
             ...stateParam,
@@ -232,7 +233,7 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
         setStateParam(param)
         applyFilter(param)
     }
-    const applyFilter = (param:any) => {
+    const applyFilter = (param: any) => {
         let paramupdate = { ...param }
         if (paramupdate.showCyclePrice === "off") {
             delete paramupdate.salary
@@ -246,7 +247,7 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
     const handleFilterMobile = () => {
         setfilterOpen(!filterOpen)
     }
-    const rangeFilter = (val:any, item:any) => {
+    const rangeFilter = (val: any, item: any) => {
         const param = {
             ...stateParam,
             [item.inputname]: val
@@ -259,31 +260,39 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
             {isMobile ? <h3 className="pb-4 d-flex align-items-center justify-content-between">Filters <Button onClick={handleFilterMobile}>╳</Button></h3> : null}
             <div className="position-relative">
                 {
-                    filterData?.slice(0, moreFilterCount)?.map((item:any, key:number) => {
+                    filterData?.slice(0, moreFilterCount)?.map((item: any, key: number) => {
                         return <>
-                            {key === 1 ? <Card key={key + 'buy'} className='like-buy mb-3'>
-                                <h5>How would you like to buy?</h5>
-                                <div className='filter-list border-0'>
-                                    <RadioInput title='Cash/Card' id='showCyclePrice' value='off' checked={stateParam.showCyclePrice === "off"} name='showCyclePrice' onChange={onChangeWork} />
-                                    <RadioInput title='Cycle to Work scheme' id='showCyclePrice_work' checked={stateParam.showCyclePrice === "on"} value='on' name='showCyclePrice' onChange={onChangeWork} />
-                                    {stateParam.showCyclePrice === 'on' ? <div>
-                                        <div className="form-group">
-                                            <label className="form-label">Salary</label>
+                            {key === 0 ? <Card key={key + 'buy'} className='like-buy mb-3'>
+                                <h5>Cycle to Work Scheme</h5>
+                                    <div className="d-flex align-items-center justify-content-between like-buy-switch">
+                                        <p>Buy outright</p>
+                                        <Form.Check
+                                            type="switch"
+                                            id="custom-switch"
+                                            name='showCyclePrice'
+                                            value={stateParam.showCyclePrice === "on" ? 'off':'on'}
+                                            checked={stateParam.showCyclePrice === "on"}
+                                            onChange={onChangeWork}
+                                        />
+                                        <p> Cycle to Work</p>
+                                    </div>
+                                    {/* <RadioInput title='Cash/Card' id='showCyclePrice' value='off' checked={stateParam.showCyclePrice === "off"} name='showCyclePrice' onChange={onChangeWork} />
+                                    <RadioInput title='Cycle to Work scheme' id='showCyclePrice_work' checked={stateParam.showCyclePrice === "on"} value='on' name='showCyclePrice' onChange={onChangeWork} /> */}
+                                    {stateParam.showCyclePrice === 'on' ?<div className="form-group">
+                                            <label className="form-label">Enter your salary for the most accurate prices</label>
                                             <div className="input-group">
                                                 <span className="input-group-text" id="basic-addon1">€</span>
                                                 <input onKeyPress={onKeyPress} type="text" id="salary" className="form-control" data-name="salary" defaultValue="30000" name="salary" onChange={onChangeWork} />
                                             </div>
-                                            <small id="salaryError" className="text-danger d-none">Salary should be greater than or equal to 12570</small>
                                         </div>
-                                    </div> : null}
-                                </div>
+                                   : null}
                             </Card> : null}
                             {
                                 moreFilter && key >= 5 ?
-                                    <AccordianCard handleTab={() => {setMoreFilter(!moreFilter);setMoreFilterCount(15)}} newDesign={newDesign} title='More filters' key={key} toggleOpen={false}>
+                                    <AccordianCard handleTab={() => { setMoreFilter(!moreFilter); setMoreFilterCount(15) }} newDesign={newDesign} title='More filters' key={key} toggleOpen={false}>
                                     </AccordianCard>
                                     :
-                                    item.inputname === "size" || item.inputname === "brands" || item?.data?.length && item?.data?.some((d:any) => d.count) ? <AccordianCard newDesign={newDesign} title={item.name} key={key} toggleOpen={item.isAlwaysOpen}>
+                                    item.inputname === "size" || item.inputname === "brands" || item?.data?.length && item?.data?.some((d: any) => d.count) ? <AccordianCard newDesign={newDesign} title={item.name} key={key} toggleOpen={item.isAlwaysOpen}>
                                         {item.infoText?.length ? <div className='badge'>
                                             <span className='badge-text'>{item.infoText}</span>
                                         </div> : null}
@@ -299,13 +308,13 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
                                                                     <img className="graph" src="/assets/graph.png" style={{ width: '100%' }} alt="Graph" />
                                                             }
                                                         </div>
-                                                        
-                                                       {/***<RangeSlider min={minMaxPrice[0]} max={minMaxPrice[1]} value={stateParam[item.inputname]?.length ? stateParam[item.inputname] : minMaxPrice} onInput={(val:any) => rangeFilter(val, item)} onThumbDragEnd={() => applyFilter(stateParam)} onRangeDragEnd={() => applyFilter(stateParam)} />
+
+                                                        {/***<RangeSlider min={minMaxPrice[0]} max={minMaxPrice[1]} value={stateParam[item.inputname]?.length ? stateParam[item.inputname] : minMaxPrice} onInput={(val:any) => rangeFilter(val, item)} onThumbDragEnd={() => applyFilter(stateParam)} onRangeDragEnd={() => applyFilter(stateParam)} />
                                                       <Slider
                                                             value={stateParam[item.inputname]?.length ? stateParam[item.inputname] : minMaxPrice}
                                                             orientation="vertical"
                                                             onChange={this.handleOnChange}
-                                                        /> */} 
+                                                        /> */}
 
                                                         <ReactSlider
                                                             className="range-slider"
@@ -314,9 +323,9 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
                                                             value={stateParam[item.inputname]?.length ? stateParam[item.inputname] : minMaxPrice}
                                                             pearling
                                                             minDistance={minMaxPrice[0]}
-                                                            min={minMaxPrice[0]} 
+                                                            min={minMaxPrice[0]}
                                                             max={minMaxPrice[1]}
-                                                            onChange={(val) => rangeFilter(val, item)} 
+                                                            onChange={(val) => rangeFilter(val, item)}
                                                             onAfterChange={() => applyFilter(stateParam)}
                                                         />
 
@@ -330,18 +339,18 @@ export default function Filter({ param,filterRes, applyFilterSet, newDesign = fa
                                                     </div>
                                                     :
                                                     item.type === 'select' ?
-                                                        <InputSelectDrop newDesign={newDesign} placeholder='Select your height' defaultValue={stateParam[item.inputname] ? stateParam[item.inputname][0] : ''} selectParam={item.selected} name={item.inputname} onChangeSelect={onChangeSelect} searchCustom={true} data={item.data?.map((items:any, i:number) => { return { ...items, name: items.label } })} />
+                                                        <InputSelectDrop newDesign={newDesign} placeholder='Select your height' defaultValue={stateParam[item.inputname] ? stateParam[item.inputname][0] : ''} selectParam={item.selected} name={item.inputname} onChangeSelect={onChangeSelect} searchCustom={true} data={item.data?.map((items: any, i: number) => { return { ...items, name: items.label } })} />
                                                         :
                                                         item.data?.length && Array.isArray(item.data) ?
-                                                            item.data?.map((items:any, i:number) => items?.count ? 
-                                                            <>
-                                                            <RadioInput key={i} checked={item.inputname !=='listing_type' ? stateParam[item.inputname]?.includes(items[item.selected]):stateParam[item.inputname] === items[item.selected]} value={items[item.selected]} name={item.inputname} title={items.label === 'in_stock' ? 'In stock now' : items.label} onChange={(e:any)=>item.inputname !=='listing_type' ? onChange(e):onChangeWork(e)} count={items.count} id={items.label} /> 
-                                                            </>: null)
+                                                            item.data?.map((items: any, i: number) => items?.count ?
+                                                                <>
+                                                                    <RadioInput key={i} checked={item.inputname !== 'listing_type' ? stateParam[item.inputname]?.includes(items[item.selected]) : stateParam[item.inputname] === items[item.selected]} value={items[item.selected]} name={item.inputname} title={items.label === 'in_stock' ? 'In stock now' : items.label} onChange={(e: any) => item.inputname !== 'listing_type' ? onChange(e) : onChangeWork(e)} count={items.count} id={items.label} />
+                                                                </> : null)
                                                             : <>
                                                                 <span className='badge-text badge-text-small pb-3 d-block'>POPULAR BRANDS</span>
-                                                                {item.data?.popular_brands?.map((items:any, i:number) => items?.count ? <RadioInput key={i} checked={stateParam[item.inputname]?.includes(items[item.selected])} value={items[item.selected]} name={item.inputname} onChange={onChange} title={items.label} count={items.count} id={items.label} /> : null)}
+                                                                {item.data?.popular_brands?.map((items: any, i: number) => items?.count ? <RadioInput key={i} checked={stateParam[item.inputname]?.includes(items[item.selected])} value={items[item.selected]} name={item.inputname} onChange={onChange} title={items.label} count={items.count} id={items.label} /> : null)}
                                                                 {/* <hr size="3" width="100%" color="black" />*/}
-                                                                {item.data?.other_brands?.map((items:any, i:number) => items?.count ? <RadioInput key={i} checked={stateParam[item.inputname]?.includes(items[item.selected])} value={items[item.selected]} name={item.inputname} onChange={onChange} title={items.label} count={items.count} id={items.label} /> : null)}
+                                                                {item.data?.other_brands?.map((items: any, i: number) => items?.count ? <RadioInput key={i} checked={stateParam[item.inputname]?.includes(items[item.selected])} value={items[item.selected]} name={item.inputname} onChange={onChange} title={items.label} count={items.count} id={items.label} /> : null)}
                                                             </>
                                             }
                                         </div>

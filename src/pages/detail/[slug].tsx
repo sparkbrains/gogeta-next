@@ -14,6 +14,7 @@ import { priceCalculator } from '<prefix>/common/utilits';
 function Pdp({ detail }: any) {
     const router = useRouter()
     const [data, setData] = useState<any>({})
+    const [relatedProducts, setRelatedProducts] = useState<any>([])
     const [selectColorProduct, setselectColorProduct] = useState<any>(detail.colourway[0] || {})
     var settings = {
         dots: true,
@@ -156,7 +157,7 @@ function Pdp({ detail }: any) {
                                 </div>
                                 <div className='inStockStatus'>
                                     <p>In stock now</p>
-                                    <button type="button" onClick={() => router.push('/my-offers')} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
+                                    <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?color=${selectColorProduct?.colourwayName}${router?.query?.price?.length ? `&price=${router?.query?.price}`:''}`)} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
                                 </div>
                             </div>
                         </Col>

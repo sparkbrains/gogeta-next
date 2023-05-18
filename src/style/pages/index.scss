@@ -5,14 +5,16 @@
     .ebay {
         &-plp {
             .check-input {
-                label{
+                label {
                     color: var(--p-color-new);
                 }
-                span{
+
+                span {
                     color: var(--backColor);
                     font-size: 11px;
                 }
             }
+
             .product-sort-list {
                 color: var(--p-color-new);
 
@@ -54,6 +56,7 @@
                     background-image: url('../../../public/checkbox_ico.svg');
                 }
             }
+
             .slider-range .range-slider .range-slider__range {
                 background-color: var(--p-color-new);
             }
@@ -67,6 +70,7 @@
             }
         }
     }
+
     .card {
         border-radius: 25px;
         box-shadow: unset;
@@ -81,10 +85,13 @@
             p {
                 font-size: 0.9rem;
             }
-            p,s{
+
+            p,
+            s {
                 color: var(--p-color-new);
             }
         }
+
         &-footer {
             background-color: var(--p-color-two);
             color: var(--p-color-new);
@@ -95,6 +102,7 @@
             justify-content: center;
         }
     }
+
     &-back {
         &::after {
             content: '';
@@ -292,13 +300,50 @@
 
 .like-buy {
     h5 {
-        background: #0b395a;
+        background: var(--backColor);
         color: var(--white);
-        padding: 25px 20px;
+        padding: 20px 20px;
         border-top-left-radius: 7px;
         border-top-right-radius: 7px;
         font-weight: 700;
         font-size: 0.9rem;
+        margin: 0;
+    }
+
+    &-switch {
+        margin: 15px 0px;
+        p {
+            font-weight: 400;
+            font-size: 11px;
+            line-height: 14px;
+            margin: 0;
+            padding: 0 20px;
+            color: var(--backColor);
+        }
+    }
+
+    .form-group {
+        background-color: var(--p-color-two);
+        padding: 20px 20px;
+        border-radius:0px 0px 25px 25px;
+        label {
+            font-weight: 400;
+            font-size: 11px;
+            line-height: 14px;
+            margin: 0;
+            margin-bottom: 10px;
+            color: var(--backColor);
+        }
+        .input-group-text{
+            background-color: var(--backColor);
+            color: var(--white);
+            border: 0;
+            border-radius: 15px;
+            padding: 0.625em 1em;
+        }
+        .form-control{
+            border-radius: 15px;
+        }
     }
 }
 

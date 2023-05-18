@@ -465,3 +465,18 @@ text-transform: uppercase;
 .plp-back{
     // background-image: url('../../../public/assets/ebay-plp-back.png');
 }
+.form{
+    &-switch .form-check-input{
+        width: 3em;
+    }
+    &-check-input{
+        height: 1.7em;
+        &:checked{
+            background-color: var(--primary-new);
+            border-color: var(--primary-new);
+        }
+        &:focus{
+            box-shadow: unset;
+        }
+    }
+}

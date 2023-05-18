@@ -37,8 +37,6 @@ export const onKeyPress = (evt: any, reg = null) => {
   }
 };
 export const calculatEbikePrice = (bike_price: number, grosssalary: number, product_categories: string, limitPrice: number = 1500) => {
-  console.log(limitPrice,'limitPrice===');
-  
   let bike = bike_price;
   let initial_payment = 0;
   let limit = limitPrice;
