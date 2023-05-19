@@ -4,8 +4,8 @@ import Image from "../image";
 
 export default function Toggle({ title,children,open }:any) {
     const [openToggle, setOpen] = useState(open || false)
-    return <Button className="toggle-card mb-3" onClick={()=>setOpen(!openToggle)}>
-        <div className={`d-flex align-center justify-content-between toggle-head ${openToggle?'show':''}`}>
+    return <div className="toggle-card mb-3">
+            <Button type='button' onClick={()=>setOpen(!openToggle)} className={`d-flex w-100 align-center justify-content-between toggle-head ${openToggle?'show':''}`}>
             <h3>{title}</h3>
             {
                 openToggle ?
@@ -13,7 +13,8 @@ export default function Toggle({ title,children,open }:any) {
                     :
                     <Image src='/assets/toggle_open.svg' width={35} height={35} alt='toggle' />
             }
-        </div>
+
+        </Button>
         {openToggle ? <div className="pt-4 toggle-body">{children}</div>:null}
-    </Button>
+    </div>
 }
