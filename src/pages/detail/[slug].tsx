@@ -9,12 +9,13 @@ import Image from 'next/image';
 import ProductList from '<prefix>/component/product-list';
 import { useRouter } from 'next/router';
 import ColorWay from '<prefix>/component/product-list/colorway';
-import { priceCalculator, submitCalculator } from '<prefix>/common/utilits';
+import { priceCalculator, queryParam, submitCalculator } from '<prefix>/common/utilits';
 import Calculate from '<prefix>/component/detailOfferCalculator';
 import MainSlider from '<prefix>/component/mainSilder';
 
 function Pdp({ detail }: any) {
     const router = useRouter()
+    const [calculateRes, setCalculateRes] = useState<any>({})
     const [data, setData] = useState<any>({})
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
     const [heightList, setHeightList] = useState([])
@@ -83,7 +84,6 @@ function Pdp({ detail }: any) {
         handleColor(detail?.colourway[0], updateRes)
 
     }, [router, detail])
-    let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     const handleSize = (event: any) => {
         const { value }: any = event.target
         const val = JSON.parse(value)
@@ -94,7 +94,7 @@ function Pdp({ detail }: any) {
     }
     const handleColor = (item: any, data: any) => {
         if (data.colourwaySizes[item.colourwayName]) {
-            if (Object.values(data.colourwaySizes[item.colourwayName]).every((size:any)=>size.stock_status !== 'In stock now')) {
+            if (Object.values(data.colourwaySizes[item.colourwayName]).every((size: any) => size.stock_status !== 'In stock now')) {
                 let colorObj = {
                     size: Object.values(data.colourwaySizes[item.colourwayName])[0],
                     ...item
@@ -113,6 +113,10 @@ function Pdp({ detail }: any) {
             }
         }
     }
+    const handleHeight = (e: ChangeEvent) => {
+        // const {value} = e.target
+    }
+    let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <section className='turboBnr porezid'>
@@ -170,7 +174,7 @@ function Pdp({ detail }: any) {
                                     </div>
                                     <div className='form-field col-md-6 mb-4 mb-md-0'>
                                         <label>What is my height?</label>
-                                        <select>
+                                        <select name='height' onChange={handleHeight}>
                                             <option selected disabled>Enter your height</option>
                                             {
                                                 heightList?.map((item: any, key: number) => <option key={key} value={item.value}>{item.label}</option>)
@@ -189,7 +193,13 @@ function Pdp({ detail }: any) {
                                             :
                                             <>
                                                 <p>{selectColorProduct?.size?.stock_status}</p>
-                                                <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?color=${selectColorProduct?.colourwayName}${router?.query?.salary?.length ? `&salary=${router?.query?.salary}` : ''}`)} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
+                                                <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?${queryParam({
+                                                    color: selectColorProduct?.colourwayName,
+                                                    salary: router?.query?.salary,
+                                                    accessories: calculateRes?.accessories_val,
+                                                    size: selectColorProduct?.size?.mapped,
+                                                    modelYear: data?.productYear
+                                                })?.replace('&', '')}`)} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
                                             </>
                                     }
                                 </div>
@@ -199,7 +209,7 @@ function Pdp({ detail }: any) {
                 </Container>
             </section>
             <section className='mt-5'>
-                <Calculate detail={{ ...data, colorObj: selectColorProduct }} />
+                <Calculate detail={{ ...data, colorObj: selectColorProduct }} handleCalculator={(val: any) => setCalculateRes(val)} />
             </section>
             {data?.feature?.length ? <section className='keyFeatures porezid'>
                 <Container>

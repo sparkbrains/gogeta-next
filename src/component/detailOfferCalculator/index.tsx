@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Button, Container, Nav, Navbar, Row, Col, Form } from 'react-bootstrap';
 import Toggle from '../toggle';
-export default function Calculate({ detail }: any) {
+export default function Calculate({ detail,handleCalculator }: any) {
     const router = useRouter()
     const [calculateRes, setCalculateRes] = useState<any>({})
     const [calculateState, setcalculateState] = useState({
@@ -60,10 +60,10 @@ export default function Calculate({ detail }: any) {
     }
     const onSubmit = (e: any) => {
         e.preventDefault();
-        setCalculateRes(submitCalculator(calculateState))
+        const stateRes =submitCalculator(calculateState)
+        setCalculateRes(stateRes)
+        handleCalculator && handleCalculator(stateRes)
     }
-    console.log(calculateState, calculateRes, 'calculat====');
-
     return <section className='schemeCost poreZindex mb-5'>
         <Container>
             <div className='toggleSchemeCost'>
@@ -141,15 +141,15 @@ export default function Calculate({ detail }: any) {
                                             <div className='savingSrc'>
                                                 <div className='bxts'>
                                                     <p>Income tax saving</p>
-                                                    <h4>{calculateRes?.incometax}</h4>
+                                                    <h4>{detail?.currencyProduct?.currency?.currencySymbol+calculateRes?.incometax}</h4>
                                                 </div>
                                                 <div className='bxts'>
                                                     <p>Employee PRSI saving</p>
-                                                    <h4>{calculateRes?.prsi}</h4>
+                                                    <h4>{detail?.currencyProduct?.currency?.currencySymbol+calculateRes?.prsi}</h4>
                                                 </div>
                                                 <div className='bxts'>
                                                     <p>Employee USC saving</p>
-                                                    <h4>{calculateRes?.usc}</h4>
+                                                    <h4>{detail?.currencyProduct?.currency?.currencySymbol+calculateRes?.usc}</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,7 +158,7 @@ export default function Calculate({ detail }: any) {
                                             <div className='savingSrc'>
                                                 <div className='bxts'>
                                                     <h5>Total savings</h5>
-                                                    <h2>{calculateRes?.total_savings_annual}</h2>
+                                                    <h2>{detail?.currencyProduct?.currency?.currencySymbol+calculateRes?.total_savings_annual}</h2>
                                                 </div>
                                                 <div className='bxts'>
                                                     <h5>Total savings</h5>

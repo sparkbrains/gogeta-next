@@ -1,8 +1,13 @@
-a.backPage{
+.backPage{
     font-weight: 400;
     font-size: 13px;
     line-height: 20px;
     color: #0A244B;
+    border: 0;
+    background-color: transparent;
+    &:hover{
+    background-color: transparent;
+    }
     img{
         margin-right: 10px;
     }
