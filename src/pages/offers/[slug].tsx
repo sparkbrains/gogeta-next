@@ -9,6 +9,12 @@ import TransitionPage from '<prefix>/component/transition';
 import { useRouter } from 'next/router';
 import { priceCalculator } from '<prefix>/common/utilits';
 import Calculate from '<prefix>/component/detailOfferCalculator';
+let size:any = {
+    s:'Small',
+    l:'Large',
+    m:'Medium',
+    xl:'Extra Large',
+}
 export default function MyOffers({ partners, offers }: any) {
     const router = useRouter()
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
@@ -52,7 +58,7 @@ export default function MyOffers({ partners, offers }: any) {
                                 </div>
                                 <div className='productSpeci'>
                                     <p className='labelText'>Your size:</p>
-                                    <p><span className='spcSize'>{offers?.selected_variant?.size}</span> Large</p>
+                                    <p><span className='spcSize'>{offers?.selected_variant?.size}</span> {size[offers?.selected_variant?.size?.toLowerCase()]}</p>
                                 </div>
                             </div>
                         </Col>
