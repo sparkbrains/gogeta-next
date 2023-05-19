@@ -1,38 +1,30 @@
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
+import { Container, Form } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import React, { useState, ChangeEvent, useEffect } from "react";
-import Slider from "react-slick";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+// import Slider from "react-slick";
 import Applayout from '<prefix>/layout/applayout';
 import Image from 'next/image';
 import ProductList from '<prefix>/component/product-list';
 import { useRouter } from 'next/router';
 import ColorWay from '<prefix>/component/product-list/colorway';
-import { priceCalculator } from '<prefix>/common/utilits';
+import { priceCalculator, submitCalculator } from '<prefix>/common/utilits';
+import Calculate from '<prefix>/component/detailOfferCalculator';
+import MainSlider from '<prefix>/component/mainSilder';
 
 function Pdp({ detail }: any) {
     const router = useRouter()
     const [data, setData] = useState<any>({})
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
-    const [heightList,setHeightList] = useState([])
-    const [calculateState,setcalculateState] = useState({
-        cost_bike:0,
-        accessories_val:0,
-        total_val:0,
-        initial_payment:0,
-        salary:0,
-        total_salary_amt:0,
-        monthly_salary_amt:0,
-    })
+    const [heightList, setHeightList] = useState([])
     var settings = {
-        dots: true,
         infinite: true,
         autoPlay: true,
         speed: 500,
         padding: '15px',
         slidesToShow: 4,
-        slidesToScroll: 1,
+        slidesToScroll: 4,
         nav: false,
         arrows: true,
         responsive: [
@@ -80,17 +72,16 @@ function Pdp({ detail }: any) {
         } else {
             setData(detail)
         }
-        let list:any = []
-        for(let item in detail?.heightDropdown){
+        let list: any = []
+        for (let item in detail?.heightDropdown) {
             list.push({
-                label:item,
-                value:detail?.heightDropdown[item]
+                label: item,
+                value: detail?.heightDropdown[item]
             })
         }
         setHeightList(list)
-        detail.colourway?.map((item: any) => {
-            handleColor(item,updateRes)
-        })
+        handleColor(detail?.colourway[0], updateRes)
+
     }, [router, detail])
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     const handleSize = (event: any) => {
@@ -101,31 +92,27 @@ function Pdp({ detail }: any) {
             size: val
         })
     }
-    const handleColor = (item: any,data:any) => {
+    const handleColor = (item: any, data: any) => {
         if (data.colourwaySizes[item.colourwayName]) {
-            Object.values(data.colourwaySizes[item.colourwayName])?.map((itemSize: any) => {
-                if (itemSize.stock_status === 'In stock now') {
-                    let colorObj = {
-                        size: itemSize,
-                        ...item
-                    }
-                    setcalculateState({
-                        ...calculateState,
-                        cost_bike:colorObj.size?.unitSuggestedRetailPrice,
-                        total_val:colorObj.size?.unitSuggestedRetailPrice + calculateState.accessories_val,
-                        salary:Number(router?.query?.salary) || 0,
-                        monthly_salary_amt:data?.context?.per_month,
-                        total_salary_amt:data?.context?.limit,
-                        initial_payment:data?.context?.initial_payment
-                    })
-                    setselectColorProduct(colorObj)
+            if (Object.values(data.colourwaySizes[item.colourwayName]).every((size:any)=>size.stock_status !== 'In stock now')) {
+                let colorObj = {
+                    size: Object.values(data.colourwaySizes[item.colourwayName])[0],
+                    ...item
                 }
-            })
-
+                setselectColorProduct(colorObj)
+            } else {
+                Object.values(data.colourwaySizes[item.colourwayName])?.map((itemSize: any) => {
+                    if (itemSize.stock_status === 'In stock now') {
+                        let colorObj = {
+                            size: itemSize,
+                            ...item
+                        }
+                        setselectColorProduct(colorObj)
+                    }
+                })
+            }
         }
     }
-    console.log(data, 'detail==');
-
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <section className='turboBnr porezid'>
@@ -138,7 +125,6 @@ function Pdp({ detail }: any) {
                             {selectColorProduct?.colourwayImage > 1 ? <div className='thumbnailSlide'>
                                 {
                                     selectColorProduct?.colourwayImage?.map((item: string, index: number) => {
-                                        // for selection image add 'current' class in main div
                                         return <div className={`thumbImg`} key={index}>
                                             <Image src={item} width={576} height={370} alt={data?.productName} className='img-fluid' />
                                         </div>
@@ -167,9 +153,7 @@ function Pdp({ detail }: any) {
                                 <div className='cycleColor'>
                                     <b>Colour:</b> {selectColorProduct?.colourwayName}
                                     <div className='colorPalette'>
-                                        <ColorWay setselectColorProduct={(val: any) => { handleColor(val,data) }} selectColorProduct={selectColorProduct} item={data} />
-                                        {/* <Button type='button' className='color1 activebtn'></Button>
-                                        <Button type='button' className='color2'></Button> */}
+                                        <ColorWay setselectColorProduct={(val: any) => { handleColor(val, data) }} selectColorProduct={selectColorProduct} item={data} />
                                     </div>
                                 </div>
                                 <div className='chooseSize row'>
@@ -182,11 +166,6 @@ function Pdp({ detail }: any) {
                                                     return <option key={key} value={JSON.stringify(item)}>{item.mapped} - {item.stock_status}</option>
                                                 })
                                             }
-                                            {/* <option>S - In stock now</option>
-                                            <option>M - In stock now</option>
-                                            <option>L - In stock now</option>
-                                            <option>XL - In stock now</option>
-                                            <option>XXL - In stock now</option> */}
                                         </select>
                                     </div>
                                     <div className='form-field col-md-6 mb-4 mb-md-0'>
@@ -194,117 +173,54 @@ function Pdp({ detail }: any) {
                                         <select>
                                             <option selected disabled>Enter your height</option>
                                             {
-                                                heightList?.map((item:any,key:number)=><option key={key} value={item.value}>{item.label}</option>)
+                                                heightList?.map((item: any, key: number) => <option key={key} value={item.value}>{item.label}</option>)
                                             }
                                         </select>
                                     </div>
                                 </div>
                                 <div className='inStockStatus'>
-                                    <p>{selectColorProduct?.size?.stock_status}</p>
-                                    <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?color=${selectColorProduct?.colourwayName}${router?.query?.salary?.length ? `&salary=${router?.query?.salary}` : ''}`)} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
+                                    {
+                                        selectColorProduct?.size?.stock_status === "Out of stock" ?
+                                            <>
+                                                <p>The bike is currently unavailable in you choosen size/colour.</p>
+                                                <p>You can still apply for your Cycle to Work voucher now, and use it for any bike at any shop</p>
+                                                <button type="button" className="customSiteBtn btn btn-primary px-4">Apply now <i className="fa-solid fa-angle-right"></i></button>
+                                            </>
+                                            :
+                                            <>
+                                                <p>{selectColorProduct?.size?.stock_status}</p>
+                                                <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?color=${selectColorProduct?.colourwayName}${router?.query?.salary?.length ? `&salary=${router?.query?.salary}` : ''}`)} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
+                                            </>
+                                    }
                                 </div>
                             </div>
                         </Col>
                     </Row>
                 </Container>
             </section>
-            <section className='schemeProvider mt-5 porezid'>
-                <Container>
-                    <div className='workScheme'>
-                        <div className='d-flex align-items-center justify-content-between schemeHead'>
-                            <h5>Save up to 52% with the Cycle to Work scheme</h5>
-                            <img src="/assets/img/ic_plus-Open.svg" alt="img" className='img-fluid' />
-                        </div>
-                        <div className='scmBodyamin'>
-                            <Row>
-                                <Col md={6} lg={7}>
-                                    <div className='schemeForm'>
-                                        <div className='inline-field'>
-                                            <label>Cost of bike</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='cost_bike' placeholder='Cost of bike' value={calculateState.cost_bike}/>
-                                            </div>
-                                        </div>
-                                        <div className='inline-field'>
-                                            <label>Accessories amount</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='accessories_val' placeholder='Accessories amount' value={calculateState.accessories_val}/>
-                                            </div>
-                                        </div>
-                                        <div className='inline-field'>
-                                            <label>Total Bike + Accessories</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='name' disabled value={calculateState.total_val}/>
-                                            </div>
-                                        </div>
-                                        <div className='inline-field'>
-                                            <label>Make initial payment one-off payment of</label>
-                                            <div className='bkrig'>
-                                                <input type='text' name='name' disabled value={calculateState.initial_payment}/>
-                                            </div>
-                                        </div>
-                                        <div className='schemeForm_calculate'>
-                                            <h5>Pay the balance of €{calculateState.total_salary_amt} via Salary Sacrifice</h5>
-                                            <div>
-                                                <h3>Calculate your repayments:</h3>
-                                                <div className='inline-field'>
-                                                    <label>My Salary before tax</label>
-                                                    <div className='bkrig me-2'>
-                                                        <input type='text' name='salary' placeholder='Salary' value={calculateState.salary}/>
-                                                    </div>
-                                                </div>
-                                                <div className='inline-field'>
-                                                    <label>Total Salary Sacrifice amount</label>
-                                                    <div className='bkrig'>
-                                                        <input type='text' name='name' placeholder='Salary' value={calculateState.total_salary_amt} disabled />
-                                                    </div>
-                                                </div>
-                                                <div className='inline-field'>
-                                                    <label>Monthly Salary Sacrifice amount</label>
-                                                    <div className='bkrig'>
-                                                        <input type='text' name='name' placeholder='Salary' value={calculateState.monthly_salary_amt} disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className='text-center mt-5'>
-                                        <button type="button" className="customSiteBtn btn btn-primary px-4">Recalculate savings <i className="fa-solid fa-angle-right"></i></button>
-                                        </div>
-                                    </div>
-                                </Col>
-                                <Col md={6} lg={5}>
-                                    <div className='scmRight'>
-                                        <div className='totalSavingbx'>
-                                            <div className='bxts'>
-                                                <img src="/assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
-                                                <h5>Total savings</h5>
-                                                <h2>€620.00</h2>
-                                            </div>
-                                            <p>Use the options on the left to calculate your savings.</p>
-                                        </div>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </div>
-                    </div>
-                </Container>
+            <section className='mt-5'>
+                <Calculate detail={{ ...data, colorObj: selectColorProduct }} />
             </section>
-            {data?.feature?.length ?<section className='keyFeatures porezid'>
+            {data?.feature?.length ? <section className='keyFeatures porezid'>
                 <Container>
                     <h4 className='mdheading'>Key features</h4>
-                    <Row>
+                    <MainSlider setting={{
+                        ...settings,
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        arrows: false
+                    }}>
                         {
-                            data?.feature?.map((item:any,key:number)=> <Col key={key} md="6" lg={4} className='mb-4 mb-lg-0'>
-                            <div className='singlekeyFeature'>
+                            data?.feature?.map((item: any, key: number) => <div className='singlekeyFeature px-3'>
                                 <Image src={item.featureImage[0]} width={409} height={400} alt="img" className='img-fluid' />
                                 <h6>{item.featureName}</h6>
                                 <p>{item.featureContent}</p>
                             </div>
-                        </Col>)
+                            )
                         }
-                    </Row>
+                    </MainSlider>
                 </Container>
-            </section>:null}
+            </section> : null}
             <section className='specification porezid'>
                 <Container>
                     <h4 className='commonInnheading'>Specifications</h4>
@@ -325,7 +241,7 @@ function Pdp({ detail }: any) {
                 <Container className='porezid'>
                     <h4 className='commonInnheading'>Related products</h4>
                     <div className='relProdSlider'>
-                        <Slider {...settings}>
+                        <MainSlider setting={{ ...settings }}>
                             {
                                 detail?.related_products?.map((item: any, key: number) => {
                                     return <div className='items' key={key}>
@@ -335,97 +251,7 @@ function Pdp({ detail }: any) {
                                     </div>
                                 })
                             }
-                        </Slider>
-                        {/* <Row>
-                <Col md={6} lg={3}>
-                    <div className='cardbx'>
-                    <img src="/assets/img/img_Product-image.svg" alt="Gogeta Logo" className='img-fluid productIMg' />
-                    <div className='cardBdy'>
-                        <div className='d-flex align-items-center justify-content-between brandColor'>
-                            <img src="/assets/img/ic_logo_trek.svg" alt="Gogeta Logo" className='img-fluid' />
-                            <div className='d-flex align-items-center'>
-                            <span className='colorRoll black'></span>
-                            <span className='colorRoll orange'></span>
-                            <span className='colorRoll multi'></span>
-                            <span className='colorRoll add'><img src='/assets/img/ic_add-plus.svg' alt='icon' className='img-fluid'  /></span>
-                            </div>
-                        </div>
-                        <h4 className='mb-2'>Powerfly 7 Equipped</h4>
-                        <h6 className='srpRate'>SRP €3,400.00</h6>
-                        <p className='wprice mt-4 mb-1'>Cycle to Work price <span>€2,968.75</span></p>
-                        <p className='monthPayment mb-1'>Pay only €89.06 per month</p>
-                        <span className='discount'>Save €431.25 (28.75%)</span>
-                    </div>
-                    <p className='stockStatus text-uppercase'>In stock now</p>
-                </div>
-                </Col>
-                 <Col md={6} lg={3}>
-                    <div className='cardbx'>
-                    <img src="/assets/img/img_Product-image.svg" alt="Gogeta Logo" className='img-fluid productIMg' />
-                    <div className='cardBdy'>
-                        <div className='d-flex align-items-center justify-content-between brandColor'>
-                            <img src="/assets/img/ic_logo_trek.svg" alt="Gogeta Logo" className='img-fluid' />
-                            <div className='d-flex align-items-center'>
-                            <span className='colorRoll black'></span>
-                            <span className='colorRoll orange'></span>
-                            <span className='colorRoll multi'></span>
-                            <span className='colorRoll add'><img src='/assets/img/ic_add-plus.svg' alt='icon' className='img-fluid'  /></span>
-                            </div>
-                        </div>
-                        <h4 className='mb-2'>Powerfly 7 Equipped</h4>
-                        <h6 className='srpRate'>SRP €3,400.00</h6>
-                        <p className='wprice mt-4 mb-1'>Cycle to Work price <span>€2,968.75</span></p>
-                        <p className='monthPayment mb-1'>Pay only €89.06 per month</p>
-                        <span className='discount'>Save €431.25 (28.75%)</span>
-                    </div>
-                    <p className='stockStatus text-uppercase'>In stock now</p>
-                </div>
-                </Col>
-                 <Col md={6} lg={3}>
-                    <div className='cardbx'>
-                    <img src="/assets/img/img_Product-image.svg" alt="Gogeta Logo" className='img-fluid productIMg' />
-                    <div className='cardBdy'>
-                        <div className='d-flex align-items-center justify-content-between brandColor'>
-                            <img src="/assets/img/ic_logo_trek.svg" alt="Gogeta Logo" className='img-fluid' />
-                            <div className='d-flex align-items-center'>
-                            <span className='colorRoll black'></span>
-                            <span className='colorRoll orange'></span>
-                            <span className='colorRoll multi'></span>
-                            <span className='colorRoll add'><img src='/assets/img/ic_add-plus.svg' alt='icon' className='img-fluid'  /></span>
-                            </div>
-                        </div>
-                        <h4 className='mb-2'>Powerfly 7 Equipped</h4>
-                        <h6 className='srpRate'>SRP €3,400.00</h6>
-                        <p className='wprice mt-4 mb-1'>Cycle to Work price <span>€2,968.75</span></p>
-                        <p className='monthPayment mb-1'>Pay only €89.06 per month</p>
-                        <span className='discount'>Save €431.25 (28.75%)</span>
-                    </div>
-                    <p className='stockStatus text-uppercase'>In stock now</p>
-                </div>
-                </Col>
-                 <Col md={6} lg={3}>
-                    <div className='cardbx'>
-                    <img src="/assets/img/img_Product-image.svg" alt="Gogeta Logo" className='img-fluid productIMg' />
-                    <div className='cardBdy'>
-                        <div className='d-flex align-items-center justify-content-between brandColor'>
-                            <img src="/assets/img/ic_logo_trek.svg" alt="Gogeta Logo" className='img-fluid' />
-                            <div className='d-flex align-items-center'>
-                            <span className='colorRoll black'></span>
-                            <span className='colorRoll orange'></span>
-                            <span className='colorRoll multi'></span>
-                            <span className='colorRoll add'><img src='/assets/img/ic_add-plus.svg' alt='icon' className='img-fluid'  /></span>
-                            </div>
-                        </div>
-                        <h4 className='mb-2'>Powerfly 7 Equipped</h4>
-                        <h6 className='srpRate'>SRP €3,400.00</h6>
-                        <p className='wprice mt-4 mb-1'>Cycle to Work price <span>€2,968.75</span></p>
-                        <p className='monthPayment mb-1'>Pay only €89.06 per month</p>
-                        <span className='discount'>Save €431.25 (28.75%)</span>
-                    </div>
-                    <p className='stockStatus text-uppercase'>In stock now</p>
-                </div>
-                </Col>
-               </Row> */}
+                        </MainSlider>
                     </div>
                 </Container>
             </section>

@@ -47,7 +47,7 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
   if (product_categories.includes("Cargo") || product_categories.includes("Light Utility")) {
     limit = 3000;
   }
-  
+
   if (bike > limit) {
     bike = limit;
     initial_payment = bike_price - limit;
@@ -75,6 +75,10 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
     total_savings: Number(totalsaving).toFixed(2),
     saving_percentage: savingRRP.toFixed(2) + " %",
     initial_payment: initial_payment.toFixed(2),
+    incometax:incometax / 12,
+    prsi:(prsi / 12).toFixed(2),
+    usc:(usc / 12).toFixed(2),
+    total_savings_annual:(+totalsaving / 12).toFixed(2),
     limit: limit
   };
   return context;
@@ -99,4 +103,14 @@ export const handleChangeSalary = (value: number) => {
   const unformattedValue = value?.toString().replace(/,/g, "");
   let formattedValue = Number(unformattedValue).toLocaleString();
   return formattedValue
+}
+export const submitCalculator = (param: any) => {
+  const { salary,total_val,categories,bicycleAssisted } = param
+  let context = {}
+  if (bicycleAssisted === "ebikes") {
+    context = calculatEbikePrice(total_val, salary, categories)
+  } else if (bicycleAssisted === "bikes") {
+    context = calculatEbikePrice(total_val, salary, categories, 1250)
+  }
+  return context;
 }

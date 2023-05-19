@@ -49,17 +49,20 @@ input:focus {
         display: block;
     }
 }
-.btn-trans{
+
+.btn-trans {
     background-color: transparent;
     padding: 0;
     border: 0;
     cursor: pointer;
 }
-.range-slider-range-1{
+
+.range-slider-range-1 {
     background-color: var(--secondary-new);
     height: 8px;
     border-radius: 4px;
 }
+
 .card {
     border: 0;
     box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.15);
@@ -84,13 +87,15 @@ input:focus {
         color: #30BE73;
         border-top: 2px solid var(--borderColor3);
         padding: 10px 20px;
-        &.outStock{
+
+        &.outStock {
             background: #E2F1F0 !important;
             font-weight: 600;
-font-size: 11px;
-line-height: 14px;
-text-transform: uppercase;
+            font-size: 11px;
+            line-height: 14px;
+            text-transform: uppercase;
         }
+
         img {
             margin-left: 5px;
         }
@@ -431,52 +436,70 @@ text-transform: uppercase;
     }
 }
 
-.toggle-card {
-    width: 100%;
-    display: block;
-    background: var(--white);
-    border-radius: 30px;
-    padding: 25px;
-    text-align: left;
+.toggle {
+    &-card {
+        width: 100%;
+        display: block;
+        background: var(--white);
+        border-radius: 30px;
+        text-align: left;
 
-    h3 {
-        font-weight: 700;
-        font-size: 24px;
-        line-height: 30px;
-        color: var(--p-color-new);
+        h3 {
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 30px;
+            color: var(--p-color-new);
 
-        @include respond-from(md) {
-            font-size: 18px;
-            line-height: 22px;
+            @include respond-from(md) {
+                font-size: 18px;
+                line-height: 22px;
+            }
+        }
+
+        p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 26px;
+            color: var(--p-color-new);
+
+            @include respond-from(md) {
+                font-size: 15px;
+                line-height: 24px;
+            }
         }
     }
 
-    p {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 26px;
-        color: var(--p-color-new);
-
-        @include respond-from(md) {
-            font-size: 15px;
-            line-height: 24px;
+    &-head {
+        border-radius: 30px;
+        &.show{
+            border-radius: 30px 30px 0px 0px;
         }
+        padding: 25px;
+    }
+
+    &-body {
+        padding: 25px;
     }
 }
-.plp-back{
+
+.plp-back {
     // background-image: url('../../../public/assets/ebay-plp-back.png');
 }
-.form{
-    &-switch .form-check-input{
+
+.form {
+    &-switch .form-check-input {
         width: 3em;
     }
-    &-check-input{
+
+    &-check-input {
         height: 1.7em;
-        &:checked{
+
+        &:checked {
             background-color: var(--primary-new);
             border-color: var(--primary-new);
         }
-        &:focus{
+
+        &:focus {
             box-shadow: unset;
         }
     }

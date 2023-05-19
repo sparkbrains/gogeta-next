@@ -4,8 +4,16 @@ import Toggle from '../../component/toggle';
 
 import Applayout from '<prefix>/layout/applayout';
 import StoreFinder from '<prefix>/component/storefinder';
-export default function MyOffers() {
+import { useEffect, useState } from 'react';
+import TransitionPage from '<prefix>/component/transition';
+export default function MyOffers({ partners }: any) {
+    const [isTransitionLoading, setTransitionLoading] = useState(true)
+    useEffect(() => { setTimeout(() => { setTransitionLoading(false) }, 2000) })
+    if (isTransitionLoading) {
+        return <TransitionPage partners={partners} />
+    }
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
+
         <div className='pt-5 pb-4'>
             <Container>
                 <Nav.Link className='backPage' href="/"><Image src='/assets/img/ic_left-Stroke.svg' className="img-fluid" /> Back to the bike</Nav.Link>
@@ -240,10 +248,25 @@ export default function MyOffers() {
                 <div className='bikeFindMap poreZindex'>
                     <h3>Find your local bike shop</h3>
                     <div className='mapInner'>
-                        <StoreFinder/>
+                        <StoreFinder />
                     </div>
                 </div>
             </Container>
         </section>
     </Applayout>
+}
+export async function getServerSideProps(context: any) {
+    const baseURL = process.env.NEXT_PUBLIC_API_URL
+    const response = await fetch(baseURL + `loading?portalDomain=gogeta.dev`, {
+        method: "get",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    let data = await response.json()
+    return {
+        props: {
+            partners: { ...data },
+        },
+    }
 }

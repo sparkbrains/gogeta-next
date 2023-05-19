@@ -2,18 +2,18 @@ import { useState } from "react";
 import Button from "../button";
 import Image from "../image";
 
-export default function Toggle({ title,children }:any) {
-    const [open, setOpen] = useState(false)
-    return <Button className="toggle-card mb-3" onClick={()=>setOpen(!open)}>
-        <div className="d-flex align-center justify-content-between">
+export default function Toggle({ title,children,open }:any) {
+    const [openToggle, setOpen] = useState(open || false)
+    return <Button className="toggle-card mb-3" onClick={()=>setOpen(!openToggle)}>
+        <div className={`d-flex align-center justify-content-between toggle-head ${openToggle?'show':''}`}>
             <h3>{title}</h3>
             {
-                open ?
+                openToggle ?
                     <Image src='/assets/toggle_close.svg' width={35} height={35} alt='toggle' />
                     :
                     <Image src='/assets/toggle_open.svg' width={35} height={35} alt='toggle' />
             }
         </div>
-        {open ? <div className="pt-4">{children}</div>:null}
+        {openToggle ? <div className="pt-4 toggle-body">{children}</div>:null}
     </Button>
 }

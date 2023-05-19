@@ -344,7 +344,21 @@
                                 gap: 20px;
                                 align-items: start;
                                 color: #fff;
-
+                                ul{
+                                    padding: 0;
+                                    width: 100%;
+                                    li{
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-between;
+                                        padding-bottom: 15px;
+                                        .highlightPrice{
+                                            background-color: var(--primary-new);
+                                            padding: 1px 8px;
+                                            border-radius: 16px;
+                                        }
+                                    }
+                                }
                                 h5 {
                                     margin-bottom: 0;
                                     color: #87F0C9;
