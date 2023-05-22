@@ -12,12 +12,14 @@ import ColorWay from '<prefix>/component/product-list/colorway';
 import { priceCalculator, queryParam, submitCalculator } from '<prefix>/common/utilits';
 import Calculate from '<prefix>/component/detailOfferCalculator';
 import MainSlider from '<prefix>/component/mainSilder';
+import Fetch from '<prefix>/common/fetch';
 
 function Pdp({ detail }: any) {
     const router = useRouter()
     const [calculateRes, setCalculateRes] = useState<any>({})
     const [data, setData] = useState<any>({})
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
+    const [selectedHeight,setselectedHeight] = useState('')
     const [heightList, setHeightList] = useState([])
     var settings = {
         infinite: true,
@@ -67,6 +69,9 @@ function Pdp({ detail }: any) {
         ],
     };
     useEffect(() => {
+        setFetchData(detail,true)
+    }, [router, detail])
+    const setFetchData = (detail: any,firstTime:boolean = false) => {
         let updateRes = priceCalculator(router?.query?.salary || 0, [detail])[0]
         if (router?.query?.salary?.length) {
             setData(updateRes)
@@ -81,9 +86,24 @@ function Pdp({ detail }: any) {
             })
         }
         setHeightList(list)
-        handleColor(detail?.colourway[0], updateRes)
-
-    }, [router, detail])
+        let colorWay = {}
+        if (detail?.filter_size) {
+            detail?.colourway?.map((d: any) => {
+                if (d.colourwayName === detail?.filter_size?.colourway) {
+                    colorWay = d
+                }
+            })
+        }else if (firstTime){
+            detail?.colourway?.map((d: any) => {
+                if (d.colourwayName === detail?.initProductDetails?.colourway) {
+                    colorWay = d
+                }
+            })
+        } else {
+            colorWay = detail?.colourway[0]
+        }
+        handleColor(colorWay, updateRes)
+    }
     const handleSize = (event: any) => {
         const { value }: any = event.target
         const val = JSON.parse(value)
@@ -93,15 +113,25 @@ function Pdp({ detail }: any) {
         })
     }
     const handleColor = (item: any, data: any) => {
-        if (data.colourwaySizes[item.colourwayName]) {
+        let sizeFilter = data?.filter_size && Object?.keys(data?.filter_size).length
+        const name = sizeFilter ? data?.filter_size?.colourway : item.colourwayName
+        if (data.colourwaySizes[name]) {
             if (Object.values(data.colourwaySizes[item.colourwayName]).every((size: any) => size.stock_status !== 'In stock now')) {
+                let val = sizeFilter ? data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped] : Object.values(data.colourwaySizes[item.colourwayName])[0]
+                
                 let colorObj = {
-                    size: Object.values(data.colourwaySizes[item.colourwayName])[0],
+                    size: val,
                     ...item
                 }
                 setselectColorProduct(colorObj)
             } else {
-                Object.values(data.colourwaySizes[item.colourwayName])?.map((itemSize: any) => {
+                if(sizeFilter){
+                    setselectColorProduct({
+                        size:data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped],
+                        ...item
+                    })
+                }else{
+                Object.values(data.colourwaySizes[name])?.map((itemSize: any) => {
                     if (itemSize.stock_status === 'In stock now') {
                         let colorObj = {
                             size: itemSize,
@@ -111,14 +141,26 @@ function Pdp({ detail }: any) {
                     }
                 })
             }
+            }
         }
     }
-    const handleHeight = (e: ChangeEvent) => {
-        // const {value} = e.target
+    const handleHeight = (e: ChangeEvent<HTMLSelectElement>) => {
+        const { value } = e.target
+        setselectedHeight(value)
+        Fetch(`test-products/${router.query.slug}/?portalDomain=gogeta.dev&height=${value}`).then(res => {
+            if (res?.status) {
+                setFetchData(res.data)
+            }
+        })
     }
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     return (
         <Applayout className='pdpMain w-100 mt-2'>
+            <div className='pb-4'>
+            <Container>
+                <Button onClick={() => router.back()} className='backPage nav-link'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back'/> Back to the bikes</Button>
+            </Container>
+        </div>
             <section className='turboBnr porezid'>
                 <Container>
                     <Row>
@@ -174,12 +216,13 @@ function Pdp({ detail }: any) {
                                     </div>
                                     <div className='form-field col-md-6 mb-4 mb-md-0'>
                                         <label>What is my height?</label>
-                                        <select name='height' onChange={handleHeight}>
-                                            <option selected disabled>Enter your height</option>
+                                        <select name='height' onChange={handleHeight} value={selectedHeight}>
+                                            <option value='' selected disabled>Enter your height</option>
                                             {
                                                 heightList?.map((item: any, key: number) => <option key={key} value={item.value}>{item.label}</option>)
                                             }
                                         </select>
+                                        {selectedHeight ?<p>Size recommendation: <b>{selectColorProduct.size?.mapped}</b></p>:''}
                                     </div>
                                 </div>
                                 <div className='inStockStatus'>

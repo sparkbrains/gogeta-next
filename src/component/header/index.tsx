@@ -32,11 +32,11 @@ export default function Header() {
                     <Nav.Link href="#action4"><Image width={45} height={44} alt="search_ico" src='/assets/img/interface_search_square.svg'/></Nav.Link>
                     <Nav.Link href="#action4"><Image width={45} height={44} alt="profile_ico"  src='/assets/img/interface_user_square_alternate.svg'/></Nav.Link>
                     </div>
-                    <Link className='d-block d-lg-none nav-link' href="">Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
+                    <Link className='d-block d-lg-none nav-link' href="/bikes?listing_type=ebikes">Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
                     <Link className='d-block d-lg-none nav-link' href="">Help <i className="fa-solid fa-angle-right"></i></Link>
                 </Nav>
                 <div className=" align-items-center navbar-nav d-none d-lg-flex">
-                    <Link className='d-none d-lg-block nav-link' href="">Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
+                    <Link className='d-none d-lg-block nav-link' href="/bikes?listing_type=ebikes">Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
                     <Link className='d-none d-lg-block nav-link' href="">Help <i className="fa-solid fa-angle-right"></i></Link>
                     <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="search_ico"  src='/assets/img/interface_search_square.svg'/></Nav.Link>
                     <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="profile_ico"  src='/assets/img/interface_user_square_alternate.svg'/></Nav.Link>

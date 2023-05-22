@@ -1,16 +1,17 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect,cache } from 'react';
+import dynamic from 'next/dynamic'
 import Fetch from '../common/fetch';
 import { priceCalculator, queryParam } from '../common/utilits';
-import ProductList from '../component/product-list';
+// import ProductList from '../component/product-list';
 import CircularProgress from '../component/progress';
-import Applayout from '../layout/applayout';
-import InfiniteScroll from 'react-infinite-scroll-component';
+// import Applayout from '../layout/applayout';
+// import InfiniteScroll from 'react-infinite-scroll-component';
 import { useRouter } from "next/router";
 import Filter from '../component/filter/filter_newdesign';
 import Filterselected from '../component/filter/filterselected';
-import { Button } from 'react-bootstrap';
-import Link from 'next/link';
+const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'))
+const ProductList = dynamic(() => import('../component/product-list'))
+const Applayout = dynamic(() => import('../layout/applayout'))
 function EbayPLP({ user, filterRes }: any) {
     const router = useRouter()
     const [productList, setProductList] = useState<any>({})
@@ -145,7 +146,7 @@ function EbayPLP({ user, filterRes }: any) {
                         >
                             {
                                 productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}>
-                                    <button onClick={()=>router.push(`/detail/${item.brandName.toLowerCase()+'-'+ item.productNameSlug}${param.showCyclePrice === 'on'? `?salary=${param.salary}`:''}`)} className='btn-trans w-100 text-start h-100'>
+                                    <button onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${param.showCyclePrice === 'on' ? `?salary=${param.salary}` : ''}`)} className='btn-trans w-100 text-start h-100'>
                                         <ProductList item={item} newDesign={true} />
                                     </button>
                                 </div>)
@@ -159,26 +160,35 @@ function EbayPLP({ user, filterRes }: any) {
 }
 export async function getServerSideProps(context: any) {
     const search = context?.resolvedUrl.replace('/bikes?', '&')
-    const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const response = await fetch(baseURL + `test-products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
-        method: "get",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    const responseFilter = await fetch(baseURL + `get-filter-count/?portalDomain=gogeta.dev${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
-        method: "get",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    let data = await response.json()
-    let dataFilter = await responseFilter.json()
+    let data = await getProducts(search)
+    let dataFilter = await getFiltersCount(search)
     return {
         props: {
             user: { ...data },
             filterRes: { ...dataFilter }
         },
     }
+}
+async function getProducts(search: string) {
+    const baseURL = process.env.NEXT_PUBLIC_API_URL
+    const response = await fetch(baseURL + `test-products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
+        method: "get",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        next: { revalidate: 10 }
+    })
+    return response.json();
+}
+async function getFiltersCount(search: string) {
+    const baseURL = process.env.NEXT_PUBLIC_API_URL
+    const res = await fetch(baseURL + `get-filter-count/?portalDomain=gogeta.dev${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
+        method: "get",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        next: { revalidate: 10 }
+    })
+    return res.json();
 }
 export default EbayPLP;

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import Button from "../../component/button"
 import { TextField } from "../../component/form/inputs"
 import Image from "next/image"
-export const InputSelectDrop = ({ selectParam = 'name', onChangeSearch, onChangeSelect, selectArrow = true, searchCustom = false, isLoading = false, name, onChange, defaultValue, data, ...rest }:any) => {
+export const InputSelectDrop = ({ selectParam = 'name', onChangeSearch, onChangeSelect, selectArrow = true, searchCustom = false, isLoading = false, name, onChange, defaultValue, data=[], ...rest }:any) => {
     const wrapperRef = useRef<any>(null);
     const [inputText, setInputText] = useState('')
     const [listShow, setlistShow] = useState(false)

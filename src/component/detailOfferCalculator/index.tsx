@@ -107,8 +107,7 @@ export default function Calculate({ detail,handleCalculator }: any) {
                                             <div className='inline-field'>
                                                 <label>Salary period:</label>
                                                 <div className='bkrig'>
-                                                    <select value={calculateState.salary_period} disabled>
-                                                        <option selected disabled>Salary period</option>
+                                                    <select defaultValue={calculateState.salary_period} disabled>
                                                         <option value={12}>12 months</option>
                                                     </select>
                                                 </div>

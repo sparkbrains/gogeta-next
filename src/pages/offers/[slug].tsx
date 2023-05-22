@@ -1,7 +1,4 @@
-import { Button, Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
-import Image from '../../component/image';
-import Toggle from '../../component/toggle';
-
+import { Button, Container, Row, Col } from 'react-bootstrap';
 import Applayout from '<prefix>/layout/applayout';
 import StoreFinder from '<prefix>/component/storefinder';
 import { useEffect, useState } from 'react';
@@ -9,6 +6,8 @@ import TransitionPage from '<prefix>/component/transition';
 import { useRouter } from 'next/router';
 import { priceCalculator } from '<prefix>/common/utilits';
 import Calculate from '<prefix>/component/detailOfferCalculator';
+import DealerList from '<prefix>/component/dealerList';
+import Image from 'next/image';
 let size:any = {
     s:'Small',
     l:'Large',
@@ -37,11 +36,10 @@ export default function MyOffers({ partners, offers }: any) {
         return <TransitionPage partners={partners} />
     }
     let price = `${'SRP ' + offers?.currencyProduct?.currency?.currencySymbol + offers?.currencyProduct?.unitSuggestedRetailPrice}`
-
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
         <div className='pt-5 pb-4'>
             <Container>
-                <Button onClick={() => router.back()} className='backPage nav-link'><Image src='/assets/img/ic_left-Stroke.svg' className="img-fluid" /> Back to the bike</Button>
+                <Button onClick={() => router.back()} className='backPage nav-link'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back'/> Back to the bike</Button>
             </Container>
         </div>
         <section className='cycleOfferBanner poreZindex mb-5'>
@@ -93,63 +91,15 @@ export default function MyOffers({ partners, offers }: any) {
         <section className='inStockNow poreZindex pb-5'>
             <Container>
                 <div className='heading_section'>
-                    <h3 className='mainHeadSub'>In stock now <Image src='/assets/img/ic_instock-now.svg' className="img-fluid" /></h3>
+                    <h3 className='mainHeadSub'>In stock now <Image width={39} height={44} alt='ok' src='/assets/img/ic_instock-now.svg' className="img-fluid" /></h3>
                     <p>We checked with all of our bike shops. Here are your offers. Please remember that stock information is real-time and may change.</p>
                 </div>
-                <div className='retailStockBx'>
-                    <Row>
-                        <Col md={8} lg={7}>
-                            <div className='retailerDetail'>
-                                <div className='retImgCell'>
-                                    <Image src='/assets/img/ic_Retailer-Logo.svg' className="img-fluid" />
-                                </div>
-                                <div className='detailCont'>
-                                    <h4>Retailer name</h4>
-                                    <p>123 Building, Street, City, County, AB1 2CD</p>
-                                    <div className='d-flex flex-wrap bdgeGrp'>
-                                        <span className='bedgeCell'>Click and Collect</span>
-                                        <span className='bedgeCell'>Cycle to Work Scheme</span>
-                                        <span className='bedgeCell'>Finance Available</span>
-                                        <span className='bedgeCell'>Free Delivery</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col md={4} lg={5}>
-                            <div className='rightCellStock'>
-                                <p>In stock <Image src='/assets/img/ic_instock.svg' className="img-fluid" /></p>
-                                <button type="button" className="customSiteBtn btn btn-primary px-4">Recalculate savings <i className="fa-solid fa-angle-right"></i></button>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-                <div className='retailStockBx'>
-                    <Row>
-                        <Col md={8} lg={7}>
-                            <div className='retailerDetail'>
-                                <div className='retImgCell'>
-                                    <Image src='/assets/img/ic_Retailer-Logo.svg' className="img-fluid" />
-                                </div>
-                                <div className='detailCont'>
-                                    <h4>Retailer name</h4>
-                                    <p>123 Building, Street, City, County, AB1 2CD</p>
-                                    <div className='d-flex flex-wrap bdgeGrp'>
-                                        <span className='bedgeCell'>Click and Collect</span>
-                                        <span className='bedgeCell'>Cycle to Work Scheme</span>
-                                        <span className='bedgeCell'>Finance Available</span>
-                                        <span className='bedgeCell'>Free Delivery</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col md={4} lg={5}>
-                            <div className='rightCellStock'>
-                                <p>In stock <Image src='/assets/img/ic_instock.svg' className="img-fluid" /></p>
-                                <button type="button" className="customSiteBtn btn btn-primary px-4">Recalculate savings <i className="fa-solid fa-angle-right"></i></button>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
+                
+                    {
+                        data?.dealersList?.dealers_in_stock?.map((items:any,key:number)=>{
+                            return<DealerList items={items} key={key}/>
+                        })
+                    }
                 <div className='retailStockBx voucherCell'>
                     <Row>
                         <Col md={12}>

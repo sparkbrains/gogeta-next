@@ -490,7 +490,7 @@
             font-weight: 700;
             font-size: 32px;
             color: #0A244B;
-            margin-bottom: 90px;
+            margin-bottom: 40px;
             @media(max-width:767px){
                 margin-bottom: 60px;
                 font-size: 28px;
@@ -500,7 +500,7 @@
             }
         }
         .mapInner{
-            height: 418px;
+            // height: 418px;
             width: 100%;
             background: #F3F9F9;
             border: 1px solid #C5E2E0;
