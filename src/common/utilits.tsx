@@ -75,7 +75,7 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
     total_savings: Number(totalsaving).toFixed(2),
     saving_percentage: savingRRP.toFixed(2) + " %",
     initial_payment: initial_payment.toFixed(2),
-    incometax:incometax / 12,
+    incometax:(incometax / 12).toFixed(2),
     prsi:(prsi / 12).toFixed(2),
     usc:(usc / 12).toFixed(2),
     total_savings_annual:(+totalsaving / 12).toFixed(2),
