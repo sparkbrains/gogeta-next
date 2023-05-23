@@ -57,9 +57,9 @@ function EbayPLP({ user, filterRes }: any) {
         let searchParams: any = new URLSearchParams(search)
         const val = Object.fromEntries([...searchParams])
         setIsLoading(true)
-        Fetch(`products/?page=${page}&portalDomain=gogeta.dev&${!search?.includes('listing_type') ? search + `listing_type=ebikes` : search}`).then(d => {
+        Fetch(`test-products/?page=${page}&portalDomain=gogeta.dev&${!search?.includes('listing_type') ? search + `listing_type=ebikes` : search}`).then(d => {
             if (d?.status) {
-                setIsLoading(false)
+                setIsLoading(false)                
                 setResult(d.data, page, val)
             } else {
                 setIsLoading(false)
@@ -69,7 +69,7 @@ function EbayPLP({ user, filterRes }: any) {
     const setResult = (d: any, page: number, val: any) => {
         let result = d?.results
         if (Object.keys(val)?.length && val?.showCyclePrice === "on" && val?.salary?.length) {
-            result = priceCalculator(val?.salary, d?.results)
+            result = priceCalculator(+val?.salary, d?.results)
         }
         const data = {
             ...d,

@@ -93,7 +93,7 @@ function EbayLp() {
                                     <Image src="assets/img/Illustration-unicycle-mobile.svg" height={490} width={388} alt="img" className='img-fluid d-block d-sm-none' />
                                     <p>This is where you can find your perfect bike, learn more about how the scheme works and apply.</p>
                                     <div className='d-flex align-items-center'>
-                                        <Button type="button" className='customSiteBtn me-2' onClick={() => handleClick('/bikes?listing_type=ebikes')}>Browse bikes <i className="fa-solid fa-angle-right"></i></Button>
+                                        <Button type="button" className='customSiteBtn me-2' onClick={() => handleClick('/bikes?listing_type=ebikes&showCyclePrice=on')}>Browse bikes <i className="fa-solid fa-angle-right"></i></Button>
                                         <Button type="button" className='customSiteBtn transpBtn' onClick={() => handleClick('/how-it-works')}>How it works <i className="fa-solid fa-angle-right"></i></Button>
                                     </div>
                                 </div>

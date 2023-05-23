@@ -86,9 +86,9 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
 export const priceCalculator = (salary: any, card: any) => {
   let context = {}
   let data = card?.map((d: any) => {
-    if (d.bicycleAssisted === "ebikes") {
+    if (d.bicycleAssisted === "ebikes" || d.listing_type === "ebikes") {
       context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories)
-    } else if (d.bicycleAssisted === "bikes") {
+    } else if (d.bicycleAssisted === "bikes" || d.listing_type === "bikes") {
       context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories, 1250)
     }
     d = {

@@ -66,7 +66,7 @@ export default function MyOffers({ partners, offers }: any) {
                             </div>
                         </Col>
                         <Col sm={6} lg={3}>
-                            <div className='coloffer productPriceoffers'>
+                            <div className='coloffer productPriceDetail'>
                                 <span>{price}</span>
                                 {
                                     data?.context && Object.keys(data?.context)?.length ?
