@@ -504,3 +504,24 @@ input:focus {
         }
     }
 }
+.calclulate-form {
+    label {
+        color: var(--white);
+    }
+
+    li {
+        list-style: none;
+        input:checked~label {
+            background-color: var(--p-color-two);
+        }
+
+        label {
+            color: var(--p-color-new);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: 500;
+            font-size: 11px;
+            line-height: 26px;
+        }
+    }
+}  

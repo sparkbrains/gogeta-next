@@ -12,8 +12,8 @@ import Applayout from '<prefix>/layout/applayout';
 import Fetch from '<prefix>/common/fetch';
 import { Form } from 'react-bootstrap';
 import { useState, ChangeEvent, useEffect } from 'react';
-import { handleChangeSalary, queryParam } from '<prefix>/common/utilits';
-import {onKeyPress} from '../common/utilits'
+import { handleChangeSalary, queryParam, useMediaQuery } from '<prefix>/common/utilits';
+import { onKeyPress } from '../common/utilits'
 interface Iprops {
     cal_burgers: number
     cal_calories: number
@@ -27,6 +27,8 @@ interface Iprops {
 }
 function EbayLp() {
     const router = useRouter();
+    const isMobile = useMediaQuery(600)
+    const isMobileSmall = useMediaQuery(600)
     const [data, setData] = useState<Iprops>({
         cal_burgers: 0,
         cal_calories: 0,
@@ -39,9 +41,9 @@ function EbayLp() {
         cal_tree: 0,
     })
     const [equivalentCount, setequivalentCount] = useState({
-        emissions: {name:'',num:null},
-        calories_burned: {name:'',num:null},
-        money_saved: {name:'',num:null}
+        emissions: { name: '', num: null },
+        calories_burned: { name: '', num: null },
+        money_saved: { name: '', num: null }
     })
     const [calclulateState, setCalclulateState] = useState({
         distance_miles: '5',
@@ -55,10 +57,10 @@ function EbayLp() {
     useEffect(() => {
         CalculatorData(null)
     }, [])
-    const onChange = (e:ChangeEvent<HTMLInputElement>)=>{
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setCalclulateState({
             ...calclulateState,
-            [e.target.name]:e.target.value
+            [e.target.name]: e.target.value
         })
     }
     const CalculatorData = (e: any) => {
@@ -68,9 +70,9 @@ function EbayLp() {
             if (d.status) {
                 setData(d.data)
                 setequivalentCount({
-                    emissions:{num:d.data.cal_tree,name:'tree'},
-                    calories_burned: {num:d.data.cal_burgers,name:'burgers'},
-                    money_saved: {num:d.data.cal_takeaway,name:'takeaways'}
+                    emissions: { num: d.data.cal_tree, name: 'tree' },
+                    calories_burned: { num: d.data.cal_burgers, name: 'burgers' },
+                    money_saved: { num: d.data.cal_takeaway, name: 'takeaways' }
                 })
             }
         })
@@ -185,7 +187,7 @@ function EbayLp() {
                                                     <label className='d-none d-lg-block'>Commute distance each way</label>
                                                     <label className='d-block d-lg-none'>Commute distance</label>
                                                     <div className='d-flex align-items-center'>
-                                                        <input type='text' className='form-input text-center' onKeyPress={onKeyPress} value={calclulateState.distance_miles} name='distance_miles' onChange={onChange}/>
+                                                        <input type='text' className='form-input text-center' onKeyPress={onKeyPress} value={calclulateState.distance_miles} name='distance_miles' onChange={onChange} />
                                                         <p className='p-2 m-0'>kilometres</p>
                                                     </div>
                                                 </div>
@@ -246,45 +248,64 @@ function EbayLp() {
                             </div>
                             <div className='cycling-saving-list'>
                                 <Row>
-                                    <Col md={4} className='mb-4 mb-sm-0'>
+                                    <Col md={4} className='mb-4 mb-md-0'>
                                         <div className='list listEmmi'>
-                                            <Image src="/assets/img/nature_ecology_leaf.svg" className="mb-4" />
-                                            <p>CO2 emissions saved:</p>
-                                            <h3>{handleChangeSalary(data.cal_co2)}<sub>kg</sub></h3>
-                                            <p>Equivalent of:</p>
-                                            <h4>{equivalentCount.emissions.num} trees</h4>
-                                            <ul>
-                                                <li className={'active'}>
-                                                    <Button onClick={() => handleEquivalent('emissions', {num:data.cal_tree,name:'tree'})}><NatureEco /></Button>
-                                                </li>
-                                            </ul>
+                                            {isMobile ? null : <Image src="/assets/img/nature_ecology_leaf.svg" className="mb-4" />}
+                                            <div className='d-flex justify-content-between'>
+                                                <div>
+                                                    <p>CO2 emissions saved:</p>
+                                                    <h3>{handleChangeSalary(data.cal_co2)}<sub>kg</sub></h3>
+                                                </div>
+                                                {!isMobile ? null : <Image width={'36px'} height={'36px'} src="/assets/img/nature_ecology_leaf.svg" className="mb-4" />}
+                                            </div>
+                                            <div className='mobile-align'>
+                                                <div>
+                                                    <p>Equivalent of:</p>
+                                                    <h4>{equivalentCount.emissions.num} trees</h4>
+                                                </div>
+                                                {!isMobile ? null : <TreesList handleEquivalent={handleEquivalent} data={data} />}
+                                            </div>
+                                            {isMobile ? null : <TreesList handleEquivalent={handleEquivalent} data={data} />}
                                         </div>
                                     </Col>
-                                    <Col md={4} className='mb-4 mb-sm-0'>
+                                    <Col md={4} className='mb-4 mb-md-0'>
                                         <div className='list listBurned'>
-                                            <Image src="/assets/img/health_medical_heart_rate.svg" className="mb-4" />
-                                            <p>Calories burned</p>
-                                            <h3>{handleChangeSalary(data.cal_calories)}<sub>kcal</sub></h3>
-                                            <p>Equivalent of:</p>
-                                            <h4>{equivalentCount.calories_burned.num} {equivalentCount.calories_burned.name}</h4>
-                                            <ul>
-                                                <li className={equivalentCount.calories_burned?.name === 'burgers' ?'active':''}><Button onClick={() => handleEquivalent('calories_burned', {num:data.cal_burgers,name:'burgers'})}><FoodBurger /></Button></li>
-                                                <li className={equivalentCount.calories_burned?.name === 'pints' ?'active':''}><Button onClick={() => handleEquivalent('calories_burned', {num:data.cal_pints,name:'pints'})}><FoodDrink /></Button></li>
-                                                <li className={equivalentCount.calories_burned?.name === 'chocolates' ?'active':''}><Button onClick={() => handleEquivalent('calories_burned', {num:data.cal_chocolate,name:'chocolates'})}><FoodCandy /></Button></li>
-                                            </ul>
+                                            {isMobile ? null : <Image src="/assets/img/health_medical_heart_rate.svg" className="mb-4" />}
+                                            <div className='d-flex justify-content-between'>
+                                                <div>
+                                                    <p>Calories burned</p>
+                                                    <h3>{handleChangeSalary(data.cal_calories)}<sub>kcal</sub></h3>
+                                                </div>
+                                                {!isMobile ? null : <Image width={'36px'} height={'36px'} src="/assets/img/health_medical_heart_rate.svg" className="mb-4" />}
+                                            </div>
+                                            <div className='mobile-align'>
+                                                <div>
+                                                    <p>Equivalent of:</p>
+                                                    <h4>{equivalentCount.calories_burned.num} {equivalentCount.calories_burned.name}</h4>
+                                                </div>
+                                                {!isMobile ? null : <CaloriesBurned equivalentCount={equivalentCount} handleEquivalent={handleEquivalent} data={data} />}
+                                            </div>
+                                            {isMobile ? null : <CaloriesBurned equivalentCount={equivalentCount} handleEquivalent={handleEquivalent} data={data} />}
                                         </div>
                                     </Col>
-                                    <Col md={4} className='mb-4 mb-sm-0'>
+                                    <Col md={4} className='mb-4 mb-md-0'>
                                         <div className='list listSaved'>
-                                            <Image src="/assets/img/money_cash_bag_euro.svg" className="mb-4" />
-                                            <p>Money saved:</p>
-                                            <h3>€{handleChangeSalary(data.cal_money)}</h3>
-                                            <p>Equivalent of:</p>
-                                            <h4>{equivalentCount.money_saved.num} {equivalentCount.money_saved.name}</h4>
-                                            <ul>
-                                                <li className={equivalentCount.money_saved?.name === 'takeaways' ?'activeGreen':''}><Button onClick={() => handleEquivalent('money_saved', {num:data.cal_takeaway,name:'takeaways'})}><FoodTakeway /></Button></li>
-                                                <li className={equivalentCount.money_saved?.name === 'cinema tickets' ?'activeGreen':''}><Button onClick={() => handleEquivalent('money_saved',{num:data.cal_cinema,name:'cinema tickets'})}><EntertainmentTicket /></Button></li>
-                                            </ul>
+                                            {isMobile ? null : <Image src="/assets/img/money_cash_bag_euro.svg" className="mb-4" />}
+                                            <div className='d-flex justify-content-between'>
+                                                <div>
+                                                    <p>Money saved:</p>
+                                                    <h3>€{handleChangeSalary(data.cal_money)}</h3>
+                                                </div>
+                                                {!isMobile ? null : <Image width={'36px'} height={'36px'} src="/assets/img/money_cash_bag_euro.svg" className="mb-4" />}
+                                            </div>
+                                            <div className='mobile-align'>
+                                                <div>
+                                                    <p>Equivalent of:</p>
+                                                    <h4>{equivalentCount.money_saved.num} {equivalentCount.money_saved.name}</h4>
+                                                </div>
+                                                {!isMobile ? null : <MoneySaved equivalentCount={equivalentCount} handleEquivalent={handleEquivalent} data={data} />}
+                                            </div>
+                                            {isMobile ? null : <MoneySaved equivalentCount={equivalentCount} handleEquivalent={handleEquivalent} data={data} />}
                                         </div>
                                     </Col>
                                 </Row>
@@ -306,5 +327,24 @@ function EbayLp() {
         </Applayout>
     );
 }
-
+const TreesList = ({ handleEquivalent, data }: any) => {
+    return <ul>
+        <li className={'active'}>
+            <Button onClick={() => handleEquivalent('emissions', { num: data.cal_tree, name: 'tree' })}><NatureEco /></Button>
+        </li>
+    </ul>
+}
+const CaloriesBurned = ({ equivalentCount, handleEquivalent, data }: any) => {
+    return <ul>
+        <li className={equivalentCount.calories_burned?.name === 'burgers' ? 'active' : ''}><Button onClick={() => handleEquivalent('calories_burned', { num: data.cal_burgers, name: 'burgers' })}><FoodBurger /></Button></li>
+        <li className={equivalentCount.calories_burned?.name === 'pints' ? 'active' : ''}><Button onClick={() => handleEquivalent('calories_burned', { num: data.cal_pints, name: 'pints' })}><FoodDrink /></Button></li>
+        <li className={equivalentCount.calories_burned?.name === 'chocolates' ? 'active' : ''}><Button onClick={() => handleEquivalent('calories_burned', { num: data.cal_chocolate, name: 'chocolates' })}><FoodCandy /></Button></li>
+    </ul>
+}
+const MoneySaved = ({ equivalentCount, handleEquivalent, data }: any) => {
+    return <ul>
+        <li className={equivalentCount.money_saved?.name === 'takeaways' ? 'activeGreen' : ''}><Button onClick={() => handleEquivalent('money_saved', { num: data.cal_takeaway, name: 'takeaways' })}><FoodTakeway /></Button></li>
+        <li className={equivalentCount.money_saved?.name === 'cinema tickets' ? 'activeGreen' : ''}><Button onClick={() => handleEquivalent('money_saved', { num: data.cal_cinema, name: 'cinema tickets' })}><EntertainmentTicket /></Button></li>
+    </ul>
+}
 export default EbayLp;

@@ -76,6 +76,12 @@
                 padding: 20px;
             }
 
+            button.customSiteBtn {
+                @include respond-from(md-small) {
+                    margin-top: 35px;
+                }
+            }
+
             label {
                 font-weight: 700;
                 font-size: 16px;
@@ -165,6 +171,16 @@
                 border-radius: 25px;
                 padding: 24px;
 
+                .mobile-align {
+                    display: flex;
+                    align-items: flex-end;
+                    justify-content: space-between;
+
+                    @include respond-from(xs_small) {
+                        display: block;
+                    }
+                }
+
                 p {
                     font-weight: 700;
                     font-size: 16px;
@@ -180,6 +196,11 @@
                     @include respond-from(md-xxl) {
                         font-size: 45px;
                     }
+
+                    @include respond-from(xs_small) {
+                        font-size: 30px;
+                    }
+
                 }
 
                 h4 {
@@ -197,16 +218,30 @@
                     padding: 0;
                     display: flex;
                     align-items: center;
+                    flex-wrap: wrap;
 
                     li {
                         margin-right: 10px;
                         list-style: none;
+
+                        @include respond-from(xs_small) {
+                            margin-right: 5px;
+                        }
 
                         button {
                             background: var(--white);
                             border-radius: 15px;
                             padding: 6px;
                             border: 0;
+
+                            @include respond-from(xs_small) {
+                                border-radius: 12px;
+
+                                svg {
+                                    width: 23px;
+                                    height: 23px;
+                                }
+                            }
                         }
 
                         &.active {
