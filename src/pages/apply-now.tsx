@@ -39,7 +39,12 @@ export default function ApplyNow() {
         const { bikeValue = 0, accessoriesValue = 0, annualSalary = 0, bikeType = '' } = param
         let bike_price = Number(bikeValue) + Number(accessoriesValue)
         let valPrice = calculatEbikePrice(bike_price, +annualSalary, bikeType)
-        let val = { ...param, totalPackageValue: bike_price, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
+        let val = { ...param, totalPackageValue: bike_price}
+        if(annualSalary?.length){
+            val = { ...val, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
+        }else{
+            val = { ...val, monthlyPayment: '', initial_payment: '' }
+        }
         setState(val)
     }
     const onSubmit = (e: FormEvent) => {
