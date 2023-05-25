@@ -64,7 +64,7 @@ export default function ApplyNow() {
             </div>
             <div className="toggle-card mb-5">
                 <button type="button" className="d-flex w-100 align-center justify-content-between toggle-head show"><h3>Package Details</h3></button>
-                <div className="pt-4 toggle-body">
+                <div className="p-5 toggle-body">
                     <Form onSubmit={handleSubmit}>
                         <p className="pb-4">Please select how much you would like to request for your gogeta Cycle Scheme package</p>
                         <div className="calclulate-form ">
@@ -90,7 +90,7 @@ export default function ApplyNow() {
                                 </li>
                             </ul>
                         </div>
-                        <div className="pb-4">
+                        <div className="pb-5 pt-4">
                             <h4>Set your budget</h4>
                             <p>This is the total cost of everything you'd like to get on the scheme ...</p>
                         </div>
