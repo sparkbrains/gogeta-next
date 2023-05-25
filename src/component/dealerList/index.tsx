@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Col, Row } from "react-bootstrap";
 
-export default function DealerList({ items }: any) {
+export default function DealerList({ items,handleApply }: any) {
     return <div className='retailStockBx'>
         <Row>
             <Col md={8} lg={7}>
@@ -25,7 +25,7 @@ export default function DealerList({ items }: any) {
             <Col md={4} lg={5}>
                 <div className='rightCellStock'>
                     <p>In stock <Image width={24} height={24} alt='name' src='/assets/img/ic_instock.svg' className="img-fluid" /></p>
-                    <button type="button" className="customSiteBtn btn btn-primary px-4">Choose this bike shop<i className="fa-solid fa-angle-right"></i></button>
+                    <button type="button" onClick={()=>handleApply(items)} className="customSiteBtn btn btn-primary px-4">Choose this bike shop<i className="fa-solid fa-angle-right"></i></button>
                 </div>
             </Col>
         </Row>

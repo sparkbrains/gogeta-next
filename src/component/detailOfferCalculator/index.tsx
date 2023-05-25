@@ -8,10 +8,10 @@ export default function Calculate({ detail,handleCalculator }: any) {
     const [calculateRes, setCalculateRes] = useState<any>({})
     const [calculateState, setcalculateState] = useState({
         cost_bike: 0,
-        accessories_val: 0,
+        accessories_val: router?.query?.accessories || 0,
         total_val: 0,
         initial_payment: 0,
-        salary: 0,
+        salary: router?.query?.salary || 30000,
         total_salary_amt: 0,
         monthly_salary_amt: 0,
         total_savings_annual: 0,
@@ -24,8 +24,9 @@ export default function Calculate({ detail,handleCalculator }: any) {
         const stateParam = {
             ...calculateState,
             cost_bike: colorObj.size?.unitSuggestedRetailPrice,
-            total_val: Number(colorObj.size?.unitSuggestedRetailPrice) + Number(calculateState.accessories_val),
-            salary: Number(router?.query?.salary) || 30000,
+            accessories_val:calculateState.accessories_val,
+            total_val: Number(colorObj.size?.unitSuggestedRetailPrice) + (Number(router?.query?.accessories) || +calculateState.accessories_val),
+            salary: calculateState.salary,
             monthly_salary_amt: context?.per_month,
             total_salary_amt: context?.limit,
             initial_payment: context?.initial_payment,
@@ -55,6 +56,7 @@ export default function Calculate({ detail,handleCalculator }: any) {
                 total_val: Number(stateParam.cost_bike) + Number(stateParam.accessories_val)
             }
         }
+        handleCalculator && handleCalculator({...stateParam})
         setcalculateState(stateParam)
 
     }
@@ -62,7 +64,7 @@ export default function Calculate({ detail,handleCalculator }: any) {
         e.preventDefault();
         const stateRes =submitCalculator(calculateState)
         setCalculateRes(stateRes)
-        handleCalculator && handleCalculator(stateRes)
+        handleCalculator && handleCalculator({...stateRes,...calculateState})
     }
     return <section className='schemeCost poreZindex mb-5'>
         <Container>

@@ -1,0 +1,1 @@
+export default function Error({text}:any){return<div className="error">{text}</div>}

@@ -44,7 +44,7 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
   let prsi = 0;
   let usc = 0;
 
-  if (product_categories.includes("Cargo") || product_categories.includes("Light Utility")) {
+  if (product_categories.toLowerCase().includes("cargo") || product_categories.toLowerCase().includes("light utility")) {
     limit = 3000;
   }
 

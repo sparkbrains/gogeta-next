@@ -17,6 +17,7 @@ let size:any = {
 export default function MyOffers({ partners, offers }: any) {
     const router = useRouter()
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
+    const [calculateRes, setCalculateRes] = useState<any>({})
     const [isTransitionLoading, setTransitionLoading] = useState(true)
     const [data, setData] = useState<any>({})
     useEffect(() => {
@@ -34,6 +35,29 @@ export default function MyOffers({ partners, offers }: any) {
     useEffect(() => { setTimeout(() => { setTransitionLoading(false) }, 4000) })
     if (isTransitionLoading) {
         return <TransitionPage partners={partners} />
+    }
+    const handleApply=(item:any={})=>{
+        let obj:any = {
+            bikeValue:data?.currencyProduct?.unitSuggestedRetailPrice,
+            accessoriesValue:calculateRes?.accessories_val || router?.query?.accessories,
+            annualSalary:calculateRes?.salary || router?.query?.salary,
+            salaryFrequency:'monthly',
+            monthlyPayment:data?.per_month,
+            bikeType:data?.listing_type==="ebikes" ? data.categories.toLowerCase()?.includes('cargo') ? 'cargo/e-cargo bike':'ebike/pedelec':'other',
+            productSKU:data.product_sku,
+            retailerEmail:data.retailer_email,
+            productTitle:data.productName,
+            dealerEmail:item?.dealer_email_address
+        }
+        obj ={
+            ...obj,
+            totalPackageValue:Number(obj.bikeValue) + Number(obj.accessoriesValue)
+        }
+        if(!item){
+            delete obj.dealerEmail
+        }
+        let encoded = window.btoa(JSON.stringify(obj));
+        router.push(`/apply-now?params=${encoded}`)
     }
     let price = `${'SRP ' + offers?.currencyProduct?.currency?.currencySymbol + offers?.currencyProduct?.unitSuggestedRetailPrice}`
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
@@ -86,7 +110,7 @@ export default function MyOffers({ partners, offers }: any) {
             </Container>
         </section>
         <section className='schemeCost poreZindex mb-5'>
-            <Calculate detail={{ ...data,bicycleAssisted:data?.listing_type, colorObj: {...selectColorProduct,size:{unitSuggestedRetailPrice:offers?.currencyProduct?.unitSuggestedRetailPrice}} }} />
+            <Calculate handleCalculator={(val: any) => setCalculateRes(val)} detail={{ ...data,bicycleAssisted:data?.listing_type, colorObj: {...selectColorProduct,size:{unitSuggestedRetailPrice:offers?.currencyProduct?.unitSuggestedRetailPrice}} }} />
         </section>
         <section className='inStockNow poreZindex pb-5'>
             <Container>
@@ -97,7 +121,7 @@ export default function MyOffers({ partners, offers }: any) {
                 
                     {
                         data?.dealersList?.dealers_in_stock?.map((items:any,key:number)=>{
-                            return<DealerList items={items} key={key}/>
+                            return<DealerList items={items} key={key} handleApply={handleApply}/>
                         })
                     }
                 <div className='retailStockBx voucherCell'>
@@ -107,7 +131,7 @@ export default function MyOffers({ partners, offers }: any) {
                                 <div className='detailCont'>
                                     <h4 className='mb-3'>Or get your voucher now, choose your bike later</h4>
                                     <p className='MB-3'>You don’t have to commit to a specific bike or shop right away. Apply for your voucher now. We’ll get it sorted and ready for you to use; for the bike you want, at the shop of your choice.</p>
-                                    <button type="button" className="customSiteBtn btn btn-primary px-4">Apply for your voucher <i className="fa-solid fa-angle-right"></i></button>
+                                    <button onClick={handleApply} type="button" className="customSiteBtn btn btn-primary px-4">Apply for your voucher <i className="fa-solid fa-angle-right"></i></button>
                                 </div>
                             </div>
                         </Col>

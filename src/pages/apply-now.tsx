@@ -1,35 +1,59 @@
+import Input from "<prefix>/common/input";
+import { FormC } from "<prefix>/common/validate";
 import { MainHead } from "<prefix>/component/main-head";
 import Toggle from "<prefix>/component/toggle";
 import Applayout from "<prefix>/layout/applayout";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { useRouter } from "next/router";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { Col, Container, Form, Row } from "react-bootstrap";
 import { calculatEbikePrice, onKeyPress } from '../common/utilits'
 export default function ApplyNow() {
+    const router = useRouter()
     const [state, setState] = useState({
-        bikeValue:'',
-        accessoriesValue:'',
-        annualSalary:'',
-        monthlyPayment:'',
-        bikeType:'ebike/pedelec',
-        totalPackageValue:'',
-        initial_payment:''
-     })
+        bikeValue: '',
+        accessoriesValue: '',
+        annualSalary: '',
+        monthlyPayment: '',
+        bikeType: 'ebike/pedelec',
+        totalPackageValue: '',
+        initial_payment: ''
+    })
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
-        const param  = {
+        const param = {
             ...state,
             [name]: value
         }
         handleCycleCalculate(param)
     }
-    const handleCycleCalculate = (param:any) => {
+    useEffect(()=>{
+        if(router.query?.params?.length){
+            const obj:any = JSON.parse(window.atob(`${router.query.params}`))
+            let valPrice = calculatEbikePrice(obj.bikeValue, +obj.annualSalary, obj.bikeType)
+            let val = { ...state,...obj, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
+            setState(val)
+        }
+    },[router])
+    const handleCycleCalculate = (param: any) => {
         const { bikeValue = 0, accessoriesValue = 0, annualSalary = 0, bikeType = '' } = param
         let bike_price = Number(bikeValue) + Number(accessoriesValue)
         let valPrice = calculatEbikePrice(bike_price, +annualSalary, bikeType)
-        let val = {...param,totalPackageValue:bike_price,monthlyPayment:valPrice.per_month,initial_payment:valPrice.initial_payment}
+        let val = { ...param, totalPackageValue: bike_price, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
         setState(val)
     }
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        let stateParam:any = {...state}
+        delete stateParam.initial_payment
+        let obj = JSON.stringify(stateParam)
+        let encoded = window.btoa(obj);
+        window.location.href = `https://ebay.gogeta.bike/hr-portal/sal-sac-form?params=${encoded}`
+    }
+    const { errors, handleSubmit } = FormC({
+        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary },
+        onSubmit
+    })
     return <Applayout className='applyNow pt-0'>
         <Container>
             <div className="text-center applyNow-des">
@@ -41,108 +65,101 @@ export default function ApplyNow() {
             <div className="toggle-card mb-5">
                 <button type="button" className="d-flex w-100 align-center justify-content-between toggle-head show"><h3>Package Details</h3></button>
                 <div className="pt-4 toggle-body">
-                    <p className="pb-4">Please select how much you would like to request for your gogeta Cycle Scheme package</p>
-                    <div className="calclulate-form ">
-                        <span className="pb-2">Bike type?</span>
-                        <ul className='flex-wrap d-block d-md-flex'>
-                            <li className='mb-3 mb-md-0'>
-                                <input type="radio" className='d-none' id='transport' checked={state.bikeType === 'ebike/pedelec'} value='ebike' name='bikeType' onChange={onChange} />
-                                <label htmlFor='transport'>
-                                    E-bike / Pedelec
-                                </label>
-                            </li>
-                            <li className='mb-3 mb-md-0'>
-                                <input type="radio" className='d-none' id='transportCargo' checked={state.bikeType === 'Cargo'} value='Cargo' name='bikeType' onChange={onChange} />
-                                <label htmlFor='transportCargo'>
-                                    Cargo / E-cargo bike
-                                </label>
-                            </li>
-                            <li className='mb-3 mb-md-0'>
-                                <input type="radio" className='d-none' id='transportOther' checked={state.bikeType === 'other'} value='other' name='bikeType' onChange={onChange} />
-                                <label htmlFor='transportOther'>
-                                    Other
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="pb-4">
-                        <h4>Set your budget</h4>
-                        <p>This is the total cost of everything you'd like to get on the scheme ...</p>
-                    </div>
-                    <Row className="pb-4">
-                        <Col xs={12} sm={6}>
-                            <div className="calclulate-form pe-0 pe-lg-4">
-                                <span className="pb-2">Bike Value?</span>
-                                <div className="d-flex align-items-center form-price-input">
-                                    <div className="currency">£</div>
-                                    <input type="text" className="form-input" name="bikeValue" value={state.bikeValue} onKeyPress={onKeyPress} onChange={onChange}/>
+                    <Form onSubmit={handleSubmit}>
+                        <p className="pb-4">Please select how much you would like to request for your gogeta Cycle Scheme package</p>
+                        <div className="calclulate-form ">
+                            <span className="pb-2">Bike type?</span>
+                            <ul className='flex-wrap d-block d-md-flex'>
+                                <li className='mb-3 mb-md-0'>
+                                    <input type="radio" className='d-none' id='transport' checked={state.bikeType === 'ebike/pedelec'} value='ebike/pedelec' name='bikeType' onChange={onChange} />
+                                    <label htmlFor='transport'>
+                                        E-bike / Pedelec
+                                    </label>
+                                </li>
+                                <li className='mb-3 mb-md-0'>
+                                    <input type="radio" className='d-none' id='transportCargo' checked={state.bikeType === 'cargo/e-cargo bike'} value='cargo/e-cargo bike' name='bikeType' onChange={onChange} />
+                                    <label htmlFor='transportCargo'>
+                                        Cargo / E-cargo bike
+                                    </label>
+                                </li>
+                                <li className='mb-3 mb-md-0'>
+                                    <input type="radio" className='d-none' id='transportOther' checked={state.bikeType === 'other'} value='other' name='bikeType' onChange={onChange} />
+                                    <label htmlFor='transportOther'>
+                                        Other
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="pb-4">
+                            <h4>Set your budget</h4>
+                            <p>This is the total cost of everything you'd like to get on the scheme ...</p>
+                        </div>
+                        <Row className="pb-4">
+                            <Col xs={12} sm={6}>
+                                <div className="calclulate-form pe-0 pe-lg-4">
+                                    <span className="pb-2">Bike Value?</span>
+                                    <Input errorText={errors.bike_value} type="text" className="form-input" name="bikeValue" value={state.bikeValue} onKeyPress={onKeyPress} onChange={onChange} />
                                 </div>
-                            </div>
-                        </Col>
-                        <Col xs={12} sm={6}>
-                            <div className="calclulate-form pe-0 pe-lg-4">
-                                <span className="pb-2">Accessories Value?</span>
-                                <div className="d-flex align-items-center form-price-input">
-                                    <div className="currency">£</div>
-                                    <input type="text" className="form-input" name="accessoriesValue" value={state.accessoriesValue} onKeyPress={onKeyPress} onChange={onChange}/>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col xs={12} sm={6}>
-                            <div className="calclulate-form pe-0 pe-lg-4">
-                                <span className="pb-2">What is your annual salary?</span>
-                                <div className="d-flex align-items-center form-price-input">
-                                    <div className="currency">£</div>
-                                    <input type="text" className="form-input" name="annualSalary" value={state.annualSalary} onKeyPress={onKeyPress} onChange={onChange}/>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                    <div className="calclulate-form pe-0 pe-lg-4">
-                        <Row>
-                            <Col xs={12} sm={4}>
-                                <span className="pb-2">Total Package Value</span>
                             </Col>
-                            <Col xs={12} sm={8}>
+                            <Col xs={12} sm={6}>
+                                <div className="calclulate-form pe-0 pe-lg-4">
+                                    <span className="pb-2">Accessories Value?</span>
+                                    <Input errorText={errors.accessories_value} type="text" className="form-input" name="accessoriesValue" value={state.accessoriesValue} onKeyPress={onKeyPress} onChange={onChange} />
+                                </div>
+                            </Col>
+                            <Col xs={12} sm={6}>
+                                <div className="calclulate-form pe-0 pe-lg-4">
+                                    <span className="pb-2">What is your annual salary?</span>
+                                    <Input errorText={errors.annual_salary} type="text" className="form-input" name="annualSalary" value={state.annualSalary} onKeyPress={onKeyPress} onChange={onChange} />
+                                </div>
+                            </Col>
+                        </Row>
+                        <div className="calclulate-form pe-0 pe-lg-4">
+                            <Row>
+                                <Col xs={12} sm={4}>
+                                    <span className="pb-2">Total Package Value</span>
+                                </Col>
+                                <Col xs={12} sm={8}>
 
-                                <div className="d-flex align-items-center form-price-input">
-                                    <div className="currency">£</div>
-                                    <input type="text" className="form-input" value={state.totalPackageValue} disabled />
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className="calclulate-form pe-0 pe-lg-4">
-                        <Row>
-                            <Col xs={12} sm={4}>
-                                <span className="pb-2">Your monthly payments</span>
-                            </Col>
-                            <Col xs={12} sm={8}>
-                                <div className="d-flex align-items-center form-price-input">
-                                    <div className="currency">£</div>
-                                    <input type="text" className="form-input" disabled value={state.monthlyPayment}/>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className="calclulate-form pe-0 pe-lg-4">
-                        <Row>
-                            <Col xs={12} sm={4}>
-                                <span className="pb-2">One-off initial payment of:</span>
-                            </Col>
-                            <Col xs={12} sm={8}>
-                                <div className="d-flex align-items-center form-price-input">
-                                    <div className="currency">£</div>
-                                    <input type="text" className="form-input" disabled  value={state.initial_payment}/>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className="pb-4 pt-4">
-                        <p>Have you forgotten anything?</p>
-                        <p>A good lock is important - we recommend spending 10% of the value of bike.</p>
-                    </div>
-                    <button type="submit" className="customSiteBtn btn btn-primary px-4">Submit <i className="fa-solid fa-angle-right"></i></button>
+                                    <div className="d-flex align-items-center form-price-input">
+                                        <div className="currency">£</div>
+                                        <input type="text" className="form-input" value={state.totalPackageValue} disabled />
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
+                        <div className="calclulate-form pe-0 pe-lg-4">
+                            <Row>
+                                <Col xs={12} sm={4}>
+                                    <span className="pb-2">Your monthly payments</span>
+                                </Col>
+                                <Col xs={12} sm={8}>
+                                    <div className="d-flex align-items-center form-price-input">
+                                        <div className="currency">£</div>
+                                        <input type="text" className="form-input" disabled value={state.monthlyPayment} />
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
+                        <div className="calclulate-form pe-0 pe-lg-4">
+                            <Row>
+                                <Col xs={12} sm={4}>
+                                    <span className="pb-2">One-off initial payment of:</span>
+                                </Col>
+                                <Col xs={12} sm={8}>
+                                    <div className="d-flex align-items-center form-price-input">
+                                        <div className="currency">£</div>
+                                        <input type="text" className="form-input" disabled value={state.initial_payment} />
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
+                        <div className="pb-4 pt-4">
+                            <p>Have you forgotten anything?</p>
+                            <p>A good lock is important - we recommend spending 10% of the value of bike.</p>
+                        </div>
+                        <button type="submit" className="customSiteBtn btn btn-primary px-4">Submit <i className="fa-solid fa-angle-right"></i></button>
+                    </Form>
                 </div>
             </div>
         </Container>

@@ -153,6 +153,8 @@ function Pdp({ detail }: any) {
             }
         })
     }
+    console.log(calculateRes,'calculateRes===');
+    
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     return (
         <Applayout className='pdpMain w-100 mt-2'>
@@ -238,7 +240,7 @@ function Pdp({ detail }: any) {
                                                 <p>{selectColorProduct?.size?.stock_status}</p>
                                                 <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?${queryParam({
                                                     color: selectColorProduct?.colourwayName,
-                                                    salary: router?.query?.salary,
+                                                    salary: calculateRes?.salary?.length ?calculateRes?.salary: router?.query?.salary,
                                                     accessories: calculateRes?.accessories_val,
                                                     size: selectColorProduct?.size?.mapped,
                                                     modelYear: data?.productYear
