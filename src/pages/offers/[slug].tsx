@@ -51,7 +51,7 @@ export default function MyOffers({ partners, offers }: any) {
         }
         obj ={
             ...obj,
-            totalPackageValue:Number(obj.bikeValue) + Number(obj.accessoriesValue)
+            totalPackageValue:Number(obj.bikeValue) + (Number(obj.accessoriesValue) || 0)
         }
         if(!item){
             delete obj.dealerEmail

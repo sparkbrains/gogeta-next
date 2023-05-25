@@ -282,7 +282,7 @@ function Pdp({ detail }: any) {
                     <div className='specifiList' dangerouslySetInnerHTML={{ __html: detail.productSpecificationContent }}></div>
                 </Container>
             </section>
-            <section className='specializedOne porezid' style={{ background: `url(${detail.brandBackground})` }}>
+            <section className='specializedOne porezid' style={{ background: `url(${detail.brandBackground})`,backgroundSize:'cover' }}>
                 <Container>
                     <Col md={6}>
                         <div className='speciContbx' >

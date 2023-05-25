@@ -31,7 +31,7 @@ export default function ApplyNow() {
         if(router.query?.params?.length){
             const obj:any = JSON.parse(window.atob(`${router.query.params}`))
             let valPrice = calculatEbikePrice(obj.bikeValue, +obj.annualSalary, obj.bikeType)
-            let val = { ...state,...obj, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
+            let val = { ...state,...obj,accessoriesValue:obj.accessoriesValue || 0, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
             setState(val)
         }
     },[router])
