@@ -27,29 +27,29 @@ export default function ApplyNow() {
         }
         handleCycleCalculate(param)
     }
-    useEffect(()=>{
-        if(router.query?.params?.length){
-            const obj:any = JSON.parse(window.atob(`${router.query.params}`))
+    useEffect(() => {
+        if (router.query?.params?.length) {
+            const obj: any = JSON.parse(window.atob(`${router.query.params}`))
             let valPrice = calculatEbikePrice(obj.bikeValue, +obj.annualSalary, obj.bikeType)
-            let val = { ...state,...obj,accessoriesValue:obj.accessoriesValue || 0, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
+            let val = { ...state, ...obj, accessoriesValue: obj.accessoriesValue || 0, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
             setState(val)
         }
-    },[router])
+    }, [router])
     const handleCycleCalculate = (param: any) => {
         const { bikeValue = 0, accessoriesValue = 0, annualSalary = 0, bikeType = '' } = param
         let bike_price = Number(bikeValue) + Number(accessoriesValue)
         let valPrice = calculatEbikePrice(bike_price, +annualSalary, bikeType)
-        let val = { ...param, totalPackageValue: bike_price}
-        if(annualSalary?.length){
+        let val = { ...param, totalPackageValue: bike_price }
+        if (annualSalary?.length) {
             val = { ...val, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
-        }else{
+        } else {
             val = { ...val, monthlyPayment: '', initial_payment: '' }
         }
         setState(val)
     }
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
-        let stateParam:any = {...state}
+        let stateParam: any = { ...state }
         delete stateParam.initial_payment
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
@@ -67,10 +67,9 @@ export default function ApplyNow() {
                 <p className="pt-2 pb-5">Just fill out the form below and we’ll get things rolling. We’ll ask your employer to set up the salary sacrifice arrangement, and then we’ll send you a voucher that you can redeem in any of your local bike shops, for whatever bike you choose.</p>
                 <Image src='/ctw-bike-image.png' width={841} height={376} alt='Bikes' />
             </div>
-            <div className="toggle-card mb-5">
-                <button type="button" className="d-flex w-100 align-center justify-content-between toggle-head show"><h3>Package Details</h3></button>
-                <div className="p-5 toggle-body">
-                    <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
+                <div className="toggle-card mb-5">
+                    <div className="p-5 toggle-body">
                         <p className="pb-4">Please select how much you would like to request for your gogeta Cycle Scheme package</p>
                         <div className="calclulate-form ">
                             <span className="pb-2">Bike type?</span>
@@ -95,30 +94,36 @@ export default function ApplyNow() {
                                 </li>
                             </ul>
                         </div>
-                        <div className="pb-5 pt-4">
-                            <h4>Set your budget</h4>
-                            <p>This is the total cost of everything you'd like to get on the scheme ...</p>
-                        </div>
-                        <Row className="pb-4">
-                            <Col xs={12} sm={6}>
-                                <div className="calclulate-form pe-0 pe-lg-4">
-                                    <span className="pb-2">Bike Value?</span>
+                        <div className="calclulate-form pe-0 pe-lg-4">
+                            <Row>
+                                <Col xs={12} sm={4}>
+                                    <span className="pb-2">Cost of bike:</span>
+                                </Col>
+                                <Col xs={12} sm={8}>
                                     <Input errorText={errors.bike_value} type="text" className="form-input" name="bikeValue" value={state.bikeValue} onKeyPress={onKeyPress} onChange={onChange} />
-                                </div>
-                            </Col>
-                            <Col xs={12} sm={6}>
-                                <div className="calclulate-form pe-0 pe-lg-4">
-                                    <span className="pb-2">Accessories Value?</span>
+                                </Col>
+                            </Row>
+                        </div>
+                        <div className="calclulate-form pe-0 pe-lg-4">
+                            <Row>
+                                <Col xs={12} sm={4}>
+                                    <span className="pb-2">Cost of accessories:</span>
+                                </Col>
+                                <Col xs={12} sm={8}>
                                     <Input errorText={errors.accessories_value} type="text" className="form-input" name="accessoriesValue" value={state.accessoriesValue} onKeyPress={onKeyPress} onChange={onChange} />
-                                </div>
-                            </Col>
-                            <Col xs={12} sm={6}>
-                                <div className="calclulate-form pe-0 pe-lg-4">
+                                </Col>
+                            </Row>
+                        </div>
+                        <div className="calclulate-form pe-0 pe-lg-4">
+                            <Row>
+                                <Col xs={12} sm={4}>
                                     <span className="pb-2">What is your annual salary?</span>
+                                </Col>
+                                <Col xs={12} sm={8}>
                                     <Input errorText={errors.annual_salary} type="text" className="form-input" name="annualSalary" value={state.annualSalary} onKeyPress={onKeyPress} onChange={onChange} />
-                                </div>
-                            </Col>
-                        </Row>
+                                </Col>
+                            </Row>
+                        </div>
                         <div className="calclulate-form pe-0 pe-lg-4">
                             <Row>
                                 <Col xs={12} sm={4}>
@@ -163,10 +168,12 @@ export default function ApplyNow() {
                             <p>Have you forgotten anything?</p>
                             <p>A good lock is important - we recommend spending 10% of the value of bike.</p>
                         </div>
-                        <button type="submit" className="customSiteBtn btn btn-primary px-4">Submit <i className="fa-solid fa-angle-right"></i></button>
-                    </Form>
+                    </div>
                 </div>
-            </div>
+                <div className="d-flex justify-content-end mb-5">
+                <button type="submit" className="customSiteBtn btn btn-primary px-4">Submit <i className="fa-solid fa-angle-right"></i></button>
+                </div>
+            </Form>
         </Container>
     </Applayout>
 }

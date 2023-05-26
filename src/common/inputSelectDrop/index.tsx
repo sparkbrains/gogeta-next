@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import Button from "../../component/button"
 import { TextField } from "../../component/form/inputs"
 import Image from "next/image"
-export const InputSelectDrop = ({ selectParam = 'name', onChangeSearch, onChangeSelect, selectArrow = true, searchCustom = false, isLoading = false, name, onChange, defaultValue, data=[], ...rest }:any) => {
+export const InputSelectDrop = ({ selectParam = 'name',className, onChangeSearch, onChangeSelect, selectArrow = true, searchCustom = false, isLoading = false, name, onChange, defaultValue, data=[], ...rest }:any) => {
     const wrapperRef = useRef<any>(null);
     const [inputText, setInputText] = useState('')
     const [listShow, setlistShow] = useState(false)
@@ -60,7 +60,7 @@ export const InputSelectDrop = ({ selectParam = 'name', onChangeSearch, onChange
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [wrapperRef]);
-    return <div className="box-search">
+    return <div className={`box-search ${className?className:''}`}>
         
         <TextField
             {...rest}
@@ -73,9 +73,8 @@ export const InputSelectDrop = ({ selectParam = 'name', onChangeSearch, onChange
                 endAdornment: (
                     <>
                         {isLoading ? 'loading....' : null}
-
-                        <div className={listShow ? 'rotate' : ''} onFocus={() => setlistShow(true)}>
-                            {selectArrow ? <Image src='/assets/header/chevron-blue.svg' width={24} height={24} alt='search' /> : null}
+                        <div className={`${className?.length?'icoArr':''} ${listShow ? 'rotate' : ''}`} onClick={() => setlistShow(true)}>
+                            {selectArrow ? <Image src='/assets/header/chevron-blue.svg' width={12} height={12} alt='search' /> : null}
                         </div>
                     </>
                 )
@@ -106,7 +105,7 @@ export const InputDropDownList = ({ keyword, selectedList, data, }:any) => {
                 return (
                     <li key={key}>
                         <Button type='button' onClick={() => selectedList(d)}>
-                            {keyword ? <div dangerouslySetInnerHTML={{ __html: makeBold(d?.name) || ''}}></div> : d?.name}
+                            {keyword ? <div dangerouslySetInnerHTML={{ __html: makeBold(d?.name || d?.label) || ''}}></div> : d?.name || d?.label}
                         </Button>
                     </li>
                 )

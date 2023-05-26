@@ -75,10 +75,10 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
     total_savings: Number(totalsaving).toFixed(2),
     saving_percentage: savingRRP.toFixed(2) + " %",
     initial_payment: initial_payment.toFixed(2),
-    incometax:(incometax / 12).toFixed(2),
-    prsi:(prsi / 12).toFixed(2),
-    usc:(usc / 12).toFixed(2),
-    total_savings_annual:(+totalsaving / 12).toFixed(2),
+    incometax: (incometax / 12).toFixed(2),
+    prsi: (prsi / 12).toFixed(2),
+    usc: (usc / 12).toFixed(2),
+    total_savings_annual: (+totalsaving / 12).toFixed(2),
     limit: limit
   };
   return context;
@@ -105,7 +105,7 @@ export const handleChangeSalary = (value: number) => {
   return formattedValue
 }
 export const submitCalculator = (param: any) => {
-  const { salary,total_val,categories,bicycleAssisted } = param
+  const { salary, total_val, categories, bicycleAssisted } = param
   let context = {}
   if (bicycleAssisted === "ebikes") {
     context = calculatEbikePrice(total_val, salary, categories)
@@ -114,3 +114,51 @@ export const submitCalculator = (param: any) => {
   }
   return context;
 }
+export const applyCalculator = (obj: any) => {
+  const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment } = obj
+  // const saviing = calculatEbikePrice(bikeValue, annualSalary)
+  const totalVal = Number(bikeValue) + Number(accessoriesValue)
+  let param:any = {
+    regular_gross: ((totalVal / 12) / (Number(frequency)/Number(sacrifice_repayment))).toFixed(2),
+  }
+  if(param.regular_gross){
+    param = {
+      net_regular: param.regular_gross / (1 - (42/100)),
+    }
+  }
+  if(param.net_regular){
+    param = {
+      total_savings: param.net_regular * Number(frequency)
+    }
+  }
+}
+// calculate_bike_salary_sacrifice_in_plp(bike_price, salary) {
+//   let total_bp = bike_price
+
+//   let ownership_charge_type = new URL(location.href).searchParams.get('scheme_provider')
+//   let ownership_value = 0
+//   let salary_period = 'monthly'
+//   let salary_sacrifice = new URL(location.href).searchParams.get('repayment_period')
+//   let country = new URL(location.href).searchParams.get('salary_sacrifice_country')
+//   let check_path = window.location.href
+//   let current_treshold = this.minimum_salary_threshold;
+//   let max_bike_value_per_year = salary - current_treshold;
+//   let max_bike_value = (max_bike_value_per_year / 12) * salary_sacrifice;
+//   let value = this.calc_taxes(country, salary);
+//   let tax1 = value[0];
+//   let threshold = value[1];
+//   let value2 = this.calc_taxes(country, salary - total_bp);
+//   let tax2 = value2[0];
+//   let differenceOverThreshold = tax1 == tax2 ? 0 : threshold;
+//   let netcost = ((salary - differenceOverThreshold) * tax1) + ((total_bp - (salary - differenceOverThreshold)) * tax2);
+
+//   let takehomepay = netcost / salary_sacrifice; // The monthly cost with the discount
+//   let savings = total_bp - netcost;
+//   let savingsPercent = (savings / total_bp) * 100;
+//   let context = {
+//       per_month: (Number(takehomepay)).toFixed(2),
+//       total_savings: Number(savings).toFixed(2),
+//       saving_percentage: Number(savingsPercent).toFixed(2) + "%",
+//   }
+//   return context
+// }

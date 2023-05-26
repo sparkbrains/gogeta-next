@@ -32,10 +32,12 @@ button {
 
 
 }
+
 .error {
     color: var(--primary-new);
     font-size: 10px;
 }
+
 input:focus {
     outline: 0;
 }
@@ -236,6 +238,54 @@ input:focus {
 .box-search {
     position: relative;
 
+    &.box-select-calclulate {
+        .form-input {
+            border-color: var(--secondary-new-two);
+            padding: 0;
+            border-radius: 15px;
+
+            .icoArr {
+                width: 44px;
+                height: 40px;
+                background: var(--secondary-new-two);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 0px 15px 15px 0px;
+            }
+
+            input {
+                height: 40px;
+                border-radius: 15px;
+                padding-left: 10px;
+            }
+        }
+
+        .drop-list {
+            box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--secondary-new-two);
+            border-radius: 15px;
+            top: 43px;
+            padding: 8px;
+
+            li {
+                padding: 0;
+
+                button {
+                    padding: 8px;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 26px;
+                    color: var(--p-color-new);
+
+                    &:hover {
+                        background-color: #E2F1F0;
+                    }
+                }
+            }
+        }
+    }
+
     .form-input {
         border: 1px solid var(--primary);
         font-size: 14px;
@@ -245,7 +295,9 @@ input:focus {
         font-size: 0.9rem;
 
         .rotate {
-            transform: rotate(-180deg);
+            img {
+                transform: rotate(-180deg);
+            }
         }
 
         input {
@@ -474,9 +526,11 @@ input:focus {
 
     &-head {
         border-radius: 30px;
-        &.show{
+
+        &.show {
             border-radius: 30px 30px 0px 0px;
         }
+
         padding: 25px;
     }
 
@@ -507,6 +561,7 @@ input:focus {
         }
     }
 }
+
 .calclulate-form {
     label {
         color: var(--white);
@@ -514,6 +569,7 @@ input:focus {
 
     li {
         list-style: none;
+
         input:checked~label {
             background-color: var(--p-color-two);
         }
@@ -527,4 +583,43 @@ input:focus {
             line-height: 26px;
         }
     }
-}  
+}
+
+.price-calculate {
+    padding: 30px;
+    background: var(--secondary-new-two);
+    border-radius: 20px;
+    margin-bottom: 20px;  
+    p {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 25px;
+        margin-bottom: 15px !important;
+        color: var(--backColor);
+    }
+
+    h4 {
+        font-weight: 500;
+        font-size: 48px;
+        line-height: 26px;
+        color: var(--p-color-new);
+    }
+    &.secondBlue{
+        background-color: var(--backColor);
+        p{
+            color: var(--p-color-two);
+        }
+        h4{
+            color: var(--white);
+        }
+    }
+    &.green{
+        background-color: #BFD2B6;
+        p{
+        color: var(--p-color-new);
+        }
+        h4{
+            color: var(--white);
+        }
+    }
+}
