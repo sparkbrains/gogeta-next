@@ -139,7 +139,7 @@ export default function MyOffers({ partners, offers }: any) {
                 </div>
             </Container>
         </section>
-        <section className='mltSection   findlocalBike'>
+        <section className='mltSection findlocalBike'>
             <Container>
                 <div className='bikeFindMap poreZindex'>
                     <h3>Find your local bike shop</h3>

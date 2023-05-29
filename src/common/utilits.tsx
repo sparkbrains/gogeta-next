@@ -115,50 +115,86 @@ export const submitCalculator = (param: any) => {
   return context;
 }
 export const applyCalculator = (obj: any) => {
-  const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment } = obj
-  // const saviing = calculatEbikePrice(bikeValue, annualSalary)
+  const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment,totalPackageValue } = obj
+  const saving:any = calculate_bike_salary_sacrifice_in_plp(totalPackageValue, annualSalary, sacrifice_repayment)
   const totalVal = Number(bikeValue) + Number(accessoriesValue)
-  let param:any = {
-    regular_gross: ((totalVal / 12) / (Number(frequency)/Number(sacrifice_repayment))).toFixed(2),
-  }
-  if(param.regular_gross){
-    param = {
-      net_regular: param.regular_gross / (1 - (42/100)),
-    }
-  }
-  if(param.net_regular){
-    param = {
-      total_savings: param.net_regular * Number(frequency)
-    }
+  let param: any = {}
+  if(frequency && sacrifice_repayment){
+  param = {
+    ...param,
+    regular_gross: ((totalVal / 12) / (Number(frequency) / Number(sacrifice_repayment))).toFixed(2),
   }
 }
-// calculate_bike_salary_sacrifice_in_plp(bike_price, salary) {
-//   let total_bp = bike_price
-
-//   let ownership_charge_type = new URL(location.href).searchParams.get('scheme_provider')
-//   let ownership_value = 0
-//   let salary_period = 'monthly'
-//   let salary_sacrifice = new URL(location.href).searchParams.get('repayment_period')
-//   let country = new URL(location.href).searchParams.get('salary_sacrifice_country')
-//   let check_path = window.location.href
-//   let current_treshold = this.minimum_salary_threshold;
-//   let max_bike_value_per_year = salary - current_treshold;
-//   let max_bike_value = (max_bike_value_per_year / 12) * salary_sacrifice;
-//   let value = this.calc_taxes(country, salary);
-//   let tax1 = value[0];
-//   let threshold = value[1];
-//   let value2 = this.calc_taxes(country, salary - total_bp);
-//   let tax2 = value2[0];
-//   let differenceOverThreshold = tax1 == tax2 ? 0 : threshold;
-//   let netcost = ((salary - differenceOverThreshold) * tax1) + ((total_bp - (salary - differenceOverThreshold)) * tax2);
-
-//   let takehomepay = netcost / salary_sacrifice; // The monthly cost with the discount
-//   let savings = total_bp - netcost;
-//   let savingsPercent = (savings / total_bp) * 100;
-//   let context = {
-//       per_month: (Number(takehomepay)).toFixed(2),
-//       total_savings: Number(savings).toFixed(2),
-//       saving_percentage: Number(savingsPercent).toFixed(2) + "%",
-//   }
-//   return context
-// }
+  if (param.regular_gross) {
+    param = {
+      ...param,
+      net_regular: (param.regular_gross / (1 - (saving?.saving_percentage_number / 100))).toFixed(2),
+    }
+  }
+  if (param.net_regular?.length) {
+    param = {
+      ...param,
+      total_savings: saving?.total_savings
+    }
+  }
+  if (param.total_savings) {
+    param = {
+      ...param,
+      total_savings_percentage: saving?.saving_percentage
+    }
+  }
+  return param
+}
+function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: number, sacrifice_repayment: number, country: string = 'England',) {
+  let total_bp = bike_price
+  let salary_sacrifice = sacrifice_repayment
+  let current_treshold = 12570;
+  let max_bike_value_per_year = salary - current_treshold;
+  let max_bike_value = (max_bike_value_per_year / 12) * salary_sacrifice;
+  let value = calc_taxes(country, salary);
+  let tax1 = value[0];
+  let threshold = value[1];
+  let value2 = calc_taxes(country, salary - total_bp);
+  let tax2 = value2[0];
+  let differenceOverThreshold = tax1 == tax2 ? 0 : threshold;
+  let netcost = ((salary - differenceOverThreshold) * tax1) + ((total_bp - (salary - differenceOverThreshold)) * tax2);
+  
+  let takehomepay = netcost / salary_sacrifice; // The monthly cost with the discount
+  let savings = total_bp - netcost;
+  let savingsPercent = (savings / total_bp) * 100;
+  let context = {
+    per_month: (Number(takehomepay)).toFixed(2),
+    total_savings: Number(savings).toFixed(2),
+    saving_percentage: Number(savingsPercent).toFixed(2) + "%",
+    saving_percentage_number: Number(savingsPercent).toFixed(2),
+  }
+  return context
+}
+function calc_taxes(country: string, salary: any) {
+  let tax = 0, threshold = 0;
+  if (country == 'England') {
+    if (salary <= 12570) { tax = 0; threshold = 0 }
+    else if (salary >= 12571 && salary <= 50270) { tax = 32.00; threshold = 12571 }
+    else if (salary >= 50271 && salary <= 125140) { tax = 42.00; threshold = 50271 }
+    else { tax = 47.00; threshold = 125141 }
+  } else if (country == 'Ireland') {
+    if (salary <= 12570) { tax = 0; threshold = 0 }
+    else if (salary >= 12571 && salary <= 50270) { tax = 32.00; threshold = 12571 }
+    else if (salary >= 50271 && salary <= 125140) { tax = 42.00; threshold = 50271 }
+    else { tax = 47.00; threshold = 125141 }
+  } else if (country == 'Wales') {
+    if (salary <= 12570) { tax = 0; threshold = 0 }
+    else if (salary >= 12571 && salary <= 50270) { tax = 32.00; threshold = 12571 }
+    else if (salary >= 50271 && salary <= 125140) { tax = 42.00; threshold = 50271 }
+    else { tax = 47.00; threshold = 125141 }
+  } else { //Scotland
+    if (salary <= 12570) { tax = 0; threshold = 0 }
+    else if (salary >= 12571 && salary <= 14732) { tax = 31.00; threshold = 12571 }
+    else if (salary >= 14733 && salary <= 25688) { tax = 32.00; threshold = 14668 }
+    else if (salary >= 25689 && salary <= 43662) { tax = 33.00; threshold = 25297 }
+    else if (salary >= 43663 && salary <= 50270) { tax = 44.00; threshold = 43663 }
+    else if (salary >= 50271 && salary <= 125140) { tax = 44.00; threshold = 50271 }
+    else { tax = 48.00; threshold = 125141 }
+  }
+  return [(100 - tax) / 100, threshold];
+}

@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-export default function StoreFinder() {
+export default function StoreFinder({type='ireland'}:any) {
     useEffect(()=>{
         var a=document.createElement("script");
         a.type="text/javascript";
@@ -9,5 +9,5 @@ export default function StoreFinder() {
         var b:any =document.getElementsByTagName("script")[0];
         b.parentNode.insertBefore(a,b);
     },[])
-    return<div id="storepoint-container" data-tags="ireland" data-map-id="163d501120d560"></div>
+    return<div id="storepoint-container" data-tags={type} data-map-id="163d501120d560"></div>
 }
