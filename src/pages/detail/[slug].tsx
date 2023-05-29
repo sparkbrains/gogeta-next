@@ -266,7 +266,7 @@ function Pdp({ detail }: any) {
                         arrows: false
                     }}>
                         {
-                            data?.feature?.map((item: any, key: number) => <div className='singlekeyFeature px-3'>
+                            data?.feature?.map((item: any, key: number) => <div key={key} className='singlekeyFeature px-3'>
                                 <Image src={item.featureImage[0]} width={409} height={400} alt="img" className='img-fluid' />
                                 <h6>{item.featureName}</h6>
                                 <p>{item.featureContent}</p>

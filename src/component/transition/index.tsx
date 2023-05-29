@@ -15,8 +15,8 @@ return (
             <div className="row">
                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
                   <div className="dealer-enquiry-navigation-tagline">
-                     <h3>Hang tight! We’re fetching you the best offers.</h3>
-                     <p>We're checking all of our dealers</p>
+                     <h3>Hang tight! We&apos;re fetching you the best offers.</h3>
+                     <p>We&apos;re checking all of our dealers</p>
                   </div>
                </div>
             </div>

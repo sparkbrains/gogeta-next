@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { withContext } from '<prefix>/context/appContext';
+import Link from 'next/link';
 function Footer({context:{host}}:any){
     return<footer className='footer'>
     {host === 'uk'?null:<div className='footer-main'>
@@ -16,14 +17,14 @@ function Footer({context:{host}}:any){
                     <div className='footer-col'>
                         <h4 className="footer-col__header">eBikes</h4>
                         <ul className='list-unstyled'>
-                            <li className="nav-leisure-ebike"><a href="/">Leisure eBikes</a></li>
-                            <li className="nav-endurance-ebike"><a href="/">Road eBikes</a></li>
-                            <li className="nav-cargo-ebike"><a href="/">Cargo eBikes</a></li>
-                            <li className="nav-commuting-ebike"><a href="/">Commuting eBikes</a></li>
-                            <li className="nav-gravel-ebike"><a href="/">Gravel eBikes</a></li>
-                            <li className="nav-mountain-ebike"><a href="/">Mountain eBikes</a></li>
-                            <li className="nav-mountain-ebike"><a href="/">Folding eBikes</a></li>
-                            <li><a href="/">Shop all</a></li>
+                            <li className="nav-leisure-ebike"><Link href="/">Leisure eBikes</Link></li>
+                            <li className="nav-endurance-ebike"><Link href="/">Road eBikes</Link></li>
+                            <li className="nav-cargo-ebike"><Link href="/">Cargo eBikes</Link></li>
+                            <li className="nav-commuting-ebike"><Link href="/">Commuting eBikes</Link></li>
+                            <li className="nav-gravel-ebike"><Link href="/">Gravel eBikes</Link></li>
+                            <li className="nav-mountain-ebike"><Link href="/">Mountain eBikes</Link></li>
+                            <li className="nav-mountain-ebike"><Link href="/">Folding eBikes</Link></li>
+                            <li><Link href="/">Shop all</Link></li>
                         </ul>
                     </div>
                 </Col>
@@ -31,12 +32,12 @@ function Footer({context:{host}}:any){
                     <div className='footer-col'>
                         <h4 className="footer-col__header">Bikes</h4>
                         <ul className='list-unstyled'>
-                            <li className="nav-leisure-ebike"><a href="/">Performance Road</a></li>
-                            <li className="nav-endurance-ebike"><a href="/">Endurance Road</a></li>
-                            <li className="nav-cargo-ebike"><a href="/">Aero Road</a></li>
-                            <li className="nav-commuting-ebike"><a href="/">Ultralight Road</a></li>
-                            <li className="nav-gravel-ebike"><a href="/">Gravel</a></li>
-                            <li><a href="/">Shop all</a></li>
+                            <li className="nav-leisure-ebike"><Link href="/">Performance Road</Link></li>
+                            <li className="nav-endurance-ebike"><Link href="/">Endurance Road</Link></li>
+                            <li className="nav-cargo-ebike"><Link href="/">Aero Road</Link></li>
+                            <li className="nav-commuting-ebike"><Link href="/">Ultralight Road</Link></li>
+                            <li className="nav-gravel-ebike"><Link href="/">Gravel</Link></li>
+                            <li><Link href="/">Shop all</Link></li>
                         </ul>
                     </div>
                 </Col>
@@ -44,9 +45,9 @@ function Footer({context:{host}}:any){
                     <div className='footer-col'>
                         <h4 className="footer-col__header">Resources</h4>
                         <ul className='list-unstyled'>
-                            <li className="nav-leisure-ebike"><a href="/">Cycle to work</a></li>
-                            <li className="nav-endurance-ebike"><a href="/">Buyer's guides</a></li>
-                            <li className="nav-cargo-ebike"><a href="/">Blog</a></li>
+                            <li className="nav-leisure-ebike"><Link href="/">Cycle to work</Link></li>
+                            <li className="nav-endurance-ebike"><Link href="/">Buyer&apos;s guides</Link></li>
+                            <li className="nav-cargo-ebike"><Link href="/">Blog</Link></li>
                         </ul>
                     </div>
                 </Col>
@@ -54,20 +55,20 @@ function Footer({context:{host}}:any){
                     <div className='footer-col'>
                         <h4 className="footer-col__header">Support</h4>
                         <ul className='list-unstyled'>
-                            <li className="nav-leisure-ebike"><a href="/">FAQs</a></li>
-                            <li className="nav-endurance-ebike"><a href="mailto:hello@gogeta.bike">hello@gogeta.bike</a></li>
-                            <li className="nav-cargo-ebike"><a href="/">About us</a></li>
+                            <li className="nav-leisure-ebike"><Link href="/">FAQs</Link></li>
+                            <li className="nav-endurance-ebike"><Link href="mailto:hello@gogeta.bike">hello@gogeta.bike</Link></li>
+                            <li className="nav-cargo-ebike"><Link href="/">About us</Link></li>
                         </ul>
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={2} className="mb-4 mb-lg-0">
                     <div className='footer-col socialIcons'>
                         <ul className='list-unstyled d-flex align-items-center'>
-                            <li className="nav-leisure-ebike"><a href="/">
-                                <img src="/assets/img/sm-instagram.svg" alt="img" className='img-fluid' /></a></li>
-                            <li className="nav-endurance-ebike"><a href="mailto:hello@gogeta.bike"><img src="/assets/img/sm-youtube.svg" alt="img" className='img-fluid' /></a></li>
-                            <li className="nav-cargo-ebike"><a href="/">
-                                <img src="/assets/img/sm-strava.svg" alt="img" className='img-fluid' /></a></li>
+                            <li className="nav-leisure-ebike"><Link href="/">
+                                <img src="/assets/img/sm-instagram.svg" alt="img" className='img-fluid' /></Link></li>
+                            <li className="nav-endurance-ebike"><Link href="mailto:hello@gogeta.bike"><img src="/assets/img/sm-youtube.svg" alt="img" className='img-fluid' /></Link></li>
+                            <li className="nav-cargo-ebike"><Link href="/">
+                                <img src="/assets/img/sm-strava.svg" alt="img" className='img-fluid' /></Link></li>
                         </ul>
                     </div>
                 </Col>
@@ -80,9 +81,9 @@ function Footer({context:{host}}:any){
                 <Row className={host !== 'uk'?'':'flex-row-reverse'}>
                     <Col md={6}>
                         <ul className={`list-unstyled d-flex ${host === 'uk'?'justify-content-end':''}`}>
-                            <li><a href='#'>Cookie policy</a></li>
-                            <li><a href='#'>Privacy policy</a></li>
-                            <li><a href='#'>Terms of use</a></li>
+                            <li><Link href='#'>Cookie policy</Link></li>
+                            <li><Link href='#'>Privacy policy</Link></li>
+                            <li><Link href='#'>Terms of use</Link></li>
                         </ul>
                     </Col>
                     <Col md={6}>
@@ -95,4 +96,4 @@ function Footer({context:{host}}:any){
     </div>
 </footer>
 }
-export default withContext(Footer)
+export default Footer

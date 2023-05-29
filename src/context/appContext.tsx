@@ -4,7 +4,7 @@ interface IProps {
     children: any;
 }
 class AppContext extends Component<IProps> {
-    constructor(props:IProps){
+    constructor(props:any){
         super(props)
         this.state= {
             host:process.env.NEXT_PUBLIC_APP_ENV
@@ -26,7 +26,7 @@ class AppContext extends Component<IProps> {
     }
 }
 export default AppContext;
-export const withContext = (Components:any) => (props:IProps) => {
+export const withContext = (Components:any) => (props:any) => {
     return (
         <MainContext.Consumer>
             {(value) => <Components context={value} {...props} />}

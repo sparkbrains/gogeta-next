@@ -1,12 +1,18 @@
+import { withContext } from "<prefix>/context/appContext";
 import Footer from "../component/footer";
 import Header from "../component/header";
-
-export default function Applayout({ children, className = '' }: any) {
+interface IProps {
+    children:any,
+    className:string,
+    context:any
+}
+function Applayout({ children, className = '',context }: IProps) {
     return <div className="gogetaMain ebay-header">
-        <Header />
+        <Header context={context}/>
         <div className={`main ${className}`}>
             {children}
-            <Footer />
+            <Footer context={context}/>
         </div>
     </div>
 }
+export default withContext(Applayout)

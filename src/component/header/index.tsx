@@ -15,7 +15,9 @@ const logo:any = {
     uk:'/assets/logo/logo_without.svg',
     ebay:'/assets/logo/eBay_logo.svg'
 }
-function Header({ context: { host } }: any) {
+function Header({context}: any) {
+    // const {context} = props
+    const {host} = context
     const router = useRouter()
     const isMobile = useMediaQuery(900)
     const [search, setSearch] = useState(false)
@@ -70,4 +72,4 @@ function Header({ context: { host } }: any) {
         </Navbar>
     </header>
 }
-export default withContext(Header)
+export default Header
