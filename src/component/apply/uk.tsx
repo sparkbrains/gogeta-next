@@ -48,7 +48,7 @@ export default function ApplyNowUK() {
         let stateParam: any = { ...state }
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
-        // window.location.href = `https://ebay.gogeta.bike/hr-portal/sal-sac-form?params=${encoded}`
+        window.location.href = `https://gogeta.bike/portal/sal-sac-form?params==${encoded}`
     }
     const { errors, handleSubmit } = FormC({
         values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary },
