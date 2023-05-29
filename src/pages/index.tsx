@@ -12,7 +12,7 @@ import { homeList } from '<prefix>/json/pages'
 import StoreFinder from '<prefix>/component/storefinder';
 import UKCalculator from '<prefix>/component/calculateSchemePackage/ukCalculator';
 import { useRouter } from 'next/router';
-import { useEffect, useState,FormEvent } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 import { applyCalculator } from '<prefix>/common/utilits';
 import { FormC } from '<prefix>/common/validate';
 import { Form } from 'react-bootstrap';
@@ -45,10 +45,10 @@ function EbayLp({ context }: any) {
     const handleCycleCalculate = (param: any) => {
         param = {
             ...param,
-            totalPackageValue:Number(param.bikeValue) + Number(param.accessoriesValue)
+            totalPackageValue: Number(param.bikeValue) + Number(param.accessoriesValue)
         }
         let valPrice = applyCalculator(param)
-        setState({...param,...valPrice})
+        setState({ ...param, ...valPrice })
     }
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -77,12 +77,12 @@ function EbayLp({ context }: any) {
                                 <div className="d-flex align-items-center justify-content-between schemeHead">
                                     <h5>Calculate your Cycling Scheme package</h5>
                                 </div>
-                                <div className='applyNow p-5'> 
-                                <Form onSubmit={handleSubmit}>
-                                    <UKCalculator errors={errors} state={state} onChange={onChange} />
-                                    <div className="d-flex justify-content-end">
-                <button type="submit" className="customSiteBtn btn btn-primary px-4">Submit <i className="fa-solid fa-angle-right"></i></button>
-            </div>
+                                <div className='applyNow p-5'>
+                                    <Form onSubmit={handleSubmit}>
+                                        <UKCalculator errors={errors} state={state} onChange={onChange} />
+                                        <div className="d-flex justify-content-end">
+                                            <button type="submit" className="customSiteBtn btn btn-primary px-4">Submit <i className="fa-solid fa-angle-right"></i></button>
+                                        </div>
                                     </Form>
                                 </div>
                             </div>

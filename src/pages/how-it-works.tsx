@@ -24,15 +24,15 @@ function HowItWorksEbay({ context }: any) {
                             <p>The Cycle to Work Scheme is a tax incentive aimed at getting more people active, by providing unbeatable savings on the cost of a new bike, or e-bike as well as cycling accessories such as a helmet, lights or a lock. </p>
                             <div className='d-flex align-items-center'>
                                 {
-                                    host === 'uk'?
-                                    <Button type="button" className='customSiteBtn me-2'>FAQs <i className="fa-solid fa-angle-right"></i></Button>
-                                    :
-                                    <>
-                                    <Button type="button" className='customSiteBtn me-2'>Speak to an expert <i className="fa-solid fa-angle-right"></i></Button>
-                                <Button type="button" className='customSiteBtn transpBtn'>FAQs <i className="fa-solid fa-angle-right"></i></Button>
-                                    </>
+                                    host === 'uk' ?
+                                        <Button type="button" className='customSiteBtn me-2'>FAQs <i className="fa-solid fa-angle-right"></i></Button>
+                                        :
+                                        <>
+                                            <Button type="button" className='customSiteBtn me-2'>Speak to an expert <i className="fa-solid fa-angle-right"></i></Button>
+                                            <Button type="button" className='customSiteBtn transpBtn'>FAQs <i className="fa-solid fa-angle-right"></i></Button>
+                                        </>
                                 }
-                                
+
                             </div>
                         </div>
                     </Col>
@@ -46,7 +46,7 @@ function HowItWorksEbay({ context }: any) {
                 </Row>
             </Container>
         </section>
-        {host === 'uk'?null:<Container>
+        {host === 'uk' ? null : <Container>
             <section className='save-up svNup'>
                 <Row className="align-items-center">
                     <Col md={6} >
@@ -73,12 +73,62 @@ function HowItWorksEbay({ context }: any) {
                             <div className='d-none d-md-block mb-4'>
                                 <MainHead title='What can you get?' />
                             </div>
-                            <p className='text-white mx-wdt5'>In Ireland employees can benefit from tax savings up to certain limits, but can add their own funds if they wish to get a bike and accessories at a higher value. In our marketplace   <a>marketplace</a> you’ll be able to see your exact savings on any bike.</p>
-                            <ul className='dotlisting'>
-                                <li><span></span>Cargo bikes & safety equipment, the limit is €3,000</li>
-                                <li><span></span>Electric bikes & safety equipment, the limit is €1,500</li>
-                                <li><span></span>Standard bikes & safety equipment, the limit is €1,250</li>
-                            </ul>
+                            {
+                                host === 'uk' ? <>
+                                    <p className='text-white mx-wdt5'>The Cycle to Work Scheme voucher limit set by [companyname] is £[limit].</p>
+                                    <p className='text-white mx-wdt5'>You can get whatever you need to keep you in the saddle and commuting regularly. That includes any type of bike or e-bike and cycling accessories including:</p>
+                                    <Row className='mt-4 mt-md-5 mb-4'>
+                                        <Col sm={6} className='mb-4 px-0 px-sm-3'>
+                                            <div className='realtimeBike d-flex align-items-start text-white'>
+                                                <img src="assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <span>Cycle clothing</span>
+                                            </div>
+                                        </Col>
+                                        <Col sm={6} className='mb-4 px-0 px-sm-3'>
+                                            <div className='realtimeBike d-flex align-items-start text-white'>
+                                                <img src="assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <span>Lights</span>
+                                            </div>
+                                        </Col>
+                                        <Col sm={6} className='mb-4 px-0 px-sm-3'>
+                                            <div className='realtimeBike d-flex align-items-start text-white'>
+                                                <img src="assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <span>Helmets</span>
+                                            </div>
+                                        </Col>
+                                        <Col sm={6} className='mb-4 px-0 px-sm-3'>
+                                            <div className='realtimeBike d-flex align-items-start text-white'>
+                                                <img src="assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <span>Child seats</span>
+                                            </div>
+                                        </Col>
+                                        <Col sm={6} className='mb-4 px-0 px-sm-3'>
+                                            <div className='realtimeBike d-flex align-items-start text-white'>
+                                                <img src="assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <span>Locks</span>
+                                            </div>
+                                        </Col>
+                                        <Col sm={6} className='mb-4 px-0 px-sm-3'>
+                                            <div className='realtimeBike d-flex align-items-start text-white'>
+                                                <img src="assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <span>Bags</span>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <p className='text-white mx-wdt5'>
+                                        Anything that’s going to help you and your bike arrive (warm, safe and secure) is allowable.
+                                    </p>
+                                </> :
+                                    <>
+                                        <p className='text-white mx-wdt5'>In Ireland employees can benefit from tax savings up to certain limits, but can add their own funds if they wish to get a bike and accessories at a higher value. In our marketplace   <a>marketplace</a> you’ll be able to see your exact savings on any bike.</p>
+                                        <ul className='dotlisting'>
+                                            <li><span></span>Cargo bikes & safety equipment, the limit is €3,000</li>
+                                            <li><span></span>Electric bikes & safety equipment, the limit is €1,500</li>
+                                            <li><span></span>Standard bikes & safety equipment, the limit is €1,250</li>
+                                        </ul>
+                                    </>
+                            }
+
                         </Col>
                         <Col md={6} className='mobor1'>
                             <div className='d-block d-md-none mb-4'>
@@ -92,11 +142,11 @@ function HowItWorksEbay({ context }: any) {
                 </div>
             </Container>
         </section>
-        {host === 'uk'?<div className='ebay-main'>
-            <SavingCalculate/>
-        </div>:
-        <CalculateSchemePackage/>}
-        {host === 'uk'?null:<section className='mltSection theprocess pb-0 pb-lg-5 mb-5 mt-hgs nobefSecl mt-4'>
+        {host === 'uk' ? <div className='ebay-main'>
+            <SavingCalculate />
+        </div> :
+            <CalculateSchemePackage />}
+        {host === 'uk' ? null : <section className='mltSection theprocess pb-0 pb-lg-5 mb-5 mt-hgs nobefSecl mt-4'>
             <div className='howtheRide'>
                 <Container>
                     <MainHead title='The process' />
