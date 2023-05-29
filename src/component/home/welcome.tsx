@@ -13,9 +13,9 @@ export default function Welcome({ host }:any) {
             <Row>
                 <Col md={6} >
                     <div className='bannerCont'>
-                        <h2 className='h2'>Welcome to the eBay Cycle to Work Scheme</h2>
+                        <h2 className='h2'>Welcome to the {host === 'uk' ?'gogeta Cycling Scheme':'Cycle to Work Scheme'} </h2>
                         <Image src={`assets/img/${host === 'uk' ?'Ebike.svg':'Illustration-Unicycle.svg'}`}height={490} width={388} alt="img" className='img-fluid d-block d-sm-none' />
-                        <p>This is where you can find your perfect bike, learn more about how the scheme works and apply.</p>
+                        <p>{host === 'uk' ?'This is where you can find your perfect bike, learn more about how the scheme works and apply.':'Learn more about how the scheme works and apply for your voucher.'}</p>
                         <div className='d-flex align-items-center'>
                             {
                                 host === 'uk' ?

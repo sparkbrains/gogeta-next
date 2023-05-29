@@ -11,8 +11,10 @@ import { useState, ChangeEvent, useEffect } from 'react';
 import CalculateSchemePackage from '<prefix>/component/calculateSchemePackage';
 import { withContext } from '<prefix>/context/appContext';
 import SavingCalculate from '<prefix>/component/home/savingCalculate';
+import { useRouter } from 'next/router';
 function HowItWorksEbay({ context }: any) {
     const host: string = context.host
+    const router = useRouter()
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
         <section className='gogetaBannerCell mb-3 mt-4 mt-sm-0'>
             <Container>
@@ -25,7 +27,7 @@ function HowItWorksEbay({ context }: any) {
                             <div className='d-flex align-items-center'>
                                 {
                                     host === 'uk' ?
-                                        <Button type="button" className='customSiteBtn me-2'>FAQs <i className="fa-solid fa-angle-right"></i></Button>
+                                        <Button onClick={()=>router.replace('/how-it-works#faq')} type="button" className='customSiteBtn me-2' >FAQs <i className="fa-solid fa-angle-right"></i></Button>
                                         :
                                         <>
                                             <Button type="button" className='customSiteBtn me-2'>Speak to an expert <i className="fa-solid fa-angle-right"></i></Button>
@@ -175,31 +177,97 @@ function HowItWorksEbay({ context }: any) {
                 </Container>
             </div>
         </section>}
-        <section className='helpingHand'>
+        <section className='helpingHand' id='faq'>
             <Container>
                 <MainHead title="Frequently asked questions" />
                 <div className='pt-5'>
-                    <Toggle title='What is the maximum value of a Cycle to Work voucher I can use?'>
-                        <p>The maximum limit is £1500 for electric bikes, or £1250 for conventional pedal bikes. This total can include accessories, if your bike is below the limit.</p>
-                        <p>If you want to buy a more expensive bike most bike shops will allow you to pay the difference.</p>
-                        <p>For example if your electric bike was priced at £2000 you could pay £500 up front to the retailer and use the Cycle to Work voucher to pay the balance of £1500. Your monthly salary sacrifice payments would be based on the £1500 balance.</p>
-                    </Toggle>
-                    <Toggle title='Question'>
-                        <p>The maximum limit is £1500 for electric bikes, or £1250 for conventional pedal bikes. This total can include accessories, if your bike is below the limit.</p>
-                        <p> If you want to buy a more expensive bike most bike shops will allow you to pay the difference.</p>
-                        <p>  For example if your electric bike was priced at £2000 you could pay £500 up front to the retailer and use the Cycle to Work voucher to pay the balance of £1500. Your monthly salary sacrifice payments would be based on the £1500 balance.</p>
-                    </Toggle>
-                    <Toggle title='Question'>
-                        <p>The maximum limit is £1500 for electric bikes, or £1250 for conventional pedal bikes. This total can include accessories, if your bike is below the limit.</p>
-                        <p> If you want to buy a more expensive bike most bike shops will allow you to pay the difference.</p>
-                        <p>  For example if your electric bike was priced at £2000 you could pay £500 up front to the retailer and use the Cycle to Work voucher to pay the balance of £1500. Your monthly salary sacrifice payments would be based on the £1500 balance.</p>
-                    </Toggle>
-                    <Toggle title='Question'>
-                        <p>The maximum limit is £1500 for electric bikes, or £1250 for conventional pedal bikes. This total can include accessories, if your bike is below the limit.</p>
-                        <p> If you want to buy a more expensive bike most bike shops will allow you to pay the difference.</p>
-                        <p>  For example if your electric bike was priced at £2000 you could pay £500 up front to the retailer and use the Cycle to Work voucher to pay the balance of £1500. Your monthly salary sacrifice payments would be based on the £1500 balance.</p>
-                    </Toggle>
-                </div>
+                            <Toggle title='What is the Cycle to Work Scheme?'>
+                                <p>The Cycle to Work Scheme was introduced by the UK Government to encourage greater participation in cycling. </p>
+                                <p>The Scheme enables employers to offer their employees the opportunity to get a bike and cycling accessories via their salary.</p>
+                                <p>This means the employee reduces part of their gross salary before tax, in exchange for a bike and accessories, and benefits from not paying Income Tax or National Insurance on the value of the bike and gear.</p>
+                                <p>Employees can use the bike for commuting as well as for leisure.</p>
+                                <p>Cycle to Work savings are typically 32% - 42% depending on your earnings.</p>
+                                <p>The scheme also acts as a form of interest free loan via salary, to further improve the affordability of getting a new bike.</p>
+                                <p>Neither the employer or the employee is required to keep a log of their use of the bike.</p>
+                            </Toggle>
+                            <Toggle title='How do I join the scheme?'>
+                                <p>To start your employer must register with <b>go</b>geta to make the scheme available to employees. It is not possible to have a salary sacrifice without the employer offering it.</p>
+                                <p>Then use <b>go</b>geta to find your bike and cycling accessories, see how much this will cost and the total salary sacrifice amount, plus the estimated tax savings.</p>
+                                <p>When you apply to join the scheme your employer will review your application, and when it is approved you will sign a salary sacrifice agreement and a hire agreement.   </p>
+                                <p>Your employer then notifies <b>go</b>geta and you get a voucher to redeem for your new bike from your preferred bike retailer. Happy cycling!</p>
+                            </Toggle>
+                            <Toggle title='What bikes and cycling accessories are available?'>
+                                <p>You can get any adult bike, including electric bikes, plus a wide range of cycling equipment and clothing. You can select cycling equipment with a bike, or if you already have a bike and are cycling to work you can choose to get equipment only, with all the same tax savings. </p>
+                                <p>You cannot get a bike for someone else.</p>
+                            </Toggle>
+                            <Toggle title='Is there a limit on how much an employee can spend via the scheme?'>
+                                <p>Your employer will set the minimum and maximum scheme limits within the <b>go</b>geta portal. You will be notified of these when the scheme is promoted to you.</p>
+                            </Toggle>
+                            <Toggle title='How are the savings made?'>
+                                <p>The Cycle to Work scheme savings are made by reducing your gross salary in exchange for your new bike. That’s called salary sacrifice.</p>
+                                <p>By reducing your salary before tax you are not paying Income Tax or National Insurance on the amount which is the value of the voucher you want to redeem for your new bike. </p>
+                                <p>So the cycle to work amount you will see in your payslip each month is before tax. The true net cost of your bike will be lower because you are not paying tax on it.</p>
+                                <p>Here’s an example:</p>
+                                {/* <p className='colorOrg'>//This will be a static instance of the calculator with values pre-filled. I will add this shortly.</p> */}
+                                <p>Plus don’t forget another nice benefit is the option to pay for the bike interest free through your salary.</p>
+                            </Toggle>
+                            <Toggle title='What happens at the end of the scheme?'>
+                                <p>The tax benefits available through the Cycle to Work Scheme are provided on the basis that employees are hiring the equipment from their employer. This avoids the scheme becoming a benefit in kind, which would attract additional tax. </p>
+                                <p>A hire agreement is supplied when the employee joins the scheme.</p>
+                                <p>This agreement is between gogeta and the employee, so there’s nothing employees will need to do, except to see out the hire term with no further charges or deposits. This offers the best benefit, with no hidden transfer of ownership fees.</p>
+                                <p>When the Fair Market Value of the goods becomes negligible, we’ll transfer ownership to the employee for free.</p>
+                                <p>Employees also have the opportunity to buy the goods early or return the bike, if they wish.</p>
+                            </Toggle>
+                            <Toggle title='How often can I join the scheme?'>
+                                <p>Your employer will decide this but it’s usually once an existing Cycle to Work Scheme salary sacrifice has ended.</p>
+                            </Toggle>
+                            <Toggle title='If I work from home can I join the scheme?'>
+                                <p>Yes, if you use the bike for work related trips such as to a co-work space, to the post office or to collect work-related items.</p>
+                            </Toggle>
+                            <Toggle title='What happens if I leave my job during the scheme?'>
+                                <p>If you leave during the salary sacrifice period your employer will deduct the outstanding balance from your final net pay.</p>
+                            </Toggle>
+                            <Toggle title='What happens if I take maternity/paternity/adoption or sick leave?'>
+                                <p>The salary sacrifice will continue as long as your salary remains at an acceptable level to ensure affordability, and it does not drop below National Minimum Wage. Your employer will confirm this with you.</p>
+                            </Toggle>
+                            <Toggle title='Who owns the bike?'>
+                                <p><b>go</b>geta owns the bike during the term of the hire agreement. </p>
+                                <p>This ensures the tax benefits are maintained. </p>
+                                <p>At the end of the hire term the employee is given the option to take ownership of the bike for a £1 transfer of ownership fee..</p>
+                            </Toggle>
+                            <Toggle title='Who is responsible for maintaining the bike?'>
+                                <p>It is the employee’s responsibility to ensure the bike is well maintained. </p>
+                            </Toggle>
+                            <Toggle title='What happens if there is a problem with the bike?'>
+                                <p>Should there be any issues with the bike, in the first instance contact the bike supplier. </p>
+                                <p>In the event of a warranty issue and subsequent replacement the bike supplier will handle this for the employee, and the scheme will continue.</p>
+                            </Toggle>
+                            <Toggle title='Do I have to spend the full amount of my gogeta voucher in one go?'>
+                                <p>Yes, you need to complete your Cycle to Work transaction with a single supplier in one go, as it is not possible to split the amounts or use more than one supplier. </p>
+                                <p>Remember your salary sacrifice will be for the full amount, and will start shortly after your employer approves your application. So it’s important to spend the full amount promptly.</p>
+                                <p>In the event there is a shortfall you can make up the difference by getting extra cycling accessories.</p>
+                            </Toggle>
+                            <Toggle title='What happens if the bike is stolen?'>
+                                <p>It is the employee’s responsibility to insure the bike.</p>
+                                <p>If the bike is stolen during the salary sacrifice period the employee remains liable for any remaining payments. If the bike is insured and replaced then the agreement continues as normal.</p>
+                                <p>We highly recommend getting insurance for the bike.</p>
+                            </Toggle>
+                            <Toggle title='What if I change my mind?'>
+                                <p>There is a 14 day cooling off period after you collect the bike if you change your mind. After that the salary sacrifice agreement with your employer cannot be cancelled.</p>
+                            </Toggle>
+                            <Toggle title='How do I make a complaint?'>
+                                <p>We endeavour to provide you with excellent customer service however we acknowledge that, at times, we may fail to meet your expectations. </p>
+                                <p>Should you be dissatisfied with the provision or our failure to provide a service to you, you can make a complaint by: </p>
+                                <ul>
+                                    <li><p>Email: hello@gogeta.bike</p></li>
+                                    <li><p>Post: Velomatch Limited (trading as gogeta), ℅ Johnston Carmichael, Birchin Court, 20 Birchin Lane, London EC3V 9DU</p></li>
+                                </ul>
+                                <p>We try to resolve complaints as soon as possible. Should we resolve your complaint by the close of the third business day following the day on which we receive your complaint, we will issue you with a written communication called a summary resolution acknowledging that you made a complaint and setting out that the complaint has been resolved and making you aware of your right to refer the complaint to the Financial Ombudsman Service should you be dissatisfied with the resolution. </p>
+                                <p>Should we consider that we are not able to resolve the complaint by the close of the third business day, we will issue you with a written complaint acknowledgement within two working days.  </p>
+                                <p>Thereafter, we will investigate your complaint in order to reach a fair resolution. Please note that investigating your complaint may require us to contact you in order to obtain further information about your complaint and the allegations raised.</p>
+                                <p>We endeavour to issue you with a written final response within eight weeks.</p>
+                            </Toggle>
+                        </div>
             </Container>
         </section>
     </Applayout>
