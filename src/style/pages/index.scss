@@ -312,6 +312,7 @@
 
     &-switch {
         margin: 15px 0px;
+
         p {
             font-weight: 400;
             font-size: 11px;
@@ -325,7 +326,8 @@
     .form-group {
         background-color: var(--p-color-two);
         padding: 20px 20px;
-        border-radius:0px 0px 25px 25px;
+        border-radius: 0px 0px 25px 25px;
+
         label {
             font-weight: 400;
             font-size: 11px;
@@ -334,14 +336,16 @@
             margin-bottom: 10px;
             color: var(--backColor);
         }
-        .input-group-text{
+
+        .input-group-text {
             background-color: var(--backColor);
             color: var(--white);
             border: 0;
             border-radius: 15px;
             padding: 0.625em 1em;
         }
-        .form-control{
+
+        .form-control {
             border-radius: 15px;
         }
     }
@@ -412,5 +416,62 @@
                 }
             }
         }
+    }
+}
+
+.hiwUk.mltSection {
+    z-index: unset !important;
+
+    &:before {
+        height: 1860px !important;
+        bottom: -37px !important;
+    }
+
+    &:after {
+        z-index: 0 !important;
+    }
+
+    .cycling-saving,
+    .main-head {
+        z-index: 2;
+        position: relative;
+    }
+}
+
+.gogetaMain .main.ebay-howWorks .hiwUk.mltSection:after {
+    z-index: 0 !important;
+    width: 300px;
+    height: 1460px;
+}
+
+.saveUptoSec {
+    background-color: var(--secondary-new-two);
+}
+
+.main-back.mainBcLpafbf {
+    &:before {
+        bottom: 0px;
+        width: 500px;
+        background-size: cover;
+        background-position: top;
+        height: 2728px;
+    }
+
+    &:after {
+        top: 300px;
+        width: 400px;
+        background-size: cover;
+        background-position: center;
+        height: 1078px;
+    }
+}
+.lpasd{
+    &:before{
+         background-image: url('../../../public/assets/img/img-Sweep1.png') !important;
+        left: -174px !important;
+        bottom: -20px !important;
+    }
+    .imgcell{
+        text-align: right !important;
     }
 }

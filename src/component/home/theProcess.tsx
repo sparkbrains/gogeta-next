@@ -2,11 +2,11 @@ import Image from "next/image"
 import { Col, Container, Row } from "react-bootstrap"
 import { MainHead } from "../main-head";
 import { MainHeadSub } from "../main-head/sub-main";
-export default function TheProcess({data}:any){
+export default function TheProcess({data,host}:any){
     return<Container>
     <section className='theProcess'>
         <MainHead title='The process' />
-        <Row className='pt-5'>
+        <Row className={`pt-5 ${host === 'uk'?'rowLineBef':''}`}>
             {
                 data?.map((item:any,key:number)=>{
                     return <Col key={key} lg={data?.length > 3 ? 3:4} md={6}>

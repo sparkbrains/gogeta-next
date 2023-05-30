@@ -128,7 +128,7 @@ export const applyCalculator = (obj: any) => {
   if (param.regular_gross) {
     param = {
       ...param,
-      net_regular: (param.regular_gross / (1 - (saving?.saving_percentage_number / 100))).toFixed(2),
+      net_regular: (param.regular_gross * (1 - (saving?.tax_percent / 100))).toFixed(2),
     }
   }
   if (param.net_regular?.length) {
@@ -140,6 +140,7 @@ export const applyCalculator = (obj: any) => {
   if (param.total_savings) {
     param = {
       ...param,
+      net_total_amount: (totalVal - param?.total_savings).toFixed(2),
       total_savings_percentage: saving?.saving_percentage
     }
   }
@@ -151,11 +152,13 @@ function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: numb
   let current_treshold = 12570;
   let max_bike_value_per_year = salary - current_treshold;
   let max_bike_value = (max_bike_value_per_year / 12) * salary_sacrifice;
-  let value = calc_taxes(country, salary);
+  let value = calc_taxes(country, salary)?.data;
   let tax1 = value[0];
   let threshold = value[1];
-  let value2 = calc_taxes(country, salary - total_bp);
+  let value2 = calc_taxes(country, salary - total_bp)?.data;
   let tax2 = value2[0];
+  console.log(value2,value,'value===');
+  
   let differenceOverThreshold = tax1 == tax2 ? 0 : threshold;
   let netcost = ((salary - differenceOverThreshold) * tax1) + ((total_bp - (salary - differenceOverThreshold)) * tax2);
   
@@ -166,6 +169,7 @@ function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: numb
     per_month: (Number(takehomepay)).toFixed(2),
     total_savings: Number(savings).toFixed(2),
     saving_percentage: Number(savingsPercent).toFixed(2) + "%",
+    tax_percent: calc_taxes(country, salary)?.tax,
     saving_percentage_number: Number(savingsPercent).toFixed(2),
   }
   return context
@@ -196,5 +200,6 @@ function calc_taxes(country: string, salary: any) {
     else if (salary >= 50271 && salary <= 125140) { tax = 44.00; threshold = 50271 }
     else { tax = 48.00; threshold = 125141 }
   }
-  return [(100 - tax) / 100, threshold];
+  console.log("value===",tax)
+  return {data:[(100 - tax) / 100, threshold],tax:tax};
 }

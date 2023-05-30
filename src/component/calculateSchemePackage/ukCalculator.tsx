@@ -3,6 +3,7 @@ import { InputSelectDrop } from "<prefix>/common/inputSelectDrop";
 import { handleChangeSalary, onKeyPress } from "<prefix>/common/utilits";
 import Image from "next/image";
 import { Col, Row } from "react-bootstrap";
+import ToolTip from "../info";
 
 export default function UKCalculator({errors,state,onChange}:any){
     return<Row>
@@ -101,31 +102,31 @@ export default function UKCalculator({errors,state,onChange}:any){
     <Col xs={12} sm={6}>
         <div className="price-calculate">
             <div className="d-flex align-items-center justify-content-between flex-wrap">
-                <p>Regular gross salary sacrifice</p>
+                <p className="d-flex align-items-center">Regular gross salary sacrifice <ToolTip className='ms-2' des='This is the amount of take-home pay that you will sacrifice from each pay packet for the duration of your Cycle to Work agreement'/></p>
                 <Image src='/assets/calculation/calendar_date_month.svg' width={36} height={36} alt='cal' />
             </div>
             <h4>£{state.regular_gross ?  handleChangeSalary(state.regular_gross):0}</h4>
         </div>
         <div className="price-calculate">
             <div className="d-flex align-items-center justify-content-between flex-wrap">
-                <p>Net regular amount</p>
+                <p className="d-flex align-items-center">Net regular amount <ToolTip className='ms-2' des='This is the amount that your employer will deduct from your salary before tax and National Insurance is taken into account'/></p>
                 <Image src='/assets/calculation/pound.svg' width={36} height={36} alt='cal' />
             </div>
             <h4>£{state.net_regular ?handleChangeSalary(state.net_regular):0}</h4>
         </div>
+        <div className="price-calculate">
+            <div className="d-flex align-items-center justify-content-between flex-wrap">
+                <p className="d-flex align-items-center">Net total amount <ToolTip className='ms-2' des='This is the total amount that you will pay for your bike and accessories over the duration of your Cycle to Work agreement'/></p>
+                <Image src='/assets/calculation/pound.svg' width={36} height={36} alt='cal' />
+            </div>
+            <h4>£{state.net_total_amount? handleChangeSalary(state.net_total_amount):0}</h4>
+        </div>
         <div className="price-calculate secondBlue">
             <div className="d-flex align-items-center justify-content-between flex-wrap">
-                <p>Total savings</p>
-                <Image src='/assets/calculation/bag_GBP_pound.svg' width={36} height={36} alt='cal' />
-            </div>
-            <h4>£{state.total_savings? handleChangeSalary(state.total_savings):0}</h4>
-        </div>
-        <div className="price-calculate green">
-            <div className="d-flex align-items-center justify-content-between flex-wrap">
-                <p>Total savings</p>
+                <p className="d-flex align-items-center">Total savings <ToolTip className='ms-2' des='The amount you will save on the bike and accessories after tax savings'/></p>
                 <Image src='/assets/calculation/percent.svg' width={36} height={36} alt='cal' />
             </div>
-            <h4>{state.total_savings_percentage?.length ? state.total_savings_percentage:'0%'}</h4>
+            <h4>£{state.total_savings? handleChangeSalary(state.total_savings):0} <sub>({state.total_savings_percentage?.length ? state.total_savings_percentage:'0%'})</sub></h4>
         </div>
     </Col>
 </Row>

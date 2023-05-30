@@ -68,8 +68,8 @@ function EbayLp({ context }: any) {
         <Applayout className='ebay w-100 m-0 pt-0'>
             <div className={`main-back ${host === 'uk' ? 'mainBcLpafbf' : ''}`}>
                 <Welcome host={host} />
-                <SaveUp data={saveUpto} />
-                <TheProcess data={process} />
+                <SaveUp data={saveUpto} host={host}/>
+                <TheProcess data={process} host={host}/>
                 {helpinghand ? <HelpingHand /> : <section className='schemeCost poreZindex mb-5'>
                     <Container>
                         <div className='toggleSchemeCost calcCyclSchPack'>
