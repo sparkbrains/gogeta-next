@@ -18,7 +18,9 @@ class AppContext extends Component<any> {
             host:window.location.host === 'collider.gogeta.bike' ? 'ukMarket':process.env.NEXT_PUBLIC_APP_ENV
         })
     }
+    
     render() {
+    console.log(this.state,window.location.host,window.location.host === 'collider.gogeta.bike','state===');
         return (
             <MainContext.Provider
                 value={{
