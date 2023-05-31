@@ -13,7 +13,7 @@ export const InputSelectDrop = ({ selectParam = 'name',className, onChangeSearch
         setStateFilter(data)
     }, [data])
     useEffect(()=>{
-        if(defaultValue.toString()?.length){
+        if(defaultValue?.toString()?.length){
             data.map((d:any)=>{
                 if(d[selectParam] === +defaultValue){
                     setInputText(d.label)

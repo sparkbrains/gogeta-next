@@ -1,9 +1,10 @@
 import React, { Component, createContext } from 'react'
+import {withRouter} from 'next/router';
 export const MainContext = createContext({});
 interface IProps {
     children: any;
 }
-class AppContext extends Component<IProps> {
+class AppContext extends Component<any> {
     constructor(props:any){
         super(props)
         this.state= {
@@ -12,6 +13,10 @@ class AppContext extends Component<IProps> {
     }
     
     componentDidMount(): void {
+        this.setState({
+            ...this.state,
+            host:window.location.host === 'localhost:3000' ? 'ukMarket':process.env.NEXT_PUBLIC_APP_ENV
+        })
     }
     render() {
         return (
@@ -25,7 +30,7 @@ class AppContext extends Component<IProps> {
         )
     }
 }
-export default AppContext;
+export default withRouter(AppContext);
 export const withContext = (Components:any) => (props:any) => {
     return (
         <MainContext.Consumer>

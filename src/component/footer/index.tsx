@@ -3,6 +3,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { withContext } from '<prefix>/context/appContext';
 import Link from 'next/link';
+const logo:any = {
+    uk:'/assets/logo/logo_without.svg',
+    ukMarket:'/assets/logo/logo_without.svg',
+    ebay:'/assets/logo/eBay_logo.svg'
+}
 function Footer({context:{host}}:any){
     return<footer className='footer'>
     {host === 'uk'?null:<div className='footer-main'>
@@ -10,7 +15,7 @@ function Footer({context:{host}}:any){
             <Row>
                 <Col sm={12} md={3} lg={2} className="mb-4 mb-lg-0">
                     <div className='ftlogo'>
-                        <img src="/assets/logo/eBay_logo.svg" alt="Gogeta Logo" />
+                        <img src={logo[host]} alt="Gogeta Logo" />
                     </div>
                 </Col>
                 <Col xs={12} sm={6} md={3} lg={2} className="mb-4 mb-lg-0">

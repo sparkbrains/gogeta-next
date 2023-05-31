@@ -1,4 +1,4 @@
-import { useState, useEffect,cache } from 'react';
+import { useState, useEffect, cache } from 'react';
 import dynamic from 'next/dynamic'
 import Fetch from '../common/fetch';
 import { priceCalculator, queryParam } from '../common/utilits';
@@ -12,7 +12,7 @@ import Filterselected from '../component/filter/filterselected';
 const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'))
 const ProductList = dynamic(() => import('../component/product-list'))
 const Applayout = dynamic(() => import('../layout/applayout'))
-function EbayPLP({ user, filterRes }: any) {
+function EbayPLP({ user, filterRes,host }: any) {
     const router = useRouter()
     const [productList, setProductList] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
@@ -29,7 +29,7 @@ function EbayPLP({ user, filterRes }: any) {
         security: [],
         price: [],
         wheel_size: [],
-        showCyclePrice: 'on',
+        showCyclePrice: host ? 'on':'off',
         listing_type: 'ebikes',
         salary: ''
     })
@@ -45,7 +45,7 @@ function EbayPLP({ user, filterRes }: any) {
             security: val?.security?.split(',') || [],
             wheel_size: val?.wheel_size?.split(',') || [],
             price: val?.price?.split('-') || [],
-            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : "on",
+            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : host ? 'on':'off',
             listing_type: val?.listing_type?.length ? val?.listing_type : "ebikes",
             salary: val?.salary || "30000",
         }
@@ -59,7 +59,7 @@ function EbayPLP({ user, filterRes }: any) {
         setIsLoading(true)
         Fetch(`test-products/?page=${page}&portalDomain=gogeta.dev&${!search?.includes('listing_type') ? search + `listing_type=ebikes` : search}`).then(d => {
             if (d?.status) {
-                setIsLoading(false)                
+                setIsLoading(false)
                 setResult(d.data, page, val)
             } else {
                 setIsLoading(false)
@@ -92,7 +92,7 @@ function EbayPLP({ user, filterRes }: any) {
             price: [],
             security: [],
             wheel_size: [],
-            showCyclePrice: "on",
+            showCyclePrice: host ? 'on':'off',
             listing_type: "ebikes",
             salary: "",
         })
@@ -146,7 +146,7 @@ function EbayPLP({ user, filterRes }: any) {
                         >
                             {
                                 productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}>
-                                    <button onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${param.showCyclePrice === 'on' ? `?salary=${param.salary}` : ''}`)} className='btn-trans w-100 text-start h-100'>
+                                    <button onClick={() => host ? router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${param.showCyclePrice === 'on' ? `?salary=${param.salary}` : ''}`):{}} className='btn-trans w-100 text-start h-100'>
                                         <ProductList item={item} newDesign={true} />
                                     </button>
                                 </div>)
@@ -159,19 +159,22 @@ function EbayPLP({ user, filterRes }: any) {
     );
 }
 export async function getServerSideProps(context: any) {
+    let host = context.req.headers.host
+    host = host === 'gogeta.dev' ? host : null
     const search = context?.resolvedUrl.replace('/bikes?', '&')
-    let data = await getProducts(search)
-    let dataFilter = await getFiltersCount(search)
+    let data = await getProducts(search, host)
+    let dataFilter = await getFiltersCount(search, host)
     return {
         props: {
             user: { ...data },
-            filterRes: { ...dataFilter }
+            filterRes: { ...dataFilter },
+            host
         },
     }
 }
-async function getProducts(search: string) {
+async function getProducts(search: string, host: string) {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const response = await fetch(baseURL + `test-products/?page=${1}&portalDomain=gogeta.dev&listing_type=ebikes${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
+    const response = await fetch(baseURL + `test-products/?page=${1}${host ? '&portalDomain=gogeta.dev' : ''}&listing_type=ebikes${search?.includes('showCyclePrice') ? search : `&showCyclePrice=${host ? 'on':'off'}`}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',
@@ -180,9 +183,9 @@ async function getProducts(search: string) {
     })
     return response.json();
 }
-async function getFiltersCount(search: string) {
+async function getFiltersCount(search: string, host: string) {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const res = await fetch(baseURL + `get-filter-count/?portalDomain=gogeta.dev${search?.includes('showCyclePrice') ? search : '&showCyclePrice=on'}`, {
+    const res = await fetch(baseURL + `get-filter-count/?${host ? '&portalDomain=gogeta.dev' : ''}${search?.includes('showCyclePrice') ? search : `&showCyclePrice=${host ? 'on':'off'}`}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',

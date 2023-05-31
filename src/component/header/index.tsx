@@ -13,6 +13,7 @@ import { withContext } from "<prefix>/context/appContext";
 import { useRouter } from "next/router";
 const logo:any = {
     uk:'/assets/logo/logo_without.svg',
+    ukMarket:'/assets/logo/logo_without.svg',
     ebay:'/assets/logo/eBay_logo.svg'
 }
 function Header({context}: any) {
@@ -31,7 +32,7 @@ function Header({context}: any) {
     return <header className="header border-0">
         <Navbar expand="lg">
             <Container className='mob_re_non'>
-                <Link href="/"><img src={logo[host]} alt="Gogeta Logo" /></Link>
+                <Link href={host === 'ukMarket'? "":"/"}><img src={logo[host]} alt="Gogeta Logo" /></Link>
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
                         className={`me-auto ms-lg-5 my-2 my-lg-0 ${host === 'uk' ? 'd-flex align-item-center justify-content-between w-100' : ''}`}
@@ -49,17 +50,17 @@ function Header({context}: any) {
                                         <Nav.Link href="#action4"><Image width={45} height={44} alt="search_ico" src='/assets/img/interface_search_square.svg' /></Nav.Link>
                                         <Nav.Link href="#action4"><Image width={45} height={44} alt="profile_ico" src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
                                     </div>
-                                    <Link className='d-block d-lg-none nav-link' href="/bikes?listing_type=ebikes&showCyclePrice=on">Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
+                                    <Link className='d-block d-lg-none nav-link' href={`/bikes?listing_type=ebikes&showCyclePrice=${host === 'ukMarket'?'off':'on'}`}>Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
                                     <Link className='d-block d-lg-none nav-link' href="">Help <i className="fa-solid fa-angle-right"></i></Link>
-                                    <Link className='d-block d-lg-none nav-link' href="/apply-now">Apply for your voucher now <i className="fa-solid fa-angle-right"></i></Link>
+                                    <Link className='d-block d-lg-none nav-link' href={host === 'ukMarket'? "":"/apply-now"}>Apply for your voucher now <i className="fa-solid fa-angle-right"></i></Link>
                                 </>
                         }
                     </Nav>
                     {
                         host !== 'uk' ? <div className=" align-items-center navbar-nav d-none d-lg-flex">
-                            <Link className='d-none d-lg-block nav-link' href="/bikes?listing_type=ebikes&showCyclePrice=on">Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
+                            <Link className='d-none d-lg-block nav-link' href={`/bikes?listing_type=ebikes&showCyclePrice=${host === 'ukMarket'?'off':'on'}`}>Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
                             <Link className='d-none d-lg-block nav-link' href="">Help <i className="fa-solid fa-angle-right"></i></Link>
-                            <Link className='d-none d-lg-block nav-link' href="/apply-now">Apply for your voucher now <i className="fa-solid fa-angle-right"></i></Link>
+                            <Link className='d-none d-lg-block nav-link' href={host === 'ukMarket'? "":"/apply-now"}>Apply for your voucher now <i className="fa-solid fa-angle-right"></i></Link>
                             <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="search_ico" src='/assets/img/interface_search_square.svg' /></Nav.Link>
                             <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="profile_ico" src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
                         </div> : null}
