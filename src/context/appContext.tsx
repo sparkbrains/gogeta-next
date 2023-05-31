@@ -15,7 +15,7 @@ class AppContext extends Component<any> {
     componentDidMount(): void {
         this.setState({
             ...this.state,
-            host:window.location.host === 'localhost:3000' ? 'ukMarket':process.env.NEXT_PUBLIC_APP_ENV
+            host:window.location.host === 'collider.gogeta.bike' ? 'ukMarket':process.env.NEXT_PUBLIC_APP_ENV
         })
     }
     render() {
