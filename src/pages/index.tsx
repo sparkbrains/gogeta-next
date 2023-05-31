@@ -36,7 +36,6 @@ function EbayLp({ context }: any) {
         handleCycleCalculate(param)
     }
     useEffect(() => {
-    const host: string = context.host
         // if (router.query?.params?.length) {
         //     const obj: any = JSON.parse(window.atob(`${router.query.params}`))
         //     let valPrice = applyCalculator(obj.bikeValue, +obj.annualSalary, obj.bikeType)
@@ -48,7 +47,7 @@ function EbayLp({ context }: any) {
         router.push('/bikes')
         return;
     }
-    }, [router])
+    }, [host])
     const handleCycleCalculate = (param: any) => {
         param = {
             ...param,
