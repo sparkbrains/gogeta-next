@@ -109,7 +109,7 @@ export default function UKCalculator({errors,state,onChange}:any){
         </div>
         <div className="price-calculate">
             <div className="d-flex align-items-center justify-content-between flex-wrap">
-                <p className="d-flex align-items-center">Net regular amount <ToolTip className='ms-2' des='This is the amount that your employer will deduct from your salary before tax and National Insurance is taken into account'/></p>
+                <p className="d-flex align-items-center">Net regular amount <ToolTip className='ms-2' des='This is the amount that you will pay (eg, monthly) after the tax savings.'/></p>
                 <Image src='/assets/calculation/pound.svg' width={36} height={36} alt='cal' />
             </div>
             <h4>£{state.net_regular ?handleChangeSalary(state.net_regular):0}</h4>
