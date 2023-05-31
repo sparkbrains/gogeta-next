@@ -41,9 +41,7 @@ function EbayLp({ context }: any) {
         //     let val = { ...state, ...obj, accessoriesValue: obj.accessoriesValue || 0, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
         //     setState(val)
         // }
-        if(host === 'ukMarket'){
-            router.push('/bikes')
-        }
+        
     }, [router])
     const handleCycleCalculate = (param: any) => {
         param = {
@@ -67,6 +65,11 @@ function EbayLp({ context }: any) {
     })
     const host: string = context.host
     const { process, helpinghand, saveUpto } = host === 'uk' ? homeList.uk : homeList.ebay
+    console.log(host === 'ebay', 'state===');
+    if(host === 'ebay'){
+        router.push('/bikes')
+        return;
+    }
     return (
         <Applayout className='ebay w-100 m-0 pt-0'>
             <div className={`main-back ${host === 'uk' ? 'mainBcLpafbf' : ''}`}>
