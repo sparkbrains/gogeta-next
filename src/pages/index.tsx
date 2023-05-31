@@ -17,6 +17,7 @@ import { applyCalculator } from '<prefix>/common/utilits';
 import { FormC } from '<prefix>/common/validate';
 import { Form } from 'react-bootstrap';
 function EbayLp({ context }: any) {
+    const host: string = context.host
     const router = useRouter()
     const [state, setState] = useState<any>({
         bikeValue: '',
@@ -35,13 +36,18 @@ function EbayLp({ context }: any) {
         handleCycleCalculate(param)
     }
     useEffect(() => {
+    const host: string = context.host
         // if (router.query?.params?.length) {
         //     const obj: any = JSON.parse(window.atob(`${router.query.params}`))
         //     let valPrice = applyCalculator(obj.bikeValue, +obj.annualSalary, obj.bikeType)
         //     let val = { ...state, ...obj, accessoriesValue: obj.accessoriesValue || 0, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
         //     setState(val)
         // }
-        
+        console.log(host,host === 'ukMarket', 'state===');
+    if(host === 'ukMarket'){
+        router.push('/bikes')
+        return;
+    }
     }, [router])
     const handleCycleCalculate = (param: any) => {
         param = {
@@ -63,13 +69,8 @@ function EbayLp({ context }: any) {
         values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary },
         onSubmit
     })
-    const host: string = context.host
     const { process, helpinghand, saveUpto } = host === 'uk' ? homeList.uk : homeList.ebay
-    console.log(host === 'ebay', 'state===');
-    if(host === 'ebay'){
-        router.push('/bikes')
-        return;
-    }
+    
     return (
         <Applayout className='ebay w-100 m-0 pt-0'>
             <div className={`main-back ${host === 'uk' ? 'mainBcLpafbf' : ''}`}>
