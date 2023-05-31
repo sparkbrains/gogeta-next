@@ -8,7 +8,7 @@ class AppContext extends Component<any> {
     constructor(props: any) {
         super(props)
         this.state = {
-            host: process.env.NEXT_PUBLIC_APP_ENV
+            host: ''
         }
     }
 
@@ -20,8 +20,9 @@ class AppContext extends Component<any> {
             })
         }
     }
-
+    
     render() {
+        console.log(this.state,'state=== 1');
         return (
             <MainContext.Provider
                 value={{
