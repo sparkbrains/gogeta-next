@@ -41,6 +41,9 @@ function EbayLp({ context }: any) {
         //     let val = { ...state, ...obj, accessoriesValue: obj.accessoriesValue || 0, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
         //     setState(val)
         // }
+        if(host === 'ukMarket'){
+            router.push('/bikes')
+        }
     }, [router])
     const handleCycleCalculate = (param: any) => {
         param = {
