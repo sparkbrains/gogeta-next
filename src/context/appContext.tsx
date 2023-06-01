@@ -33,7 +33,7 @@ class AppContext extends Component<any> {
                         profile: {
                             "currencyCode": "GBP",
                             "currencySymbol": "£",
-                            portalLogo:"/assets/logo/logo_without.svg"
+                            portalLogo:host === 'uk'?"/assets/logo/logo_without.svg":'/assets/logo/squaretrade-logo.svg'
                         }
                     })
                 }
@@ -42,6 +42,8 @@ class AppContext extends Component<any> {
     }
 
     render() {
+        console.log(this.state);
+        
         return (
             <MainContext.Provider
                 value={{

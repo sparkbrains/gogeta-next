@@ -10,7 +10,7 @@ const logo:any = {
 }
 function Footer({context:{host}}:any){
     return<footer className='footer'>
-    {host === 'uk'?null:<div className='footer-main'>
+    {host.includes('uk')?null:<div className='footer-main'>
         <Container>
             <Row>
                 <Col sm={12} md={3} lg={2} className="mb-4 mb-lg-0">
@@ -83,17 +83,17 @@ function Footer({context:{host}}:any){
     <div className='footer-end'>
         <div className='bottomFooter'>
             <Container>
-                <Row className={host !== 'uk'?'':'flex-row-reverse'}>
+                <Row className={!host.includes('uk')?'':'flex-row-reverse'}>
                     <Col md={6}>
-                        <ul className={`list-unstyled d-flex ${host === 'uk'?'justify-content-end':''}`}>
+                        <ul className={`list-unstyled d-flex ${host.includes('uk')?'justify-content-end':''}`}>
                             <li><Link href='#'>Cookie policy</Link></li>
                             <li><Link href='#'>Privacy policy</Link></li>
                             <li><Link href='#'>Terms of use</Link></li>
                         </ul>
                     </Col>
                     <Col md={6}>
-                        <p className={`copyRightTxt ${host === 'uk'?'text-start mb-2':''}`}>© 2023 Velomatch Ltd. t/a gogeta</p>
-                        {host !== 'uk'?'':<p className='copyRightTxt text-start velomatchCont'>Velomatch Limited t/a gogeta is a registered company in England and Wales as Velomatch Limited (No. 13403344), Birchin Court, 20 Birchin Lane, London EC3V 9DU. We are authorised and regulated by the Financial Conduct Authority under registration number 994240.</p>}
+                        <p className={`copyRightTxt ${host.includes('uk')?'text-start mb-2':''}`}>© 2023 Velomatch Ltd. t/a gogeta</p>
+                        {!host.includes('uk')?'':<p className='copyRightTxt text-start velomatchCont'>Velomatch Limited t/a gogeta is a registered company in England and Wales as Velomatch Limited (No. 13403344), Birchin Court, 20 Birchin Lane, London EC3V 9DU. We are authorised and regulated by the Financial Conduct Authority under registration number 994240.</p>}
                     </Col>
                 </Row>
             </Container>
