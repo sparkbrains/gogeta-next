@@ -7,6 +7,7 @@ import { Col, Container, Form, Row } from "react-bootstrap"
 import Button from "../button"
 import { MainHead } from "../main-head";
 import { Bus, Car, EntertainmentTicket, FoodBurger, FoodCandy, FoodDrink, FoodTakeway, NatureEco, Train } from "../svgIcon";
+import { withContext } from "<prefix>/context/appContext";
 interface Iprops {
     cal_burgers: number
     cal_calories: number
@@ -18,7 +19,8 @@ interface Iprops {
     cal_takeaway: number
     cal_tree: number
 }
-export default function SavingCalculate(){
+function SavingCalculate({context}:any){
+    const {profile,hostUrl} = context
     const isMobile = useMediaQuery(600)
     const [data, setData] = useState<Iprops>({
         cal_burgers: 0,
@@ -40,12 +42,18 @@ export default function SavingCalculate(){
         distance_miles: '5',
         time_period: 'period_annually',
         mode_of_transport: 'transport_car',
-        portalDomain: 'gogeta.dev'
+        portalDomain: ''
     })
     
     useEffect(() => {
         CalculatorData(null)
     }, [])
+    useEffect(() => {
+        setCalclulateState({
+            ...calclulateState,
+            portalDomain:hostUrl
+        })
+    }, [hostUrl])
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setCalclulateState({
             ...calclulateState,
@@ -54,7 +62,7 @@ export default function SavingCalculate(){
     }
     const CalculatorData = (e: any) => {
         e?.preventDefault();
-        const val = queryParam(calclulateState)?.replace('&', '?')
+        const val = queryParam({...calclulateState,portalDomain:hostUrl})?.replace('&', '?')
         Fetch(`calculate_health_data${val}`).then(d => {
             if (d.status) {
                 setData(d.data)
@@ -194,7 +202,7 @@ export default function SavingCalculate(){
                             <div className='d-flex justify-content-between'>
                                 <div>
                                     <p>Money saved:</p>
-                                    <h3>€{handleChangeSalary(data.cal_money)}</h3>
+                                    <h3>{profile.currencySymbol}{handleChangeSalary(data.cal_money)}</h3>
                                 </div>
                                 {!isMobile ? null : <Image width={36} height={36} alt='ico' src="/assets/img/money_cash_bag_euro.svg" className="mb-4" />}
                             </div>
@@ -214,6 +222,7 @@ export default function SavingCalculate(){
     </section>
 </Container>
 }
+export default withContext(SavingCalculate)
 const TreesList = ({ handleEquivalent, data }: any) => {
     return <ul>
         <li className={'active'}>

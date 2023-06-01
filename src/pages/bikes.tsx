@@ -9,10 +9,12 @@ import CircularProgress from '../component/progress';
 import { useRouter } from "next/router";
 import Filter from '../component/filter/filter_newdesign';
 import Filterselected from '../component/filter/filterselected';
+import { withContext } from '<prefix>/context/appContext';
 const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'))
 const ProductList = dynamic(() => import('../component/product-list'))
 const Applayout = dynamic(() => import('../layout/applayout'))
-function EbayPLP({ user, filterRes,host }: any) {
+function EbayPLP({ user, filterRes,host,context }: any) {
+    const {profile} = context
     const router = useRouter()
     const [productList, setProductList] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
@@ -69,7 +71,7 @@ function EbayPLP({ user, filterRes,host }: any) {
     const setResult = (d: any, page: number, val: any) => {
         let result = d?.results
         if (Object.keys(val)?.length && val?.showCyclePrice === "on" && val?.salary?.length) {
-            result = priceCalculator(+val?.salary, d?.results)
+            result = priceCalculator(+val?.salary, d?.results,profile.currencyCode)
         }
         const data = {
             ...d,
@@ -147,7 +149,7 @@ function EbayPLP({ user, filterRes,host }: any) {
                             {
                                 productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}>
                                     <button onClick={() => host ? router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${param.showCyclePrice === 'on' ? `?salary=${param.salary}` : ''}`):{}} className='btn-trans w-100 text-start h-100'>
-                                        <ProductList item={item} newDesign={true} />
+                                        <ProductList profile={profile} item={item} newDesign={true} />
                                     </button>
                                 </div>)
                             }
@@ -194,4 +196,4 @@ async function getFiltersCount(search: string, host: string) {
     })
     return res.json();
 }
-export default EbayPLP;
+export default withContext(EbayPLP);

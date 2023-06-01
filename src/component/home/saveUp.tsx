@@ -9,7 +9,7 @@ interface iProps {
     host: string
 }
 export default function SaveUp({ data, host }: iProps) {
-    return host === 'uk' ?
+    return host.includes('uk') ?
         <section className={`save-up border-radius-0`}>
             <Container>
                 <SaveDes data={data} />

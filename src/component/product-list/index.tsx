@@ -4,9 +4,9 @@ import Card from "../card";
 import Image from "next/image"
 import ColorWay from "./colorway";
 
-export default function ProductList({ item }: any) {
+export default function ProductList({ profile,item }: any) {
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
-    let price = `${'SRP ' + item.currencyProduct.currencySymbol + item.currencyProduct.unitSuggestedRetailPrice}`
+    let price = `${'SRP ' + profile.currencySymbol + item.currencyProduct.unitSuggestedRetailPrice}`
     return <Card className={'h-100'}>
         <div className="card-image">
             <Image width={260} height={173} alt='ss' className="img-fluid card-img-top product-image" src={selectColorProduct?.colourwayImage?.length ? selectColorProduct?.colourwayImage[0] : item.productImage} />
@@ -21,17 +21,17 @@ export default function ProductList({ item }: any) {
             <h5>{item.productName}</h5>
             {item?.context && Object.keys(item?.context)?.length ?
                 <>
-                    <s className="price-current">{price} </s> <span className="primary-color ml-1">{item.currencyProduct.currencySymbol + (item.currencyProduct.unitSuggestedRetailPrice - Number(item?.context?.total_savings))}</span>
-                    <p className="primary-color price-des">Save {item.currencyProduct.currencySymbol + item?.context?.total_savings} with Cycle to Work ({item?.context?.saving_percentage})</p>
-                    <p className="price-des py-3">Just 12 monthly payments of <span className="primary-color">{item.currencyProduct.currencySymbol +item.context?.per_month}</span> from your gross salary</p>
-                    <p className="price-des">Plus a <span className="primary-color">{item.currencyProduct.currencySymbol +item.context?.initial_payment}</span> initial payment</p>
+                    <s className="price-current">{price} </s> <span className="primary-color ml-1">{profile.currencySymbol + (item.currencyProduct.unitSuggestedRetailPrice - Number(item?.context?.total_savings))}</span>
+                    <p className="primary-color price-des">Save {profile.currencySymbol + item?.context?.total_savings} with Cycle to Work ({item?.context?.saving_percentage})</p>
+                    <p className="price-des py-3">Just 12 monthly payments of <span className="primary-color">{profile.currencySymbol +item.context?.per_month}</span> from your gross salary</p>
+                    <p className="price-des">Plus a <span className="primary-color">{profile.currencySymbol +item.context?.initial_payment}</span> initial payment</p>
                 </> :
                 <>
                     {item.saving_price.offerPrice ? <s className="price-current">{price}</s> : <p className="price-current">{price}</p>}
                     {item.saving_price.offerPrice ?
                         <>
-                            <p><span>Best price </span>{item.currencyProduct.currencySymbol + item.saving_price.offerPrice}</p>
-                            <p>Save <span>{item.currencyProduct.currencySymbol + item.saving_price.saving}</span></p>
+                            <p><span>Best price </span>{profile.currencySymbol + item.saving_price.offerPrice}</p>
+                            <p>Save <span>{profile.currencySymbol + item.saving_price.saving}</span></p>
                         </> : null}
                 </>
             }

@@ -83,14 +83,22 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
   };
   return context;
 }
-export const priceCalculator = (salary: any, card: any) => {
+export const priceCalculator = (salary: any, card: any,currencyCode:string) => {
   let context = {}
   let data = card?.map((d: any) => {
+    if(currencyCode === 'EUR'){
     if (d.bicycleAssisted === "ebikes" || d.listing_type === "ebikes") {
       context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories)
     } else if (d.bicycleAssisted === "bikes" || d.listing_type === "bikes") {
       context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories, 1250)
     }
+  }else{
+    if (d.bicycleAssisted === "ebikes" || d.listing_type === "ebikes") {
+      context = calculate_bike_salary_sacrifice_in_plp(d?.currencyProduct?.unitSuggestedRetailPrice, salary, 12)
+    } else if (d.bicycleAssisted === "bikes" || d.listing_type === "bikes") {
+      context = calculate_bike_salary_sacrifice_in_plp(d?.currencyProduct?.unitSuggestedRetailPrice, salary, 12)
+    }
+  }
     d = {
       ...d,
       context: context
@@ -151,7 +159,7 @@ function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: numb
   let salary_sacrifice = sacrifice_repayment
   let current_treshold = 12570;
   let max_bike_value_per_year = salary - current_treshold;
-  let max_bike_value = (max_bike_value_per_year / 12) * salary_sacrifice;
+  let max_bike_value = (max_bike_value_per_year / 12) * salary_sacrifice;``
   let value = calc_taxes(country, salary)?.data;
   let tax1 = value[0];
   let threshold = value[1];

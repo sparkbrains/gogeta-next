@@ -6,7 +6,7 @@ export default function TheProcess({data,host}:any){
     return<Container>
     <section className='theProcess'>
         <MainHead title='The process' />
-        <Row className={`pt-5 ${host === 'uk'?'rowLineBef':''}`}>
+        <Row className={`pt-5 ${host.includes('uk')?'rowLineBef':''}`}>
             {
                 data?.map((item:any,key:number)=>{
                     return <Col key={key} lg={data?.length > 3 ? 3:4} md={6}>

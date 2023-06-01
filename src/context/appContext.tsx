@@ -1,5 +1,6 @@
 import React, { Component, createContext } from 'react'
 import { withRouter } from 'next/router';
+import Fetch from '<prefix>/common/fetch';
 export const MainContext = createContext({});
 interface IProps {
     children: any;
@@ -8,21 +9,39 @@ class AppContext extends Component<any> {
     constructor(props: any) {
         super(props)
         this.state = {
-            host: ''
+            host: '',
+            profile: {}
         }
     }
 
     componentDidMount(): void {
         if (typeof window !== "undefined") {
-            this.setState({
-                ...this.state,
-                host: window.location.host === 'collider.gogeta.bike' ? 'ukMarket' : process.env.NEXT_PUBLIC_APP_ENV
+            let host = window.location.host === 'collider.gogeta.bike' ? 'ukMarket' : process.env.NEXT_PUBLIC_APP_ENV
+            Fetch(`portal/${window.location.host}`).then(res => {
+                if (res?.status) {
+                    this.setState({
+                        ...this.state,
+                        host: host,
+                        hostUrl:window.location.host,
+                        profile: {...res.data,...res.data.portalDefaultCurrency}
+                    })
+                } else {
+                    this.setState({
+                        ...this.state,
+                        host: host,
+                        hostUrl:window.location.host,
+                        profile: {
+                            "currencyCode": "GBP",
+                            "currencySymbol": "£",
+                            portalLogo:"/assets/logo/logo_without.svg"
+                        }
+                    })
+                }
             })
         }
     }
-    
+
     render() {
-        console.log(this.state,'state=== 1');
         return (
             <MainContext.Provider
                 value={{

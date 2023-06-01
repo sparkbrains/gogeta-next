@@ -18,7 +18,7 @@ const logo:any = {
 }
 function Header({context}: any) {
     // const {context} = props
-    const {host} = context
+    const {host,profile} = context
     const router = useRouter()
     const isMobile = useMediaQuery(900)
     const [search, setSearch] = useState(false)
@@ -32,7 +32,7 @@ function Header({context}: any) {
     return <header className="header border-0">
         <Navbar expand="lg">
             <Container className='mob_re_non'>
-                <Link href={host === 'ukMarket'? "":"/"}><img src={logo[host]} alt="Gogeta Logo" /></Link>
+                <Link href={"/"}><img src={profile.portalLogo} alt="Gogeta Logo" /></Link>
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
                         className={`me-auto ms-lg-5 my-2 my-lg-0 ${host === 'uk' ? 'd-flex align-item-center justify-content-between w-100' : ''}`}

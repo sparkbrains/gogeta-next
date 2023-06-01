@@ -42,11 +42,6 @@ function EbayLp({ context }: any) {
         //     let val = { ...state, ...obj, accessoriesValue: obj.accessoriesValue || 0, monthlyPayment: valPrice.per_month, initial_payment: valPrice.initial_payment }
         //     setState(val)
         // }
-        console.log(host,host === 'ukMarket', 'state===');
-    if(host === 'ukMarket'){
-        router.push('/bikes')
-        return;
-    }
     }, [host])
     const handleCycleCalculate = (param: any) => {
         param = {
@@ -61,21 +56,20 @@ function EbayLp({ context }: any) {
         let stateParam: any = { ...state }
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
-        router.push(`/apply-now?params=${encoded}`)
-        // window.location.href = `https://ebay.gogeta.bike/hr-portal/sal-sac-form?params=${encoded}`
+        // router.push(`/apply-now?params=${encoded}`)
     }
     const { errors, handleSubmit } = FormC({
         values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary },
         onSubmit
     })
-    const { process, helpinghand, saveUpto } = host === 'uk' ? homeList.uk : homeList.ebay
+    const { process, helpinghand, saveUpto } = host.includes('uk') ? homeList.uk : homeList.ebay
     
     return (
         <Applayout className='ebay w-100 m-0 pt-0'>
-            <div className={`main-back ${host === 'uk' ? 'mainBcLpafbf' : ''}`}>
+            <div className={`main-back ${host.includes('uk') ? 'mainBcLpafbf' : ''}`}>
                 <Welcome host={host} />
                 <SaveUp data={saveUpto} host={host}/>
-                <TheProcess data={process} host={host}/>
+                <TheProcess data={host.includes('Market') ?homeList.ebay.process: process} host={host}/>
                 {helpinghand ? <HelpingHand /> : <section className='schemeCost poreZindex mb-5'>
                     <Container>
                         <div className='toggleSchemeCost calcCyclSchPack'>
@@ -96,7 +90,7 @@ function EbayLp({ context }: any) {
                     </Container>
                 </section>}
             </div>
-            {host === 'uk' ?
+            {host.includes('uk') ?
                 <section className='mltSection findlocalBike'>
                     <Container>
                         <div className='bikeFindMap poreZindex'>

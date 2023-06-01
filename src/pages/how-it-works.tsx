@@ -26,7 +26,7 @@ function HowItWorksEbay({ context }: any) {
                             <p>The Cycle to Work Scheme is a tax incentive aimed at getting more people active, by providing unbeatable savings on the cost of a new bike, or e-bike as well as cycling accessories such as a helmet, lights or a lock. </p>
                             <div className='d-flex align-items-center'>
                                 {
-                                    host === 'uk' ?
+                                    host.includes('uk') ?
                                         <Button onClick={()=>router.replace('/how-it-works#faq')} type="button" className='customSiteBtn me-2' >FAQs <i className="fa-solid fa-angle-right"></i></Button>
                                         :
                                         <>
@@ -48,7 +48,7 @@ function HowItWorksEbay({ context }: any) {
                 </Row>
             </Container>
         </section>
-        {host === 'uk' ? null : <Container>
+        {host.includes('uk') ? null : <Container>
             <section className='save-up svNup'>
                 <Row className="align-items-center">
                     <Col md={6} >
@@ -76,7 +76,7 @@ function HowItWorksEbay({ context }: any) {
                                 <MainHead title='What can you get?' />
                             </div>
                             {
-                                host === 'uk' ? <>
+                                host.includes('uk') ? <>
                                     <p className='text-white mx-wdt5'>The Cycle to Work Scheme voucher limit set by [companyname] is £[limit].</p>
                                     <p className='text-white mx-wdt5'>You can get whatever you need to keep you in the saddle and commuting regularly. That includes any type of bike or e-bike and cycling accessories including:</p>
                                     <Row className='mt-4 mt-md-5 mb-4'>
@@ -144,11 +144,11 @@ function HowItWorksEbay({ context }: any) {
                 </div>
             </Container>
         </section>
-        {host === 'uk' ? <div className='ebay-main'>
+        {host.includes('uk') ? <div className='ebay-main'>
             <SavingCalculate />
         </div> :
             <CalculateSchemePackage />}
-        {host === 'uk' ? null : <section className='mltSection theprocess pb-0 pb-lg-5 mb-5 mt-hgs nobefSecl mt-4'>
+        {host.includes('uk') ? null : <section className='mltSection theprocess pb-0 pb-lg-5 mb-5 mt-hgs nobefSecl mt-4'>
             <div className='howtheRide'>
                 <Container>
                     <MainHead title='The process' />
