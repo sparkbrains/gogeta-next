@@ -13,8 +13,10 @@ import { priceCalculator, queryParam, submitCalculator } from '<prefix>/common/u
 import Calculate from '<prefix>/component/detailOfferCalculator';
 import MainSlider from '<prefix>/component/mainSilder';
 import Fetch from '<prefix>/common/fetch';
+import { withContext } from '<prefix>/context/appContext';
 
-function Pdp({ detail }: any) {
+function Pdp({ detail,context }: any) {
+    const {profile} = context
     const router = useRouter()
     const [calculateRes, setCalculateRes] = useState<any>({})
     const [data, setData] = useState<any>({})
@@ -72,7 +74,7 @@ function Pdp({ detail }: any) {
         setFetchData(detail,true)
     }, [router, detail])
     const setFetchData = (detail: any,firstTime:boolean = false) => {
-        let updateRes = priceCalculator(router?.query?.salary || 0, [detail])[0]
+        let updateRes = priceCalculator(router?.query?.salary || 0, [detail],profile.currencyCode)[0]
         if (router?.query?.salary?.length) {
             setData(updateRes)
         } else {
@@ -328,4 +330,4 @@ export async function getServerSideProps(context: any) {
         },
     }
 }
-export default Pdp;
+export default withContext(Pdp);

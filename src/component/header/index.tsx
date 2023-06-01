@@ -11,14 +11,14 @@ import Col from 'react-bootstrap/Col';
 import Link from "next/link";
 import { withContext } from "<prefix>/context/appContext";
 import { useRouter } from "next/router";
-const logo:any = {
-    uk:'/assets/logo/logo_without.svg',
-    ukMarket:'/assets/logo/logo_without.svg',
-    ebay:'/assets/logo/eBay_logo.svg'
+const logo: any = {
+    uk: '/assets/logo/logo_without.svg',
+    ukMarket: '/assets/logo/logo_without.svg',
+    ebay: '/assets/logo/eBay_logo.svg'
 }
-function Header({context}: any) {
+function Header({ context }: any) {
     // const {context} = props
-    const {host,profile} = context
+    const { host, profile } = context
     const router = useRouter()
     const isMobile = useMediaQuery(900)
     const [search, setSearch] = useState(false)
@@ -35,14 +35,25 @@ function Header({context}: any) {
                 <Link href={"/"}><img src={profile.portalLogo} alt="Gogeta Logo" /></Link>
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
-                        className={`me-auto ms-lg-5 my-2 my-lg-0 ${host === 'uk' ? 'd-flex align-item-center justify-content-between w-100' : ''}`}
+                        className={`me-auto ms-lg-5 my-2 my-lg-0 ${host.includes('uk') ? 'd-flex align-item-center justify-content-between w-100' : ''}`}
                         navbarScroll
                     >
                         {
-                            host === 'uk' ?
+                            host.includes('uk') ?
                                 <>
                                     <Link className='nav-link' href="/how-it-works">How it works </Link>
-                                    <Button type="button" className='customSiteBtn text-white' onClick={()=>router.push('/apply-now')}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
+                                    <div className="d-flex align-item-center">
+                                        {
+                                            host.includes('Market') ?
+                                                <>
+                                                    <Link className='nav-link' href="/">Apply now <i className="fa-solid fa-angle-right"></i></Link>
+                                                    <Button type="button" className='customSiteBtn text-white' onClick={() => router.push(`/bikes?listing_type=ebikes&showCyclePrice=${host.includes('Market') ? 'off' : 'on'}`)}>Browse bikes<i className="fa-solid fa-angle-right"></i></Button>
+                                                </>
+                                                :
+                                                <Button type="button" className='customSiteBtn text-white' onClick={() => router.push('/apply-now')}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
+                                        }
+
+                                    </div>
                                 </>
                                 :
                                 <>
@@ -50,17 +61,17 @@ function Header({context}: any) {
                                         <Nav.Link href="#action4"><Image width={45} height={44} alt="search_ico" src='/assets/img/interface_search_square.svg' /></Nav.Link>
                                         <Nav.Link href="#action4"><Image width={45} height={44} alt="profile_ico" src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
                                     </div>
-                                    <Link className='d-block d-lg-none nav-link' href={`/bikes?listing_type=ebikes&showCyclePrice=${host === 'ukMarket'?'off':'on'}`}>Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
+                                    <Link className='d-block d-lg-none nav-link' href={`/bikes?listing_type=ebikes&showCyclePrice=${host === 'ukMarket' ? 'off' : 'on'}`}>Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
                                     <Link className='d-block d-lg-none nav-link' href="">Help <i className="fa-solid fa-angle-right"></i></Link>
-                                    <Link className='d-block d-lg-none nav-link' href={host === 'ukMarket'? "":"/apply-now"}>Apply for your voucher now <i className="fa-solid fa-angle-right"></i></Link>
+                                    <Link className='d-block d-lg-none nav-link' href={host === 'ukMarket' ? "" : "/apply-now"}>Apply for your voucher now <i className="fa-solid fa-angle-right"></i></Link>
                                 </>
                         }
                     </Nav>
                     {
-                        host !== 'uk' ? <div className=" align-items-center navbar-nav d-none d-lg-flex">
-                            <Link className='d-none d-lg-block nav-link' href={`/bikes?listing_type=ebikes&showCyclePrice=${host === 'ukMarket'?'off':'on'}`}>Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
+                        !host.includes('uk') ? <div className=" align-items-center navbar-nav d-none d-lg-flex">
+                            <Link className='d-none d-lg-block nav-link' href={`/bikes?listing_type=ebikes&showCyclePrice=${host === 'ukMarket' ? 'off' : 'on'}`}>Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
                             <Link className='d-none d-lg-block nav-link' href="">Help <i className="fa-solid fa-angle-right"></i></Link>
-                            <Link className='d-none d-lg-block nav-link' href={host === 'ukMarket'? "":"/apply-now"}>Apply for your voucher now <i className="fa-solid fa-angle-right"></i></Link>
+                            <Link className='d-none d-lg-block nav-link' href={host === 'ukMarket' ? "" : "/apply-now"}>Apply for your voucher now <i className="fa-solid fa-angle-right"></i></Link>
                             <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="search_ico" src='/assets/img/interface_search_square.svg' /></Nav.Link>
                             <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="profile_ico" src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
                         </div> : null}

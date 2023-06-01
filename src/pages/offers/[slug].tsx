@@ -8,13 +8,15 @@ import { priceCalculator } from '<prefix>/common/utilits';
 import Calculate from '<prefix>/component/detailOfferCalculator';
 import DealerList from '<prefix>/component/dealerList';
 import Image from 'next/image';
+import { withContext } from '<prefix>/context/appContext';
 let size:any = {
     s:'Small',
     l:'Large',
     m:'Medium',
     xl:'Extra Large',
 }
-export default function MyOffers({ partners, offers }: any) {
+function MyOffers({ partners, offers,context }: any) {
+    const {profile} = context
     const router = useRouter()
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
     const [calculateRes, setCalculateRes] = useState<any>({})
@@ -22,7 +24,7 @@ export default function MyOffers({ partners, offers }: any) {
     const [data, setData] = useState<any>({})
     useEffect(() => {
         if (router.query?.salary?.length) {
-            setData(priceCalculator(router.query?.salary, [offers])[0])
+            setData(priceCalculator(router.query?.salary, [offers],profile.currencyCode)[0])
         } else {
             setData(offers)
         }
@@ -176,3 +178,4 @@ export async function getServerSideProps(context: any) {
         },
     }
 }
+export default withContext(MyOffers)
