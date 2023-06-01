@@ -46,7 +46,7 @@ function Header({ context }: any) {
                                         {
                                             host.includes('Market') ?
                                                 <>
-                                                    <Link className='nav-link' href="/">Apply now <i className="fa-solid fa-angle-right"></i></Link>
+                                                    <Link className='nav-link' href="/">Apply now </Link>
                                                     <Button type="button" className='customSiteBtn text-white' onClick={() => router.push(`/bikes?listing_type=ebikes&showCyclePrice=${host.includes('Market') ? 'off' : 'on'}`)}>Browse bikes<i className="fa-solid fa-angle-right"></i></Button>
                                                 </>
                                                 :

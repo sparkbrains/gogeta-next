@@ -95,7 +95,7 @@ function SavingCalculate({context}:any){
                                     <label className='d-none d-lg-block'>Commute distance each way</label>
                                     <label className='d-block d-lg-none'>Commute distance</label>
                                     <div className='d-flex align-items-center'>
-                                        <input type='text' className='form-input text-center' onKeyPress={onKeyPress} value={calclulateState.distance_miles} name='distance_miles' onChange={onChange} />
+                                        <input type='text' maxLength={5} className='form-input text-center' onKeyPress={onKeyPress} value={calclulateState.distance_miles} name='distance_miles' onChange={onChange} />
                                         <p className='p-2 m-0'>kilometres</p>
                                     </div>
                                 </div>
@@ -168,7 +168,7 @@ function SavingCalculate({context}:any){
                             </div>
                             <div className='mobile-align'>
                                 <div>
-                                    <p>Equivalent of:</p>
+                                    <p className='pt-3'>Equivalent to:</p>
                                     <h4>{equivalentCount.emissions.num} trees</h4>
                                 </div>
                                 {!isMobile ? null : <TreesList handleEquivalent={handleEquivalent} data={data} />}
@@ -188,7 +188,7 @@ function SavingCalculate({context}:any){
                             </div>
                             <div className='mobile-align'>
                                 <div>
-                                    <p>Equivalent of:</p>
+                                    <p className='pt-3'>Equivalent to:</p>
                                     <h4>{equivalentCount.calories_burned.num} {equivalentCount.calories_burned.name}</h4>
                                 </div>
                                 {!isMobile ? null : <CaloriesBurned equivalentCount={equivalentCount} handleEquivalent={handleEquivalent} data={data} />}
@@ -208,7 +208,7 @@ function SavingCalculate({context}:any){
                             </div>
                             <div className='mobile-align'>
                                 <div>
-                                    <p>Equivalent of:</p>
+                                    <p className='pt-3'>Equivalent to:</p>
                                     <h4>{equivalentCount.money_saved.num} {equivalentCount.money_saved.name}</h4>
                                 </div>
                                 {!isMobile ? null : <MoneySaved equivalentCount={equivalentCount} handleEquivalent={handleEquivalent} data={data} />}

@@ -92,7 +92,7 @@ function Footer({context:{host}}:any){
                         </ul>
                     </Col>
                     <Col md={6}>
-                        <p className={`copyRightTxt ${host.includes('uk')?'text-start mb-2':''}`}>© 2023 Velomatch Ltd. t/a gogeta</p>
+                        <p className={`copyRightTxt ${host.includes('uk')?'text-start mb-2':''}`}>© 2023 Velomatch Limited t/a gogeta.</p>
                         {!host.includes('uk')?'':<p className='copyRightTxt text-start velomatchCont'>Velomatch Limited t/a gogeta is a registered company in England and Wales as Velomatch Limited (No. 13403344), Birchin Court, 20 Birchin Lane, London EC3V 9DU. We are authorised and regulated by the Financial Conduct Authority under registration number 994240.</p>}
                     </Col>
                 </Row>

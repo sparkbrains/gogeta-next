@@ -81,7 +81,7 @@ function EbayLp({ context }: any) {
                                     <Form onSubmit={handleSubmit}>
                                         <UKCalculator errors={errors} state={state} onChange={onChange} />
                                         <div className="d-flex justify-content-end">
-                                            <button type="submit" className="customSiteBtn btn btn-primary px-4">Submit <i className="fa-solid fa-angle-right"></i></button>
+                                            <button type="submit" className="customSiteBtn btn btn-primary px-4">Apply now <i className="fa-solid fa-angle-right"></i></button>
                                         </div>
                                     </Form>
                                 </div>

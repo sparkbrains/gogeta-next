@@ -15,6 +15,6 @@ export default function Toggle({ title,children,open }:any) {
             }
 
         </Button>
-        {openToggle ? <div className="pt-4 toggle-body">{children}</div>:null}
+        {openToggle ? <div className="pt-0 toggle-body">{children}</div>:null}
     </div>
 }
