@@ -96,7 +96,7 @@ function SavingCalculate({context}:any){
                                     <label className='d-block d-lg-none'>Commute distance</label>
                                     <div className='d-flex align-items-center'>
                                         <input type='text' maxLength={5} className='form-input text-center' onKeyPress={onKeyPress} value={calclulateState.distance_miles} name='distance_miles' onChange={onChange} />
-                                        <p className='p-2 m-0'>kilometres</p>
+                                        <p className='p-2 m-0'>miles</p>
                                     </div>
                                 </div>
                                 <div className='calclulate-form'>

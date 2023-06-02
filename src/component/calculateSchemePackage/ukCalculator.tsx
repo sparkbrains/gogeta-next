@@ -59,7 +59,10 @@ export default function UKCalculator({errors,state,onChange}:any){
                     <span className="pb-2">Pay frequency:</span>
                 </Col>
                 <Col xs={12} sm={8}>
-                    <InputSelectDrop
+                <div className="NoCurr form-price-input">
+                <input type="text" className="form-input" value={state.paymentFrequency} disabled/>
+                </div>
+                    {/* <InputSelectDrop
                         placeholder='Select an option'
                         defaultValue={state.frequency}
                         selectParam={'value'}
@@ -72,7 +75,7 @@ export default function UKCalculator({errors,state,onChange}:any){
                             { value: 13, label: '4 weekly' },
                             { value: 52, label: 'Weekly' },
                             { value: 26, label: 'Fortnightly' },
-                        ]} />
+                        ]} /> */}
                 </Col>
             </Row>
         </div>
@@ -82,7 +85,10 @@ export default function UKCalculator({errors,state,onChange}:any){
                     <span className="pb-2">Salary sacrifice repayment term:</span>
                 </Col>
                 <Col xs={12} sm={8}>
-                    <InputSelectDrop
+                <div className="form-price-input NoCurr">
+                    <input type="text" className="form-input" value={state.sacrifice_repayment} disabled/>
+                    </div>
+                    {/* <InputSelectDrop
                         placeholder='Select an option'
                         defaultValue={state.sacrifice_repayment}
                         className='box-select-calclulate'
@@ -94,7 +100,7 @@ export default function UKCalculator({errors,state,onChange}:any){
                             { value: 12, label: '12' },
                             { value: 18, label: '18' },
                             { value: 24, label: '24' },
-                        ]} />
+                        ]} /> */}
                 </Col>
             </Row>
         </div>

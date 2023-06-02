@@ -11,6 +11,12 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { applyCalculator, onKeyPress } from '../../common/utilits'
 import UKCalculator from "../calculateSchemePackage/ukCalculator";
+var frequencydata:any = {
+    MONTHLY:12,
+    WEEKLY:52,
+    FORTNIGHTLY:26,
+    FOUR_WEEKLY:13
+}
 export default function ApplyNowUK() {
     const router = useRouter()
     const [state, setState] = useState<any>({
@@ -32,7 +38,8 @@ export default function ApplyNowUK() {
     useEffect(() => {
         if (router.query?.params?.length) {
             const obj: any = JSON.parse(window.atob(`${router.query.params}`))
-            setState(obj)
+            setState({...obj,frequency: frequencydata[obj.paymentFrequency],
+                sacrifice_repayment: obj?.salarySacrificeTerm})
         }
     }, [router])
     const handleCycleCalculate = (param: any) => {
@@ -48,10 +55,10 @@ export default function ApplyNowUK() {
         let stateParam: any = { ...state }
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
-        window.location.href = `https://gogeta.bike/portal/sal-sac-form?params==${encoded}`
+        window.location.href = `https://gogeta.bike/portal/sal-sac-form?params=${encoded}`
     }
     const { errors, handleSubmit } = FormC({
-        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary },
+        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary,sacrifice_repayment:state.sacrifice_repayment },
         onSubmit
     })
     console.log(state,'state==');

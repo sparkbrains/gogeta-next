@@ -1,0 +1,80 @@
+import { applyCalculator } from "<prefix>/common/utilits";
+import { FormC } from "<prefix>/common/validate";
+import UKCalculator from "<prefix>/component/calculateSchemePackage/ukCalculator";
+import { useRouter } from "next/router";
+import { useEffect, useState,FormEvent } from "react";
+import { Container, Form } from "react-bootstrap";
+var frequencydata:any = {
+    MONTHLY:12,
+    WEEKLY:52,
+    FORTNIGHTLY:26,
+    FOUR_WEEKLY:13
+}
+export default function UKFreeSiteCalculate({data}:any){
+    const router = useRouter()
+    const [state, setState] = useState<any>({
+        bikeValue: '',
+        accessoriesValue: '',
+        totalPackageValue: '',
+        annualSalary: '',
+        frequency: '',
+        sacrifice_repayment: ''
+    })
+    const onChange = (e: any) => {
+        const { value, name } = e.target
+        const param = {
+            ...state,
+            [name]: typeof value === 'object' ? value.value : value
+        }
+        handleCycleCalculate(param)
+    }
+    useEffect(() => {
+        setState({
+            ...state,
+            ...data,
+            frequency: frequencydata[data.paymentFrequency],
+            sacrifice_repayment: data?.salarySacrificeTerm
+        })
+    }, [data])
+    const handleCycleCalculate = (param: any) => {
+        param = {
+            ...param,
+            totalPackageValue: Number(param.bikeValue) + Number(param.accessoriesValue)
+        }
+        
+        let valPrice = applyCalculator(param)
+        setState({ ...param, ...valPrice })
+    }
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        let stateParam: any = { ...state }
+        delete stateParam.frequency
+        delete stateParam.sacrifice_repayment
+        let obj = JSON.stringify(stateParam)
+        let encoded = window.btoa(obj);
+        router.push(`/apply-now?params=${encoded}`)
+    }
+    const { errors, handleSubmit } = FormC({
+        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary,sacrifice_repayment:state.sacrifice_repayment },
+        onSubmit
+    })
+    return<section className='schemeCost poreZindex mb-5'>
+    <Container>
+        <div className='toggleSchemeCost calcCyclSchPack'>
+            <div className='workScheme'>
+                <div className="d-flex align-items-center justify-content-between schemeHead">
+                    <h5>Calculate your Cycling Scheme package</h5>
+                </div>
+                <div className='applyNow p-5'>
+                    <Form onSubmit={handleSubmit}>
+                        <UKCalculator errors={errors} state={state} onChange={onChange} />
+                        <div className="d-flex justify-content-end">
+                            <button type="submit" className="customSiteBtn btn btn-primary px-4">Apply now <i className="fa-solid fa-angle-right"></i></button>
+                        </div>
+                    </Form>
+                </div>
+            </div>
+        </div>
+    </Container>
+</section>
+}

@@ -1,11 +1,12 @@
-.applyNow{
-    .head_apply{
+.applyNow {
+    .head_apply {
         font-weight: 700;
-font-size: 32px;
-color: var(--p-color-new);
-padding-bottom: 50px;
+        font-size: 32px;
+        color: var(--p-color-new);
+        padding-bottom: 50px;
     }
-    &-steps{
+
+    &-steps {
         padding: 0;
         margin: 0;
         display: flex;
@@ -14,6 +15,7 @@ padding-bottom: 50px;
         padding-bottom: 50px;
         position: relative;
         z-index: 1;
+
         &:after {
             content: '';
             width: calc(100% - 210px);
@@ -24,45 +26,54 @@ padding-bottom: 50px;
             opacity: 0.5;
             z-index: -1;
         }
-        li{
+
+        li {
             list-style: none;
             text-align: center;
-            p{
+
+            p {
                 font-weight: 700;
-font-size: 24px;
-color: var(--p-color-new);
-padding-top: 20px;
+                font-size: 24px;
+                color: var(--p-color-new);
+                padding-top: 20px;
             }
         }
     }
-    &-des{
+
+    &-des {
         margin-bottom: -45px;
     }
-    .toggle{
-        &-head{
+
+    .toggle {
+        &-head {
             background-color: #BFD2B6;
             justify-content: center !important;
         }
-        &-body{
-            p{
+
+        &-body {
+            p {
                 margin: 0;
             }
         }
     }
-    .calclulate-form{
+
+    .calclulate-form {
         padding-bottom: 15px;
-        span{
+
+        span {
             font-weight: 700;
             font-size: 15px;
             display: flex;
             align-items: center;
             color: var(--p-color-new);
         }
-        ul{
+
+        ul {
             padding: 0;
             margin: 0;
         }
-        .form-price-input{
+
+        .form-price-input {
             .currency {
                 background: var(--secondary-new-two);
                 border-radius: 15px 0px 0px 15px;
@@ -71,6 +82,7 @@ padding-top: 20px;
                 align-items: center;
                 padding: 0px 17px;
             }
+
             .form-input {
                 border: 0;
                 background-color: var(--white);
@@ -79,6 +91,12 @@ padding-top: 20px;
                 border-radius: 0px 15px 15px 0px;
                 height: 44px;
                 width: 100%;
+            }
+
+            &.NoCurr {
+                .form-input {
+                    border-radius: 15px;
+                }
             }
         }
     }
