@@ -201,7 +201,11 @@
 
                     button {
                         border: 0;
-
+                        text-align: left;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        width: 100%;
                         .close {
                             transform: translateY(-50%) rotate(45deg);
                             margin-top: 10px;

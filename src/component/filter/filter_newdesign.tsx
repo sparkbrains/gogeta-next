@@ -11,7 +11,7 @@ import ReactSlider from 'react-slider';
 import { onKeyPress } from '../../common/utilits'
 import { useRouter } from "next/router"
 import { Form } from "react-bootstrap"
-export default function Filter({ param, filterRes, applyFilterSet, newDesign = false }: any) {
+export default function Filter({ param, filterRes, applyFilterSet, newDesign = false,profile }: any) {
     const isMobile = useMediaQuery(900)
     const [filterOpen, setfilterOpen] = useState(false)
     const [moreFilter, setMoreFilter] = useState(newDesign)
@@ -331,10 +331,10 @@ export default function Filter({ param, filterRes, applyFilterSet, newDesign = f
 
 
 
-                                                        <div className="d-flex align-item-center justify-content-between pt-2"><div>£{minMaxPrice[0]}</div><div>{minMaxPrice[1]}</div></div>
+                                                        <div className="d-flex align-item-center justify-content-between pt-2"><div>{profile.currencySymbol+minMaxPrice[0]}</div><div>{profile.currencySymbol+minMaxPrice[1]}</div></div>
                                                         <div className="d-flex align-item-center justify-content-between pt-3">
-                                                            <div className="d-flex align-item-center"><label>From</label>  <div className="slider-range-input">{'£' + (stateParam[item.inputname]?.length ? stateParam[item.inputname][0] : minMaxPrice[0])}</div></div>
-                                                            <div className="d-flex align-item-center"><label>to</label> <div className="slider-range-input">{'£' + (stateParam[item.inputname]?.length ? stateParam[item.inputname][1] : minMaxPrice[1])}</div></div>
+                                                            <div className="d-flex align-item-center"><label>Min</label>  <div className="slider-range-input">{profile.currencySymbol + (stateParam[item.inputname]?.length ? stateParam[item.inputname][0] : minMaxPrice[0])}</div></div>
+                                                            <div className="d-flex align-item-center"><label>Max</label> <div className="slider-range-input">{profile.currencySymbol + (stateParam[item.inputname]?.length ? stateParam[item.inputname][1] : minMaxPrice[1])}</div></div>
                                                         </div>
                                                     </div>
                                                     :
