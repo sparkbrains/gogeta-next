@@ -7,6 +7,8 @@ import ColorWay from "./colorway";
 export default function ProductList({ profile, item }: any) {
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
     let price = `${'SRP ' + profile.currencySymbol + item.currencyProduct.unitSuggestedRetailPrice}`
+    console.log(item.context,'context==');
+    
     return <Card className={'h-100'}>
         <div className="card-image">
             <Image width={260} height={173} alt='ss' className="img-fluid card-img-top product-image" src={selectColorProduct?.colourwayImage?.length ? selectColorProduct?.colourwayImage[0] : item.productImage} />
@@ -24,7 +26,7 @@ export default function ProductList({ profile, item }: any) {
                     <s className="price-current">{price} </s> <span className="primary-color ml-1">{profile.currencySymbol + (item.currencyProduct.unitSuggestedRetailPrice - Number(item?.context?.total_savings))}</span>
                     <p className="primary-color price-des">Save {profile.currencySymbol + item?.context?.total_savings} with Cycle to Work ({item?.context?.saving_percentage})</p>
                     <p className="price-des py-3">Just 12 monthly payments of <span className="primary-color">{profile.currencySymbol + item.context?.per_month}</span> from your gross salary</p>
-                    <p className="price-des">Plus a <span className="primary-color">{profile.currencySymbol + item.context?.initial_payment}</span> initial payment</p>
+                    {item.context?.initial_payment ? <p className="price-des">Plus a <span className="primary-color">{profile.currencySymbol + item.context?.initial_payment}</span> initial payment</p>:null}
                 </> :
                 <>
                     {item.saving_price.offerPrice ? <s className="price-current">{price}</s> : <p className="price-current">{price}</p>}

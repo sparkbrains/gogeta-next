@@ -83,22 +83,22 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
   };
   return context;
 }
-export const priceCalculator = (salary: any, card: any,currencyCode:string) => {
+export const priceCalculator = (salary: any, card: any, currencyCode: string) => {
   let context = {}
   let data = card?.map((d: any) => {
-    if(currencyCode === 'EUR'){
-    if (d.bicycleAssisted === "ebikes" || d.listing_type === "ebikes") {
-      context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories)
-    } else if (d.bicycleAssisted === "bikes" || d.listing_type === "bikes") {
-      context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories, 1250)
+    if (currencyCode === 'EUR') {
+      if (d.bicycleAssisted === "ebikes" || d.listing_type === "ebikes") {
+        context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories)
+      } else if (d.bicycleAssisted === "bikes" || d.listing_type === "bikes") {
+        context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories, 1250)
+      }
+    } else {
+      if (d.bicycleAssisted === "ebikes" || d.listing_type === "ebikes") {
+        context = calculate_bike_salary_sacrifice_in_plp(d?.currencyProduct?.unitSuggestedRetailPrice, salary, 12)
+      } else if (d.bicycleAssisted === "bikes" || d.listing_type === "bikes") {
+        context = calculate_bike_salary_sacrifice_in_plp(d?.currencyProduct?.unitSuggestedRetailPrice, salary, 12)
+      }
     }
-  }else{
-    if (d.bicycleAssisted === "ebikes" || d.listing_type === "ebikes") {
-      context = calculate_bike_salary_sacrifice_in_plp(d?.currencyProduct?.unitSuggestedRetailPrice, salary, 12)
-    } else if (d.bicycleAssisted === "bikes" || d.listing_type === "bikes") {
-      context = calculate_bike_salary_sacrifice_in_plp(d?.currencyProduct?.unitSuggestedRetailPrice, salary, 12)
-    }
-  }
     d = {
       ...d,
       context: context
@@ -123,16 +123,16 @@ export const submitCalculator = (param: any) => {
   return context;
 }
 export const applyCalculator = (obj: any) => {
-  const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment,totalPackageValue } = obj
-  const saving:any = calculate_bike_salary_sacrifice_in_plp(totalPackageValue, annualSalary, sacrifice_repayment)
+  const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue } = obj
+  const saving: any = calculate_bike_salary_sacrifice_in_plp(totalPackageValue, annualSalary, sacrifice_repayment)
   const totalVal = Number(bikeValue) + Number(accessoriesValue)
   let param: any = {}
-  if(frequency && sacrifice_repayment){
-  param = {
-    ...param,
-    regular_gross: ((totalVal / 12) / (Number(frequency) / Number(sacrifice_repayment))).toFixed(2),
+  if (frequency && sacrifice_repayment) {
+    param = {
+      ...param,
+      regular_gross: ((totalVal / 12) / (Number(frequency) / Number(sacrifice_repayment))).toFixed(2),
+    }
   }
-}
   if (param.regular_gross) {
     param = {
       ...param,
@@ -159,17 +159,17 @@ function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: numb
   let salary_sacrifice = sacrifice_repayment
   let current_treshold = 12570;
   let max_bike_value_per_year = salary - current_treshold;
-  let max_bike_value = (max_bike_value_per_year / 12) * salary_sacrifice;``
+  let max_bike_value = (max_bike_value_per_year / 12) * salary_sacrifice; ``
   let value = calc_taxes(country, salary)?.data;
   let tax1 = value[0];
   let threshold = value[1];
   let value2 = calc_taxes(country, salary - total_bp)?.data;
   let tax2 = value2[0];
-  console.log(value2,value,'value===');
-  
+  console.log(value2, value, 'value===');
+
   let differenceOverThreshold = tax1 == tax2 ? 0 : threshold;
   let netcost = ((salary - differenceOverThreshold) * tax1) + ((total_bp - (salary - differenceOverThreshold)) * tax2);
-  
+
   let takehomepay = netcost / salary_sacrifice; // The monthly cost with the discount
   let savings = total_bp - netcost;
   let savingsPercent = (savings / total_bp) * 100;
@@ -208,6 +208,6 @@ function calc_taxes(country: string, salary: any) {
     else if (salary >= 50271 && salary <= 125140) { tax = 44.00; threshold = 50271 }
     else { tax = 48.00; threshold = 125141 }
   }
-  console.log("value===",tax)
-  return {data:[(100 - tax) / 100, threshold],tax:tax};
+  console.log("value===", tax)
+  return { data: [(100 - tax) / 100, threshold], tax: tax };
 }
