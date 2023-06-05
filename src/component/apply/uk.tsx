@@ -4,6 +4,7 @@ import { InputDropDownList, InputSelectDrop } from "<prefix>/common/inputSelectD
 import { FormC } from "<prefix>/common/validate";
 import { MainHead } from "<prefix>/component/main-head";
 import Toggle from "<prefix>/component/toggle";
+import { withContext } from "<prefix>/context/appContext";
 import Applayout from "<prefix>/layout/applayout";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -17,7 +18,8 @@ var frequencydata:any = {
     FORTNIGHTLY:26,
     FOUR_WEEKLY:13
 }
-export default function ApplyNowUK() {
+function ApplyNowUK({context}:any) {
+    const {host} = context
     const router = useRouter()
     const [state, setState] = useState<any>({
         bikeValue: '',
@@ -37,9 +39,10 @@ export default function ApplyNowUK() {
     }
     useEffect(() => {
         if (router.query?.params?.length) {
-            const obj: any = JSON.parse(window.atob(`${router.query.params}`))
-            setState({...obj,frequency: frequencydata[obj.paymentFrequency],
-                sacrifice_repayment: obj?.salarySacrificeTerm})
+            let obj: any = JSON.parse(window.atob(`${router.query.params}`))
+            obj =host === 'uk'? {...obj,frequency: frequencydata[obj.paymentFrequency],
+            sacrifice_repayment: obj?.salarySacrificeTerm}:obj
+            setState(obj)
         }
     }, [router])
     const handleCycleCalculate = (param: any) => {
@@ -93,7 +96,7 @@ export default function ApplyNowUK() {
             <div className="toggle-card mb-5">
                 <div className="p-5 toggle-body">
                     <h4 className="head_apply"> <Image src='/assets/calculation/shopping_cart.svg' width={48} height={48} alt='cart' /> Your package</h4>
-                    <UKCalculator errors={errors} state={state} onChange={onChange} />
+                    <UKCalculator errors={errors} state={state} onChange={onChange} host={host}/>
                 </div>
             </div>
             <div className="d-flex justify-content-end mb-5">
@@ -102,3 +105,4 @@ export default function ApplyNowUK() {
         </Form>
     </>
 }
+export default withContext(ApplyNowUK)

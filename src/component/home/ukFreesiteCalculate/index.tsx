@@ -1,16 +1,18 @@
 import { applyCalculator } from "<prefix>/common/utilits";
 import { FormC } from "<prefix>/common/validate";
 import UKCalculator from "<prefix>/component/calculateSchemePackage/ukCalculator";
+import { withContext } from "<prefix>/context/appContext";
 import { useRouter } from "next/router";
-import { useEffect, useState,FormEvent } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import { Container, Form } from "react-bootstrap";
-var frequencydata:any = {
-    MONTHLY:12,
-    WEEKLY:52,
-    FORTNIGHTLY:26,
-    FOUR_WEEKLY:13
+var frequencydata: any = {
+    MONTHLY: 12,
+    WEEKLY: 52,
+    FORTNIGHTLY: 26,
+    FOUR_WEEKLY: 13
 }
-export default function UKFreeSiteCalculate({data}:any){
+function UKFreeSiteCalculate({ data, context }: any) {
+    const { host } = context
     const router = useRouter()
     const [state, setState] = useState<any>({
         bikeValue: '',
@@ -32,7 +34,7 @@ export default function UKFreeSiteCalculate({data}:any){
         setState({
             ...state,
             ...data,
-            frequency: frequencydata[data.paymentFrequency],
+            frequency: host === 'uk'?frequencydata[data.paymentFrequency]:data?.frequency,
             sacrifice_repayment: data?.salarySacrificeTerm
         })
     }, [data])
@@ -41,7 +43,7 @@ export default function UKFreeSiteCalculate({data}:any){
             ...param,
             totalPackageValue: Number(param.bikeValue) + Number(param.accessoriesValue)
         }
-        
+
         let valPrice = applyCalculator(param)
         setState({ ...param, ...valPrice })
     }
@@ -52,29 +54,30 @@ export default function UKFreeSiteCalculate({data}:any){
         delete stateParam.sacrifice_repayment
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
-        router.push(`/apply-now?params=${encoded}`)
+        host === 'uk'? router.push(`/apply-now?params=${encoded}`):null
     }
     const { errors, handleSubmit } = FormC({
-        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary,sacrifice_repayment:state.sacrifice_repayment },
+        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
         onSubmit
     })
-    return<section className='schemeCost poreZindex mb-5'>
-    <Container>
-        <div className='toggleSchemeCost calcCyclSchPack'>
-            <div className='workScheme'>
-                <div className="d-flex align-items-center justify-content-between schemeHead">
-                    <h5>Calculate your Cycling Scheme package</h5>
-                </div>
-                <div className='applyNow p-5'>
-                    <Form onSubmit={handleSubmit}>
-                        <UKCalculator errors={errors} state={state} onChange={onChange} />
-                        <div className="d-flex justify-content-end">
-                            <button type="submit" className="customSiteBtn btn btn-primary px-4">Apply now <i className="fa-solid fa-angle-right"></i></button>
-                        </div>
-                    </Form>
+    return <section className='schemeCost poreZindex mb-5'>
+        <Container>
+            <div className='toggleSchemeCost calcCyclSchPack'>
+                <div className='workScheme'>
+                    <div className="d-flex align-items-center justify-content-between schemeHead">
+                        <h5>Calculate your Cycling Scheme package</h5>
+                    </div>
+                    <div className='applyNow p-5'>
+                        <Form onSubmit={handleSubmit}>
+                            <UKCalculator errors={errors} state={state} onChange={onChange} host={host} />
+                            <div className="d-flex justify-content-end">
+                                <button type="submit" className="customSiteBtn btn btn-primary px-4">Apply now <i className="fa-solid fa-angle-right"></i></button>
+                            </div>
+                        </Form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </Container>
-</section>
+        </Container>
+    </section>
 }
+export default withContext(UKFreeSiteCalculate)

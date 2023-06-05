@@ -148,7 +148,7 @@ function EbayPLP({ user, filterRes,host,context }: any) {
                         >
                             {
                                 productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}>
-                                    <button onClick={() => host ? router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${param.showCyclePrice === 'on' ? `?salary=${param.salary}` : ''}`):{}} className='btn-trans w-100 text-start h-100'>
+                                    <button onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${param.showCyclePrice === 'on' ? `?salary=${param.salary}` : ''}`)} className='btn-trans w-100 text-start h-100'>
                                         <ProductList profile={profile} item={item} newDesign={true} />
                                     </button>
                                 </div>)

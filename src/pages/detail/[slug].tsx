@@ -14,9 +14,11 @@ import Calculate from '<prefix>/component/detailOfferCalculator';
 import MainSlider from '<prefix>/component/mainSilder';
 import Fetch from '<prefix>/common/fetch';
 import { withContext } from '<prefix>/context/appContext';
+import ApplyNowUK from "<prefix>/component/apply/uk";
+import UkFreesiteCalculate from '<prefix>/component/home/ukFreesiteCalculate';
 
 function Pdp({ detail,context }: any) {
-    const {profile} = context
+    const {profile,host} = context
     const router = useRouter()
     const [calculateRes, setCalculateRes] = useState<any>({})
     const [data, setData] = useState<any>({})
@@ -24,7 +26,7 @@ function Pdp({ detail,context }: any) {
     const [selectedHeight,setselectedHeight] = useState('')
     const [heightList, setHeightList] = useState([])
     var settings = {
-        infinite: true,
+        infinite: false,
         autoPlay: true,
         speed: 500,
         padding: '15px',
@@ -256,7 +258,17 @@ function Pdp({ detail,context }: any) {
                 </Container>
             </section>
             <section className='mt-5'>
+                {
+                    host.includes('uk') ?
+                    <div className='applyNow pt-0'>
+                    <Container>
+                    <UkFreesiteCalculate/>
+                    </Container>
+                    </div>
+                    :
                 <Calculate detail={{ ...data, colorObj: selectColorProduct }} handleCalculator={(val: any) => setCalculateRes(val)} />
+
+                }
             </section>
             {data?.feature?.length ? <section className='keyFeatures porezid'>
                 <Container>
@@ -278,12 +290,12 @@ function Pdp({ detail,context }: any) {
                     </MainSlider>
                 </Container>
             </section> : null}
-            <section className='specification porezid'>
+            {detail.productSpecificationContent?.length ? <section className='specification porezid'>
                 <Container>
                     <h4 className='commonInnheading'>Specifications</h4>
                     <div className='specifiList' dangerouslySetInnerHTML={{ __html: detail.productSpecificationContent }}></div>
                 </Container>
-            </section>
+            </section>:null}
             <section className='specializedOne porezid' style={{ background: `url(${detail.brandBackground})`,backgroundSize:'cover' }}>
                 <Container>
                     <Col md={6}>
@@ -303,7 +315,7 @@ function Pdp({ detail,context }: any) {
                                 detail?.related_products?.map((item: any, key: number) => {
                                     return <div className='items' key={key}>
                                         <div onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}`)} className='btn-trans w-100 text-start h-100'>
-                                            <ProductList item={item} newDesign={true} />
+                                            <ProductList item={item} newDesign={true} profile={profile}/>
                                         </div>
                                     </div>
                                 })
@@ -317,7 +329,9 @@ function Pdp({ detail,context }: any) {
 }
 export async function getServerSideProps(context: any) {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const response = await fetch(baseURL + `test-products/${context.query.slug}/?portalDomain=gogeta.dev`, {
+    let host = context.req.headers.host
+    host = host === 'gogeta.dev' ? host : null
+    const response = await fetch(baseURL + `test-products/${context.query.slug}/${host ? `?portalDomain=${host}`:''}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',
