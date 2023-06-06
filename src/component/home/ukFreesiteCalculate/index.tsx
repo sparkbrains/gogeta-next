@@ -31,19 +31,19 @@ function UKFreeSiteCalculate({ data, context }: any) {
         handleCycleCalculate(param)
     }
     useEffect(() => {
-        setState({
+        const dParam = {
             ...state,
             ...data,
             frequency: host === 'uk'?frequencydata[data.paymentFrequency]:data?.frequency,
             sacrifice_repayment: data?.salarySacrificeTerm,salarySacrificeTerm:data?.salarySacrificeTerm
-        })
+        }
+        handleCycleCalculate(dParam)
     }, [data])
     const handleCycleCalculate = (param: any) => {
         param = {
             ...param,
             totalPackageValue: Number(param.bikeValue) + Number(param.accessoriesValue)
         }
-
         let valPrice = applyCalculator(param)
         setState({ ...param, ...valPrice })
     }
