@@ -158,6 +158,8 @@ function Pdp({ detail, context }: any) {
         })
     }
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
+    console.log(data,selectColorProduct,'data==');
+    
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <div className='pb-4'>
@@ -188,15 +190,22 @@ function Pdp({ detail, context }: any) {
                                 <Image src={data.brandLogo} width={122} height={40} alt="img" className='img-fluid brandLogo' />
                                 <h3>{data.productName}</h3>
                                 <div className='priceDetailoffer'>
-                                    <span>{price}</span>
                                     {
                                         data?.context && Object.keys(data?.context)?.length ?
                                             <>
-                                                <p className='cyclePrice'>Cycle to Work price <b>{data.currencyProduct.currency.currencySymbol + (selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings))}</b></p>
-                                                <p className='payEmi'>Pay only {data.currencyProduct.currency.currencySymbol + data?.context?.per_month} per month</p>
-                                                <p className='saveupto'>Save {data.currencyProduct.currency.currencySymbol + data?.context?.total_savings} ({data?.context?.saving_percentage})</p>
+                                    <span>{price}</span>
+                                                <p className='cyclePrice'>Cycle to Work price <b>{profile.currencySymbol + (selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings))}</b></p>
+                                                <p className='payEmi'>Pay only {profile.currencySymbol + data?.context?.per_month} per month</p>
+                                                <p className='saveupto'>Save {profile.currencySymbol + data?.context?.total_savings} ({data?.context?.saving_percentage})</p>
                                             </>
-                                            : null
+                                            : <>
+                                            {selectColorProduct.size?.offer_price ? <s className="price-current">{price}</s> : <p className="price-current">{price}</p>}
+                                            {selectColorProduct.size?.offer_price ?
+                                                <>
+                                                    <p className='price-best'><span>Best price </span>{profile.currencySymbol + selectColorProduct.size.offer_price}</p>
+                                                    <p className='price-best'>Save <span>{profile.currencySymbol + selectColorProduct.size.saving}</span></p>
+                                                </> : null}
+                                        </>
                                     }
 
                                 </div>
@@ -233,7 +242,7 @@ function Pdp({ detail, context }: any) {
                                     {
                                         selectColorProduct?.size?.stock_status === "Out of stock" ?
                                             <>
-                                                <p>The bike is currently unavailable in you choosen size/colour.</p>
+                                                <p>This bike is currently unavailable in your choosen size/colour.</p>
                                                 <p>You can still apply for your Cycle to Work voucher now, and use it for any bike at any shop</p>
                                                 <button type="button" className="customSiteBtn btn btn-primary px-4">Apply now <i className="fa-solid fa-angle-right"></i></button>
                                             </>

@@ -127,7 +127,7 @@ export const applyCalculator = (obj: any) => {
   const saving: any = calculate_bike_salary_sacrifice_in_plp(totalPackageValue, annualSalary, sacrifice_repayment)
   const totalVal = Number(bikeValue) + Number(accessoriesValue)
   let param: any = {}
-  if (frequency && sacrifice_repayment) {
+  if (frequency && sacrifice_repayment && bikeValue) {
     param = {
       ...param,
       regular_gross: ((totalVal / 12) / (Number(frequency) / Number(sacrifice_repayment))).toFixed(2),

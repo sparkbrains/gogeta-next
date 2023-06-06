@@ -10,7 +10,7 @@ function ApplyNow({context:{host}}:any) {
     return <Applayout className='applyNow pt-0'>
         <Container>
             {
-                host === 'uk' ? <ApplyNowUK/>:<ApplyNowEbay/>
+                host.includes('uk') ? <ApplyNowUK/>:<ApplyNowEbay/>
             }
         </Container>
     </Applayout>

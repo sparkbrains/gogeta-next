@@ -689,3 +689,12 @@ input:focus {
         }
     }
 }
+.price-best{
+        color: var(--p-color-new);
+        font-size: 0.9rem;
+        font-weight: bold;
+        line-height: 22px;
+        span{
+            color: var(--primary-new);
+        }
+}

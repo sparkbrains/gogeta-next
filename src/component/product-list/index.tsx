@@ -21,7 +21,7 @@ export default function ProductList({ profile, item }: any) {
             <h5>{item.productName}</h5>
             {item?.context && Object.keys(item?.context)?.length ?
                 <>
-                    <s className="price-current">{price} </s> <span className="primary-color ml-1">{profile.currencySymbol + (item.currencyProduct.unitSuggestedRetailPrice - Number(item?.context?.total_savings))}</span>
+                    <s className="price-current pe-1">{price} </s> <span className="primary-color ml-1">{profile.currencySymbol + (item.currencyProduct.unitSuggestedRetailPrice - Number(item?.context?.total_savings))}</span>
                     <p className="primary-color price-des">Save {profile.currencySymbol + item?.context?.total_savings} with Cycle to Work ({item?.context?.saving_percentage})</p>
                     <p className="price-des py-3">Just 12 monthly payments of <span className="primary-color">{profile.currencySymbol + item.context?.per_month}</span> from your gross salary</p>
                     {item.context?.initial_payment ? <p className="price-des">Plus a <span className="primary-color">{profile.currencySymbol + item.context?.initial_payment}</span> initial payment</p>:null}

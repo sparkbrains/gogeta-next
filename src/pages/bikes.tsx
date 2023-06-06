@@ -121,7 +121,7 @@ function EbayPLP({ user, filterRes,host,context }: any) {
         <Applayout ebay={true} className='m-0 plp-back'>
             <div className='container ebay-plp'>
                 <div className='row'>
-                    <Filter filterRes={filterRes} profile={profile} applyFilterSet={applyFilter} param={param} newDesign={true} />
+                    <Filter filterRes={filterRes} profile={profile} host={host} applyFilterSet={applyFilter} param={param} newDesign={true} />
                     <div className='col-xl-9 col-lg-8 col-md-12 col-sm-12 col-12 album-right'>
                         <div className='d-flex align-items-center justify-content-between product-sort'>
                             <p>{productList?.count || 0} models found</p>
@@ -176,6 +176,7 @@ export async function getServerSideProps(context: any) {
 }
 async function getProducts(search: string, host: string) {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
+    console.log(`test-products/?page=${1}${host ? '&portalDomain=gogeta.dev' : ''}&listing_type=ebikes${search?.includes('showCyclePrice') ? search : `&showCyclePrice=${host ? 'on':'off'}`}`);
     const response = await fetch(baseURL + `test-products/?page=${1}${host ? '&portalDomain=gogeta.dev' : ''}&listing_type=ebikes${search?.includes('showCyclePrice') ? search : `&showCyclePrice=${host ? 'on':'off'}`}`, {
         method: "get",
         headers: {

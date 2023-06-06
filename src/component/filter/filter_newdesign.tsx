@@ -11,7 +11,7 @@ import ReactSlider from 'react-slider';
 import { onKeyPress } from '../../common/utilits'
 import { useRouter } from "next/router"
 import { Form } from "react-bootstrap"
-export default function Filter({ param, filterRes, applyFilterSet, newDesign = false,profile }: any) {
+export default function Filter({ param,host, filterRes, applyFilterSet, newDesign = false,profile }: any) {
     const isMobile = useMediaQuery(900)
     const [filterOpen, setfilterOpen] = useState(false)
     const [moreFilter, setMoreFilter] = useState(newDesign)
@@ -106,6 +106,8 @@ export default function Filter({ param, filterRes, applyFilterSet, newDesign = f
     const replaceFilterArray = (data: any) => {
         let priceR = data?.price_range?.length && data?.price_range[0]
         setMinMaxPrice([priceR?.price_min ? priceR?.price_min : 500, priceR?.price_max ? priceR?.price_max : 15000])
+        console.log(data,'datadw===');
+        
         const orderSet = [
             {
                 name: 'Price',
@@ -121,8 +123,8 @@ export default function Filter({ param, filterRes, applyFilterSet, newDesign = f
                 inputname: 'listing_type',
                 selected: 'value',
                 data: [
-                    { label: 'Electric bike', value: 'ebikes', count: 123 },
-                    { label: 'Standard bike', value: 'bikes', count: 123 }
+                    { label: 'Electric bike', value: 'ebikes', count: data?.electric_assistance?.electric_bike },
+                    { label: 'Standard bike', value: 'bikes', count: data?.electric_assistance?.standard_bike }
                 ]
             },
             {
@@ -281,7 +283,7 @@ export default function Filter({ param, filterRes, applyFilterSet, newDesign = f
                                     {stateParam.showCyclePrice === 'on' ?<div className="form-group">
                                             <label className="form-label">Enter your salary for the most accurate prices</label>
                                             <div className="input-group">
-                                                <span className="input-group-text" id="basic-addon1">€</span>
+                                                <span className="input-group-text" id="basic-addon1">{profile?.currencySymbol}</span>
                                                 <input onKeyPress={onKeyPress} type="text" id="salary" className="form-control" data-name="salary" defaultValue="30000" name="salary" onChange={onChangeWork} />
                                             </div>
                                         </div>

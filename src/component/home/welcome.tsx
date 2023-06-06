@@ -25,7 +25,8 @@ export default function Welcome({ host,data }: any) {
                             }
                             {
                                 host.includes('Market') ?
-                                    <Button type="button" className='customSiteBtn transpBtn' onClick={() => {}}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
+                                null
+                                    // <Button type="button" className='customSiteBtn transpBtn' onClick={() => {}}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
                                     :
                                     <Button type="button" className='customSiteBtn transpBtn' onClick={() => handleClick(`/how-it-works${host ==='uk'?'?params='+router.query.params:''}`)}>How it works <i className="fa-solid fa-angle-right"></i></Button>
                             }

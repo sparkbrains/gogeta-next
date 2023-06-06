@@ -42,6 +42,8 @@ function ApplyNowUK({context}:any) {
             let obj: any = JSON.parse(window.atob(`${router.query.params}`))
             obj =host === 'uk'? {...obj,frequency: frequencydata[obj.paymentFrequency],
             sacrifice_repayment: obj?.salarySacrificeTerm}:obj
+            console.log(obj,'obj===');
+            
             setState(obj)
         }
     }, [router])
@@ -56,6 +58,9 @@ function ApplyNowUK({context}:any) {
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         let stateParam: any = { ...state }
+        // stateParam ={
+        //     ...stateParam
+        // }
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
         window.location.href = `https://gogeta.bike/portal/sal-sac-form?params=${encoded}`
