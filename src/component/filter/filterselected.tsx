@@ -77,8 +77,6 @@ export default function FilterSelected({ param, applyFilterSet }:any) {
         <div className="d-flex">
             {
                 listFilter(stateParam)?.map((item, key) => {
-                    console.log(item,'item===');
-                    
                     return <Button key={key} onClick={() => handleOpen(key)}>
                         {item.label === 'showCyclePrice' ? 'Cycle to Work' :item.name === 'listing_type' ? 'Electric assistance' : item.label}
                         {

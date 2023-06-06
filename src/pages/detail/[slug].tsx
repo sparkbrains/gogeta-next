@@ -17,13 +17,13 @@ import { withContext } from '<prefix>/context/appContext';
 import ApplyNowUK from "<prefix>/component/apply/uk";
 import UkFreesiteCalculate from '<prefix>/component/home/ukFreesiteCalculate';
 
-function Pdp({ detail,context }: any) {
-    const {profile,host} = context
+function Pdp({ detail, context }: any) {
+    const { profile, host } = context
     const router = useRouter()
     const [calculateRes, setCalculateRes] = useState<any>({})
     const [data, setData] = useState<any>({})
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
-    const [selectedHeight,setselectedHeight] = useState('')
+    const [selectedHeight, setselectedHeight] = useState('')
     const [heightList, setHeightList] = useState([])
     var settings = {
         infinite: false,
@@ -73,10 +73,10 @@ function Pdp({ detail,context }: any) {
         ],
     };
     useEffect(() => {
-        setFetchData(detail,true)
+        setFetchData(detail, true)
     }, [router, detail])
-    const setFetchData = (detail: any,firstTime:boolean = false) => {
-        let updateRes = priceCalculator(router?.query?.salary || 0, [detail],profile.currencyCode)[0]
+    const setFetchData = (detail: any, firstTime: boolean = false) => {
+        let updateRes = priceCalculator(router?.query?.salary || 0, [detail], profile.currencyCode)[0]
         if (router?.query?.salary?.length) {
             setData(updateRes)
         } else {
@@ -97,7 +97,7 @@ function Pdp({ detail,context }: any) {
                     colorWay = d
                 }
             })
-        }else if (firstTime){
+        } else if (firstTime) {
             detail?.colourway?.map((d: any) => {
                 if (d.colourwayName === detail?.initProductDetails?.colourway) {
                     colorWay = d
@@ -122,29 +122,29 @@ function Pdp({ detail,context }: any) {
         if (data.colourwaySizes[name]) {
             if (Object.values(data.colourwaySizes[item.colourwayName]).every((size: any) => size.stock_status !== 'In stock now')) {
                 let val = sizeFilter ? data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped] : Object.values(data.colourwaySizes[item.colourwayName])[0]
-                
+
                 let colorObj = {
                     size: val,
                     ...item
                 }
                 setselectColorProduct(colorObj)
             } else {
-                if(sizeFilter){
+                if (sizeFilter) {
                     setselectColorProduct({
-                        size:data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped],
+                        size: data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped],
                         ...item
                     })
-                }else{
-                Object.values(data.colourwaySizes[name])?.map((itemSize: any) => {
-                    if (itemSize.stock_status === 'In stock now') {
-                        let colorObj = {
-                            size: itemSize,
-                            ...item
+                } else {
+                    Object.values(data.colourwaySizes[name])?.map((itemSize: any) => {
+                        if (itemSize.stock_status === 'In stock now') {
+                            let colorObj = {
+                                size: itemSize,
+                                ...item
+                            }
+                            setselectColorProduct(colorObj)
                         }
-                        setselectColorProduct(colorObj)
-                    }
-                })
-            }
+                    })
+                }
             }
         }
     }
@@ -157,16 +157,14 @@ function Pdp({ detail,context }: any) {
             }
         })
     }
-    console.log(calculateRes,'calculateRes===');
-    
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <div className='pb-4'>
-            <Container>
-                <Button onClick={() => router.back()} className='backPage nav-link'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back'/> Back to the bikes</Button>
-            </Container>
-        </div>
+                <Container>
+                    <Button onClick={() => router.back()} className='backPage nav-link'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to the bikes</Button>
+                </Container>
+            </div>
             <section className='turboBnr porezid'>
                 <Container>
                     <Row>
@@ -228,7 +226,7 @@ function Pdp({ detail,context }: any) {
                                                 heightList?.map((item: any, key: number) => <option key={key} value={item.value}>{item.label}</option>)
                                             }
                                         </select>
-                                        {selectedHeight ?<p>Size recommendation: <b>{selectColorProduct.size?.mapped}</b></p>:''}
+                                        {selectedHeight ? <p>Size recommendation: <b>{selectColorProduct.size?.mapped}</b></p> : ''}
                                     </div>
                                 </div>
                                 <div className='inStockStatus'>
@@ -242,13 +240,13 @@ function Pdp({ detail,context }: any) {
                                             :
                                             <>
                                                 <p>{selectColorProduct?.size?.stock_status}</p>
-                                                <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?${queryParam({
+                                                <button type="button" onClick={() => !host.includes('uk') ? router.push(`/offers/${router?.query?.slug}?${queryParam({
                                                     color: selectColorProduct?.colourwayName,
-                                                    salary: calculateRes?.salary?.length ?calculateRes?.salary: router?.query?.salary,
+                                                    salary: calculateRes?.salary?.length ? calculateRes?.salary : router?.query?.salary,
                                                     accessories: calculateRes?.accessories_val,
                                                     size: selectColorProduct?.size?.mapped,
                                                     modelYear: data?.productYear
-                                                })?.replace('&', '')}`)} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
+                                                })?.replace('&', '')}`) : {}} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
                                             </>
                                     }
                                 </div>
@@ -260,14 +258,14 @@ function Pdp({ detail,context }: any) {
             <section className='mt-5'>
                 {
                     host.includes('uk') ?
-                    <div className='applyNow pt-0'>
-                    <Container>
-                    <UkFreesiteCalculate/>
-                    </Container>
-                    </div>
-                    :
-                <Calculate detail={{ ...data, colorObj: selectColorProduct }} handleCalculator={(val: any) => setCalculateRes(val)} />
-
+                        <div className='applyNow pt-0'>
+                            <Container>
+                            {/* data={{salary:router.query.salary || ''}} */}
+                                <UkFreesiteCalculate data={{annualSalary:router?.query?.salary}}/>
+                            </Container>
+                        </div>
+                        :
+                        <Calculate detail={{ ...data, colorObj: selectColorProduct }} handleCalculator={(val: any) => setCalculateRes(val)} />
                 }
             </section>
             {data?.feature?.length ? <section className='keyFeatures porezid'>
@@ -295,8 +293,8 @@ function Pdp({ detail,context }: any) {
                     <h4 className='commonInnheading'>Specifications</h4>
                     <div className='specifiList' dangerouslySetInnerHTML={{ __html: detail.productSpecificationContent }}></div>
                 </Container>
-            </section>:null}
-            <section className='specializedOne porezid' style={{ background: `url(${detail.brandBackground})`,backgroundSize:'cover' }}>
+            </section> : null}
+            <section className='specializedOne porezid' style={{ background: `url(${detail.brandBackground})`, backgroundSize: 'cover' }}>
                 <Container>
                     <Col md={6}>
                         <div className='speciContbx' >
@@ -315,7 +313,7 @@ function Pdp({ detail,context }: any) {
                                 detail?.related_products?.map((item: any, key: number) => {
                                     return <div className='items' key={key}>
                                         <div onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}`)} className='btn-trans w-100 text-start h-100'>
-                                            <ProductList item={item} newDesign={true} profile={profile}/>
+                                            <ProductList item={item} newDesign={true} profile={profile} />
                                         </div>
                                     </div>
                                 })
@@ -331,7 +329,7 @@ export async function getServerSideProps(context: any) {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
     let host = context.req.headers.host
     host = host === 'gogeta.dev' ? host : null
-    const response = await fetch(baseURL + `test-products/${context.query.slug}/${host ? `?portalDomain=${host}`:''}`, {
+    const response = await fetch(baseURL + `test-products/${context.query.slug}/${host ? `?portalDomain=${host}` : ''}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',

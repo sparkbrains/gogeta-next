@@ -42,8 +42,6 @@ class AppContext extends Component<any> {
     }
 
     render() {
-        console.log(this.state);
-        
         return (
             <MainContext.Provider
                 value={{

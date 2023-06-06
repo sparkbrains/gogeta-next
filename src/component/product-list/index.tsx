@@ -7,8 +7,6 @@ import ColorWay from "./colorway";
 export default function ProductList({ profile, item }: any) {
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
     let price = `${'SRP ' + profile.currencySymbol + item.currencyProduct.unitSuggestedRetailPrice}`
-    console.log(item.context,'context==');
-    
     return <Card className={'h-100'}>
         <div className="card-image">
             <Image width={260} height={173} alt='ss' className="img-fluid card-img-top product-image" src={selectColorProduct?.colourwayImage?.length ? selectColorProduct?.colourwayImage[0] : item.productImage} />

@@ -91,8 +91,6 @@ export const FormC = ({ values, removeValidValue, onSubmit,onSubmitError, onChan
     const data = removeFormValidation(stateParam);
     const error = validation(data);
     setErr(error);
-    console.log(values,error,'errors== 1');
-    
     if (!Object?.keys(error)?.length) {
       onSubmit(e);
     } else {

@@ -8,8 +8,6 @@ export default function Welcome({ host,data }: any) {
     const handleClick = (pageName: string) => {
         router.push(pageName);
     };
-    console.log(router,'router==');
-    
     return <section className={`gogetaBannerCell ${host.includes('uk') ? '' : 'perfectBike'}`}>
         <Container>
             <Row>

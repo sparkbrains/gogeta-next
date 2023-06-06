@@ -64,8 +64,6 @@ function ApplyNowUK({context}:any) {
         values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary,sacrifice_repayment:state.sacrifice_repayment },
         onSubmit
     })
-    console.log(state,'state==');
-    
     return <>
         <ul className="applyNow-steps">
             <li>

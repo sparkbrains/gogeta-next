@@ -165,8 +165,6 @@ function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: numb
   let threshold = value[1];
   let value2 = calc_taxes(country, salary - total_bp)?.data;
   let tax2 = value2[0];
-  console.log(value2, value, 'value===');
-
   let differenceOverThreshold = tax1 == tax2 ? 0 : threshold;
   let netcost = ((salary - differenceOverThreshold) * tax1) + ((total_bp - (salary - differenceOverThreshold)) * tax2);
 
@@ -208,6 +206,5 @@ function calc_taxes(country: string, salary: any) {
     else if (salary >= 50271 && salary <= 125140) { tax = 44.00; threshold = 50271 }
     else { tax = 48.00; threshold = 125141 }
   }
-  console.log("value===", tax)
   return { data: [(100 - tax) / 100, threshold], tax: tax };
 }
