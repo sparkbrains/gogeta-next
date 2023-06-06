@@ -130,16 +130,16 @@ export const applyCalculator = (obj: any) => {
   if (frequency && sacrifice_repayment && bikeValue) {
     param = {
       ...param,
-      regular_gross: (totalVal / (Number(frequency) / 12) / Number(sacrifice_repayment)).toFixed(2),
+      regular_gross: Math.round(totalVal / (Number(frequency) / 12) / Number(sacrifice_repayment)),
     }
   }
   if (param.regular_gross) {
     param = {
       ...param,
-      net_regular: (param.regular_gross * (1 - (saving?.tax_percent / 100))).toFixed(2),
+      net_regular: Math.round(param.regular_gross * (1 - (saving?.tax_percent / 100))),
     }
   }
-  if (param.net_regular?.length) {
+  if (param.net_regular?.toString()?.length) {
     param = {
       ...param,
       total_savings: saving?.total_savings
@@ -148,7 +148,7 @@ export const applyCalculator = (obj: any) => {
   if (param.total_savings) {
     param = {
       ...param,
-      net_total_amount: (totalVal - param?.total_savings).toFixed(2),
+      net_total_amount: (totalVal - param?.total_savings),
       total_savings_percentage: saving?.saving_percentage
     }
   }
@@ -172,11 +172,11 @@ function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: numb
   let savings = total_bp - netcost;
   let savingsPercent = (savings / total_bp) * 100;
   let context = {
-    per_month: (Number(takehomepay)).toFixed(2),
-    total_savings: Number(savings).toFixed(2),
-    saving_percentage: Number(savingsPercent).toFixed(2) + "%",
+    per_month: Math.round(Number(takehomepay)),
+    total_savings: Math.round(Number(savings)),
+    saving_percentage: Math.round(Number(savingsPercent)) + "%",
     tax_percent: calc_taxes(country, salary)?.tax,
-    saving_percentage_number: Number(savingsPercent).toFixed(2),
+    saving_percentage_number: Math.round(Number(savingsPercent)),
   }
   return context
 }

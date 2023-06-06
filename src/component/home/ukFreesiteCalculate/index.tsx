@@ -12,7 +12,7 @@ var frequencydata: any = {
     FOUR_WEEKLY: 13
 }
 function UKFreeSiteCalculate({ data, context }: any) {
-    const { host,profile } = context
+    const { host, profile } = context
     const router = useRouter()
     const [state, setState] = useState<any>({
         bikeValue: '',
@@ -34,8 +34,8 @@ function UKFreeSiteCalculate({ data, context }: any) {
         const dParam = {
             ...state,
             ...data,
-            frequency: host === 'uk'?frequencydata[data.paymentFrequency]:data?.frequency,
-            sacrifice_repayment: data?.salarySacrificeTerm,salarySacrificeTerm:data?.salarySacrificeTerm
+            frequency: host === 'uk' ? frequencydata[data.paymentFrequency] : data?.frequency,
+            sacrifice_repayment: data?.salarySacrificeTerm, salarySacrificeTerm: data?.salarySacrificeTerm
         }
         handleCycleCalculate(dParam)
     }, [data])
@@ -50,10 +50,10 @@ function UKFreeSiteCalculate({ data, context }: any) {
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         let stateParam: any = { ...state }
-        if(host === 'uk'){
-        delete stateParam.frequency
-        delete stateParam.sacrifice_repayment
-    }
+        if (host === 'uk') {
+            delete stateParam.frequency
+            delete stateParam.sacrifice_repayment
+        }
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
         router.push(`/apply-now?params=${encoded}`)
