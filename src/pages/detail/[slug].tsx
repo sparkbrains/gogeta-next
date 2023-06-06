@@ -158,8 +158,13 @@ function Pdp({ detail, context }: any) {
         })
     }
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
-    console.log(data,selectColorProduct,'data==');
-    
+    console.log(data, selectColorProduct, 'data==');
+    const calObj = router?.query?.salary ? {
+    annualSalary: router?.query?.salary,
+     totalPackageValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
+      bikeValue: selectColorProduct?.size?.unitSuggestedRetailPrice, 
+      frequency: 12, salarySacrificeTerm: 12 
+    }:{}
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <div className='pb-4'>
@@ -193,19 +198,19 @@ function Pdp({ detail, context }: any) {
                                     {
                                         data?.context && Object.keys(data?.context)?.length ?
                                             <>
-                                    <span>{price}</span>
-                                                <p className='cyclePrice'>Cycle to Work price <b>{profile.currencySymbol + (selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings))}</b></p>
+                                                <span>{price}</span>
+                                                <p className='cyclePrice'>Cycle to Work price <b>{profile.currencySymbol + Math.round(selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings))}</b></p>
                                                 <p className='payEmi'>Pay only {profile.currencySymbol + data?.context?.per_month} per month</p>
                                                 <p className='saveupto'>Save {profile.currencySymbol + data?.context?.total_savings} ({data?.context?.saving_percentage})</p>
                                             </>
                                             : <>
-                                            {selectColorProduct.size?.offer_price ? <s className="price-current">{price}</s> : <p className="price-current">{price}</p>}
-                                            {selectColorProduct.size?.offer_price ?
-                                                <>
-                                                    <p className='price-best'><span>Best price </span>{profile.currencySymbol + selectColorProduct.size.offer_price}</p>
-                                                    <p className='price-best'>Save <span>{profile.currencySymbol + selectColorProduct.size.saving}</span></p>
-                                                </> : null}
-                                        </>
+                                                {selectColorProduct.size?.offer_price ? <s className="price-current">{price}</s> : <p className="price-current">{price}</p>}
+                                                {selectColorProduct.size?.offer_price ?
+                                                    <>
+                                                        <p className='price-best'><span>Best price </span>{profile.currencySymbol + selectColorProduct.size.offer_price}</p>
+                                                        <p className='price-best'>Save <span>{profile.currencySymbol + selectColorProduct.size.saving}</span></p>
+                                                    </> : null}
+                                            </>
                                     }
 
                                 </div>
@@ -269,8 +274,8 @@ function Pdp({ detail, context }: any) {
                     host.includes('uk') ?
                         <div className='applyNow pt-0'>
                             <Container>
-                            {/* data={{salary:router.query.salary || ''}} */}
-                                <UkFreesiteCalculate data={{annualSalary:router?.query?.salary}}/>
+                                {/* data={{salary:router.query.salary || ''}} */}
+                                <UkFreesiteCalculate data={calObj} />
                             </Container>
                         </div>
                         :

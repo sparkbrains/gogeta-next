@@ -130,7 +130,7 @@ export const applyCalculator = (obj: any) => {
   if (frequency && sacrifice_repayment && bikeValue) {
     param = {
       ...param,
-      regular_gross: ((totalVal / 12) / (Number(frequency) / Number(sacrifice_repayment))).toFixed(2),
+      regular_gross: (totalVal / (Number(frequency) / 12) / Number(sacrifice_repayment)).toFixed(2),
     }
   }
   if (param.regular_gross) {

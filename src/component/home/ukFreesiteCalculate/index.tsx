@@ -35,7 +35,7 @@ function UKFreeSiteCalculate({ data, context }: any) {
             ...state,
             ...data,
             frequency: host === 'uk'?frequencydata[data.paymentFrequency]:data?.frequency,
-            sacrifice_repayment: data?.salarySacrificeTerm
+            sacrifice_repayment: data?.salarySacrificeTerm,salarySacrificeTerm:data?.salarySacrificeTerm
         })
     }, [data])
     const handleCycleCalculate = (param: any) => {

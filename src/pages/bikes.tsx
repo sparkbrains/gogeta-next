@@ -98,6 +98,7 @@ function EbayPLP({ user, filterRes,host,context }: any) {
             listing_type: "ebikes",
             salary: "",
         })
+        setHasMore(true)
         fetchAllData(1, val)
     }
     const scrollEnd = () => {
@@ -113,6 +114,7 @@ function EbayPLP({ user, filterRes,host,context }: any) {
     const onChangeSort = (e: any) => {
         const { name, value } = e.target
         setSortBy(value)
+        setHasMore(true)
         const val = queryParam({ ...param, [name]: value?.length ? [value] : [] })
         router.replace(`${router.pathname}${val.replace('&', '?')}`)
         fetchAllData(1, val)
