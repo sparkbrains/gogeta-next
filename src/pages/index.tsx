@@ -32,11 +32,11 @@ function EbayLp({ context }: any) {
             <div className={`main-back ${host.includes('uk') ? 'mainBcLpafbf' : ''}`}>
                 <Welcome host={host} data={data}/>
                 <SaveUp data={saveUpto} host={host}/>
-                <TheProcess data={host.includes('Market') ?homeList.ebay.process: process} host={host}/>
+                <TheProcess data={host.includes('Market') ?homeList.process: process} host={host}/>
                 {helpinghand ? <HelpingHand /> : <UKFreeSiteCalculate data={data}/>}
             </div>
             {host.includes('uk') ?
-                <section className='mltSection findlocalBike'>
+                <section className='mltSection findlocalBike' id='participating-retailers'>
                     <Container>
                         <div className='bikeFindMap poreZindex'>
                             <h3>Find your local bike shop</h3>

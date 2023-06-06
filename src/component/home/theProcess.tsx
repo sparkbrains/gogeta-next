@@ -1,8 +1,18 @@
 import Image from "next/image"
+import { useRouter } from "next/router";
 import { Col, Container, Row } from "react-bootstrap"
 import { MainHead } from "../main-head";
 import { MainHeadSub } from "../main-head/sub-main";
 export default function TheProcess({data,host}:any){
+    const router = useRouter()
+    function contentClickHandler(e: any) {
+        const targetLink = e.target.closest('a');
+        if (!targetLink) return;
+        e.preventDefault();
+        if(targetLink.id){
+            router.push('/' + targetLink.id)
+        }
+    }
     return<Container>
     <section className='theProcess'>
         <MainHead title='The process' />
@@ -12,7 +22,7 @@ export default function TheProcess({data,host}:any){
                     return <Col key={key} lg={data?.length > 3 ? 3:4} md={6}>
                     <Image width={62} height={62} alt='ico' src={item.img} className='mb-3' />
                     <MainHeadSub title={item.title} />
-                    <div dangerouslySetInnerHTML={{__html:item.des}}></div>
+                    <div onClick={contentClickHandler} dangerouslySetInnerHTML={{__html:item.des}}></div>
                 </Col>
                 })
             }
