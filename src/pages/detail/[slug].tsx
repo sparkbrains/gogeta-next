@@ -164,6 +164,7 @@ function Pdp({ detail, context }: any) {
       bikeValue: selectColorProduct?.size?.unitSuggestedRetailPrice, 
       frequency: 12, salarySacrificeTerm: 12 
     }:{}
+    
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <div className='pb-4'>
