@@ -325,7 +325,7 @@ function Pdp({ detail, context }: any) {
                             {
                                 detail?.related_products?.map((item: any, key: number) => {
                                     return <div className='items' key={key}>
-                                        <div onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}`)} className='btn-trans w-100 text-start h-100'>
+                                        <div onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${router.query.salary?'?salary='+router.query.salary:''}`)} className='btn-trans w-100 text-start h-100'>
                                             <ProductList item={item} newDesign={true} profile={profile} />
                                         </div>
                                     </div>
@@ -348,7 +348,7 @@ export async function getServerSideProps(context: any) {
             'Content-Type': 'application/json',
         },
     })
-    let data = await response.json()
+    let data = await response?.json()
     return {
         props: {
             detail: { ...data },

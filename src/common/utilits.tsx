@@ -148,7 +148,7 @@ export const applyCalculator = (obj: any) => {
   if (param.total_savings) {
     param = {
       ...param,
-      net_total_amount: (totalVal - param?.total_savings),
+      net_total_amount: Math.round(totalVal - param?.total_savings),
       total_savings_percentage: saving?.saving_percentage
     }
   }
