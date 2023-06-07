@@ -32,7 +32,7 @@ export const homeList = {
             {
                 title:'1. Browse',
                 img:'/assets/img/browse-process.svg',
-                des:'<p>Find your bike or ebike. You can use our <a id="bikes">marketplace</a> to explore an extensive range from the best brands and retailers. Or visit any of our <a id="#participating-retailers">participating retailers</a> to get a quote.</p>'
+                des:'<p>Find your bike or ebike. You can use our <a id="bikes">marketplace</a> to explore an extensive range from the best brands and retailers. Or visit any of our <a>participating retailers</a> to get a quote.</p>'
             },
             {
                 title:'2. Choose',

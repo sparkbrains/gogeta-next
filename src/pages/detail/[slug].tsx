@@ -9,7 +9,7 @@ import Image from 'next/image';
 import ProductList from '<prefix>/component/product-list';
 import { useRouter } from 'next/router';
 import ColorWay from '<prefix>/component/product-list/colorway';
-import { handleChangeSalary, priceCalculator, queryParam, submitCalculator } from '<prefix>/common/utilits';
+import { applyCalculator, handleChangeSalary, priceCalculator, queryParam, submitCalculator } from '<prefix>/common/utilits';
 import Calculate from '<prefix>/component/detailOfferCalculator';
 import MainSlider from '<prefix>/component/mainSilder';
 import Fetch from '<prefix>/common/fetch';
@@ -76,12 +76,8 @@ function Pdp({ detail, context }: any) {
         setFetchData(detail, true)
     }, [router, detail])
     const setFetchData = (detail: any, firstTime: boolean = false) => {
-        let updateRes = priceCalculator(router?.query?.salary || 0, [detail], profile.currencyCode)[0]
-        if (router?.query?.salary?.length) {
-            setData(updateRes)
-        } else {
-            setData(detail)
-        }
+        // let updateRes = priceCalculator(router?.query?.salary || 0, [detail], profile.currencyCode)[0]
+        
         let list: any = []
         for (let item in detail?.heightDropdown) {
             list.push({
@@ -106,7 +102,7 @@ function Pdp({ detail, context }: any) {
         } else {
             colorWay = detail?.colourway[0]
         }
-        handleColor(colorWay, updateRes)
+        handleColor(colorWay, detail)
     }
     const handleSize = (event: any) => {
         const { value }: any = event.target
@@ -117,35 +113,54 @@ function Pdp({ detail, context }: any) {
         })
     }
     const handleColor = (item: any, data: any) => {
+        let updateRes = data
         let sizeFilter = data?.filter_size && Object?.keys(data?.filter_size).length
         const name = sizeFilter ? data?.filter_size?.colourway : item.colourwayName
+        let colorObj:any = {}
         if (data.colourwaySizes[name]) {
             if (Object.values(data.colourwaySizes[item.colourwayName]).every((size: any) => size.stock_status !== 'In stock now')) {
                 let val = sizeFilter ? data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped] : Object.values(data.colourwaySizes[item.colourwayName])[0]
-
-                let colorObj = {
+                colorObj = {
                     size: val,
                     ...item
                 }
-                setselectColorProduct(colorObj)
             } else {
                 if (sizeFilter) {
-                    setselectColorProduct({
+                    colorObj = {
                         size: data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped],
                         ...item
-                    })
+                    }
                 } else {
                     Object.values(data.colourwaySizes[name])?.map((itemSize: any) => {
                         if (itemSize.stock_status === 'In stock now') {
-                            let colorObj = {
+                            colorObj = {
                                 size: itemSize,
                                 ...item
                             }
-                            setselectColorProduct(colorObj)
                         }
                     })
                 }
             }
+        }
+        console.log(colorObj,'colorObj==');
+        setselectColorProduct(colorObj)
+        if(host?.includes('uk') && data?.length){
+            updateRes=detail
+            updateRes = applyCalculator({
+                bikeValue:colorObj.size.offer_price ? colorObj.size.offer_price:colorObj?.size?.unitSuggestedRetailPrice,
+                accessoriesValue:0,
+                annualSalary:router?.query?.salary,
+                frequency:12,
+                sacrifice_repayment:12,
+                totalPackageValue:colorObj.size.offer_price ? colorObj.size.offer_price:colorObj?.size?.unitSuggestedRetailPrice,
+            })
+        }else{
+            updateRes = priceCalculator(router?.query?.salary || 0, [detail], profile.currencyCode)[0]
+        }
+        if (router?.query?.salary?.length) {
+            setData(updateRes)
+        } else {
+            setData(data)
         }
     }
     const handleHeight = (e: ChangeEvent<HTMLSelectElement>) => {

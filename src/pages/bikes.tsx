@@ -13,8 +13,8 @@ import { withContext } from '<prefix>/context/appContext';
 const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'))
 const ProductList = dynamic(() => import('../component/product-list'))
 const Applayout = dynamic(() => import('../layout/applayout'))
-function EbayPLP({ user, filterRes,host,context }: any) {
-    const {profile} = context
+function EbayPLP({ user, filterRes,context }: any) {
+    const {profile,host} = context
     const router = useRouter()
     const [productList, setProductList] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
@@ -31,11 +31,12 @@ function EbayPLP({ user, filterRes,host,context }: any) {
         security: [],
         price: [],
         wheel_size: [],
-        showCyclePrice: host ? 'on':'off',
+        showCyclePrice: !host.includes('uk') ? 'on':'off',
         listing_type: 'ebikes',
         salary: ''
     })
     useEffect(() => {
+        setHasMore(true)
         const val: any = router.query
         const data = {
             live_stock: val?.live_stock?.split(',') || [],
@@ -47,7 +48,7 @@ function EbayPLP({ user, filterRes,host,context }: any) {
             security: val?.security?.split(',') || [],
             wheel_size: val?.wheel_size?.split(',') || [],
             price: val?.price?.split('-') || [],
-            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : host ? 'on':'off',
+            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : !host.includes('uk') ? 'on':'off',
             listing_type: val?.listing_type?.length ? val?.listing_type : "ebikes",
             salary: val?.salary || "30000",
         }
@@ -94,7 +95,7 @@ function EbayPLP({ user, filterRes,host,context }: any) {
             price: [],
             security: [],
             wheel_size: [],
-            showCyclePrice: host ? 'on':'off',
+            showCyclePrice: !host.includes('uk') ? 'on':'off',
             listing_type: "ebikes",
             salary: "",
         })
@@ -119,6 +120,8 @@ function EbayPLP({ user, filterRes,host,context }: any) {
         router.replace(`${router.pathname}${val.replace('&', '?')}`)
         fetchAllData(1, val)
     }
+    console.log(productList,'productList===');
+    
     return (
         <Applayout ebay={true} className='m-0 plp-back'>
             <div className='container ebay-plp'>
@@ -151,7 +154,7 @@ function EbayPLP({ user, filterRes,host,context }: any) {
                             {
                                 productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}>
                                     <button onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${param.showCyclePrice === 'on' ? `?salary=${param.salary}` : ''}`)} className='btn-trans w-100 text-start h-100'>
-                                        <ProductList profile={profile} item={item} newDesign={true} />
+                                        <ProductList profile={profile} item={item} newDesign={true} host={host}/>
                                     </button>
                                 </div>)
                             }

@@ -93,10 +93,18 @@ export const priceCalculator = (salary: any, card: any, currencyCode: string) =>
         context = calculatEbikePrice(d?.currencyProduct?.unitSuggestedRetailPrice, salary, d.categories, 1250)
       }
     } else {
+      const obj = {
+        bikeValue:d?.saving_price?.offerPrice ? d?.saving_price?.offerPrice:d?.currencyProduct?.unitSuggestedRetailPrice,
+        accessoriesValue:0,
+        annualSalary:salary,
+        frequency:12,
+        sacrifice_repayment:12,
+        totalPackageValue:d?.saving_price?.offerPrice ? d?.saving_price?.offerPrice:d?.currencyProduct?.unitSuggestedRetailPrice,
+      }
       if (d.bicycleAssisted === "ebikes" || d.listing_type === "ebikes") {
-        context = calculate_bike_salary_sacrifice_in_plp(d?.currencyProduct?.unitSuggestedRetailPrice, salary, 12)
+        context = applyCalculator(obj)
       } else if (d.bicycleAssisted === "bikes" || d.listing_type === "bikes") {
-        context = calculate_bike_salary_sacrifice_in_plp(d?.currencyProduct?.unitSuggestedRetailPrice, salary, 12)
+        context = applyCalculator(obj)
       }
     }
     d = {
