@@ -165,7 +165,6 @@ export const applyCalculator = (obj: any) => {
       saving_C2W:SRPVal - param.C2W_price,
     }
   }
-  // console.log(SRPVal,param,'param===');
   
   if(param.saving_C2W){
     param = {
@@ -173,6 +172,7 @@ export const applyCalculator = (obj: any) => {
       saving_C2W_percentage:(+param.saving_C2W / SRPVal) * 100,
     }
   }
+  // console.log(SRPVal,param,{bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue, SRP_val },totalVal,'param===');
   return {
     C2W_price: Math.round(param.C2W_price),
 net_regular: Math.round(param.net_regular),

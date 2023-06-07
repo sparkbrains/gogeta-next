@@ -151,7 +151,7 @@ function Pdp({ detail, context }: any) {
                 annualSalary: router?.query?.salary,
                 frequency: 12,
                 sacrifice_repayment: 12,
-                totalPackageValue: colorObj.size.offer_price ? colorObj.size.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
+                totalPackageValue: colorObj?.size?.offer_price ? colorObj?.size?.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
             })
             updateRes = {
                 ...detail,
@@ -177,9 +177,10 @@ function Pdp({ detail, context }: any) {
     }
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     const calObj = router?.query?.salary ? {
+        SRP_val:selectColorProduct?.size?.unitSuggestedRetailPrice,
         annualSalary: router?.query?.salary,
         totalPackageValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
-        bikeValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
+        bikeValue: selectColorProduct?.size?.offer_price ? selectColorProduct?.size?.offer_price : selectColorProduct?.size?.unitSuggestedRetailPrice,
         frequency: 12, salarySacrificeTerm: 12
     } : {}
     console.log('====updateRes', data);
