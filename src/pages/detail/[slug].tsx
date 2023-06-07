@@ -74,7 +74,7 @@ function Pdp({ detail, context }: any) {
     };
     useEffect(() => {
         setFetchData(detail, true)
-    }, [router, detail])
+    }, [router, detail,host])
     const setFetchData = (detail: any, firstTime: boolean = false) => {
         // let updateRes = priceCalculator(router?.query?.salary || 0, [detail], profile.currencyCode)[0]
         
@@ -142,11 +142,9 @@ function Pdp({ detail, context }: any) {
                 }
             }
         }
-        console.log(colorObj,'colorObj==');
         setselectColorProduct(colorObj)
-        if(host?.includes('uk') && data?.length){
-            updateRes=detail
-            updateRes = applyCalculator({
+        if(host?.includes('uk') && data?.bicycleAssisted?.length){
+            let context = applyCalculator({
                 bikeValue:colorObj.size.offer_price ? colorObj.size.offer_price:colorObj?.size?.unitSuggestedRetailPrice,
                 accessoriesValue:0,
                 annualSalary:router?.query?.salary,
@@ -154,6 +152,10 @@ function Pdp({ detail, context }: any) {
                 sacrifice_repayment:12,
                 totalPackageValue:colorObj.size.offer_price ? colorObj.size.offer_price:colorObj?.size?.unitSuggestedRetailPrice,
             })
+            updateRes={
+                ...detail,
+                context:context
+            }
         }else{
             updateRes = priceCalculator(router?.query?.salary || 0, [detail], profile.currencyCode)[0]
         }
@@ -179,6 +181,7 @@ function Pdp({ detail, context }: any) {
       bikeValue: selectColorProduct?.size?.unitSuggestedRetailPrice, 
       frequency: 12, salarySacrificeTerm: 12 
     }:{}
+    console.log('====updateRes',data);
     
     return (
         <Applayout className='pdpMain w-100 mt-2'>
@@ -212,6 +215,14 @@ function Pdp({ detail, context }: any) {
                                 <div className='priceDetailoffer'>
                                     {
                                         data?.context && Object.keys(data?.context)?.length ?
+                                        host.includes('uk')?
+                                        <>
+                                                <span>{price}</span>
+                                                <p className='cyclePrice'>Cycle to Work price <b>{profile.currencySymbol + handleChangeSalary(Math.round(selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings)))}</b></p>
+                                                <p className='payEmi'>Best Price {profile.currencySymbol + handleChangeSalary(selectColorProduct.size?.offer_price)}</p>
+                                                <p className='saveupto'>Save {profile.currencySymbol + handleChangeSalary(data?.context?.total_savings)} ({data?.context?.total_savings_percentage})</p>
+                                            </>
+                                            :
                                             <>
                                                 <span>{price}</span>
                                                 <p className='cyclePrice'>Cycle to Work price <b>{profile.currencySymbol + handleChangeSalary(Math.round(selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings)))}</b></p>
