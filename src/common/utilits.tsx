@@ -94,6 +94,7 @@ export const priceCalculator = (salary: any, card: any, currencyCode: string) =>
       }
     } else {
       const obj = {
+        SRP_val:d?.currencyProduct?.unitSuggestedRetailPrice,
         bikeValue:d?.saving_price?.offerPrice ? d?.saving_price?.offerPrice:d?.currencyProduct?.unitSuggestedRetailPrice,
         accessoriesValue:0,
         annualSalary:salary,
@@ -131,7 +132,8 @@ export const submitCalculator = (param: any) => {
   return context;
 }
 export const applyCalculator = (obj: any) => {
-  const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue } = obj
+  const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue, SRP_val } = obj
+  const SRPVal = +SRP_val > 0?+SRP_val:bikeValue
   const saving: any = calculate_bike_salary_sacrifice_in_plp(totalPackageValue, annualSalary, sacrifice_repayment)
   const totalVal = Number(bikeValue) + Number(accessoriesValue)
   let param: any = {}
@@ -144,23 +146,43 @@ export const applyCalculator = (obj: any) => {
   if (param.regular_gross) {
     param = {
       ...param,
-      net_regular: Math.round(param.regular_gross * (1 - (saving?.tax_percent / 100))),
+      net_regular: param.regular_gross * (1 - (saving?.tax_percent / 100)),
     }
   }
   if (param.net_regular?.toString()?.length) {
     param = {
       ...param,
-      total_savings: saving?.total_savings
+      total_savings: saving?.total_savings,
+      C2W_price:+param.net_regular * 12
     }
   }
+  
   if (param.total_savings) {
     param = {
       ...param,
-      net_total_amount: Math.round(totalVal - param?.total_savings),
-      total_savings_percentage: saving?.saving_percentage
+      net_total_amount: totalVal - param?.total_savings,
+      total_savings_percentage: saving?.saving_percentage,
+      saving_C2W:SRPVal - param.C2W_price,
     }
   }
-  return param
+  // console.log(SRPVal,param,'param===');
+  
+  if(param.saving_C2W){
+    param = {
+      ...param,
+      saving_C2W_percentage:(+param.saving_C2W / SRPVal) * 100,
+    }
+  }
+  return {
+    C2W_price: Math.round(param.C2W_price),
+net_regular: Math.round(param.net_regular),
+net_total_amount: Math.round(param.net_total_amount),
+regular_gross: Math.round(param.regular_gross),
+saving_C2W: Math.round(param.saving_C2W),
+saving_C2W_percentage: Math.round(param.saving_C2W_percentage),
+total_savings: Math.round(param.total_savings),
+total_savings_percentage: param.total_savings_percentage
+  }
 }
 function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: number, sacrifice_repayment: number, country: string = 'England',) {
   let total_bp = bike_price

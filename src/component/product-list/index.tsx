@@ -5,9 +5,7 @@ import Image from "next/image"
 import ColorWay from "./colorway";
 import { handleChangeSalary } from "<prefix>/common/utilits";
 
-export default function ProductList({ profile, item,host='' }: any) {
-    console.log(host);
-
+export default function ProductList({ profile, item, host = '' }: any) {
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
     let price = `${'SRP ' + profile.currencySymbol + handleChangeSalary(item.currencyProduct.unitSuggestedRetailPrice)}`
     return <Card className={'h-100'}>
@@ -22,20 +20,28 @@ export default function ProductList({ profile, item,host='' }: any) {
                 </ul>
             </div>
             <h5>{item.productName}</h5>
-            
+
             {item?.context && Object.keys(item?.context)?.length ?
-            host?.includes('uk')?
-                <>
-                    <s className="price-current pe-1">{price} </s>
-                    <p className="price-current">Best price {profile.currencySymbol + handleChangeSalary(item.saving_price.offerPrice)}</p>
-                    <p className="primary-color price-des">gogeta C2W price {profile.currencySymbol + handleChangeSalary(Math.round(item.currencyProduct.unitSuggestedRetailPrice - Number(item?.context?.total_savings)))}</p>
-                    <p className="pt-3">Save {profile.currencySymbol + handleChangeSalary(item?.context?.total_savings)} ({item?.context?.total_savings_percentage})</p>
-                </>: <>
-                    <s className="price-current pe-1">{price} </s> <span className="primary-color ml-1">{profile.currencySymbol + handleChangeSalary(Math.round(item.currencyProduct.unitSuggestedRetailPrice - Number(item?.context?.total_savings)))}</span>
-                    <p className="primary-color price-des">Save {profile.currencySymbol + handleChangeSalary(item?.context?.total_savings)} with Cycle to Work ({item?.context?.saving_percentage})</p>
-                    <p className="price-des py-3">Just 12 monthly payments of <span className="primary-color">{profile.currencySymbol + handleChangeSalary(item.context?.per_month)}</span> from your gross salary</p>
-                    {item.context?.initial_payment ? <p className="price-des">Plus a <span className="primary-color">{profile.currencySymbol + item.context?.initial_payment}</span> initial payment</p>:null}
-                </> :
+                host?.includes('uk') ?
+                    <>
+                        {
+                            item.saving_price.offerPrice ?
+                                <>
+                                    <s className="price-current pe-1">{price} </s>
+                                    <p className="price-current">Best price {profile.currencySymbol + handleChangeSalary(item.saving_price.offerPrice)}</p>
+                                </>
+                                :
+                                <p className="price-current pe-1">{price} </p>
+                        }
+
+                        <p className="primary-color price-des">gogeta C2W price {profile.currencySymbol + handleChangeSalary(item?.context?.C2W_price)}</p>
+                        <p className="pt-3">Save {profile.currencySymbol + handleChangeSalary(item?.context?.saving_C2W)} ({item?.context?.saving_C2W_percentage + '%'})</p>
+                    </> : <>
+                        <s className="price-current pe-1">{price} </s> <span className="primary-color ml-1">{profile.currencySymbol + handleChangeSalary(Math.round(item.currencyProduct.unitSuggestedRetailPrice - Number(item?.context?.total_savings)))}</span>
+                        <p className="primary-color price-des">Save {profile.currencySymbol + handleChangeSalary(item?.context?.total_savings)} with Cycle to Work ({item?.context?.saving_percentage})</p>
+                        <p className="price-des py-3">Just 12 monthly payments of <span className="primary-color">{profile.currencySymbol + handleChangeSalary(item.context?.per_month)}</span> from your gross salary</p>
+                        {item.context?.initial_payment ? <p className="price-des">Plus a <span className="primary-color">{profile.currencySymbol + item.context?.initial_payment}</span> initial payment</p> : null}
+                    </> :
                 <>
                     {item.saving_price.offerPrice ? <s className="price-current">{price}</s> : <p className="price-current">{price}</p>}
                     {item.saving_price.offerPrice ?

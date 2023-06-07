@@ -74,10 +74,10 @@ function Pdp({ detail, context }: any) {
     };
     useEffect(() => {
         setFetchData(detail, true)
-    }, [router, detail,host])
+    }, [router, detail, host])
     const setFetchData = (detail: any, firstTime: boolean = false) => {
         // let updateRes = priceCalculator(router?.query?.salary || 0, [detail], profile.currencyCode)[0]
-        
+
         let list: any = []
         for (let item in detail?.heightDropdown) {
             list.push({
@@ -116,7 +116,7 @@ function Pdp({ detail, context }: any) {
         let updateRes = data
         let sizeFilter = data?.filter_size && Object?.keys(data?.filter_size).length
         const name = sizeFilter ? data?.filter_size?.colourway : item.colourwayName
-        let colorObj:any = {}
+        let colorObj: any = {}
         if (data.colourwaySizes[name]) {
             if (Object.values(data.colourwaySizes[item.colourwayName]).every((size: any) => size.stock_status !== 'In stock now')) {
                 let val = sizeFilter ? data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped] : Object.values(data.colourwaySizes[item.colourwayName])[0]
@@ -143,20 +143,21 @@ function Pdp({ detail, context }: any) {
             }
         }
         setselectColorProduct(colorObj)
-        if(host?.includes('uk') && data?.bicycleAssisted?.length){
+        if (host?.includes('uk') && data?.bicycleAssisted?.length) {
             let context = applyCalculator({
-                bikeValue:colorObj.size.offer_price ? colorObj.size.offer_price:colorObj?.size?.unitSuggestedRetailPrice,
-                accessoriesValue:0,
-                annualSalary:router?.query?.salary,
-                frequency:12,
-                sacrifice_repayment:12,
-                totalPackageValue:colorObj.size.offer_price ? colorObj.size.offer_price:colorObj?.size?.unitSuggestedRetailPrice,
+                SRP_val: colorObj?.size?.unitSuggestedRetailPrice,
+                bikeValue: colorObj.size.offer_price ? colorObj.size.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
+                accessoriesValue: 0,
+                annualSalary: router?.query?.salary,
+                frequency: 12,
+                sacrifice_repayment: 12,
+                totalPackageValue: colorObj.size.offer_price ? colorObj.size.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
             })
-            updateRes={
+            updateRes = {
                 ...detail,
-                context:context
+                context: context
             }
-        }else{
+        } else {
             updateRes = priceCalculator(router?.query?.salary || 0, [detail], profile.currencyCode)[0]
         }
         if (router?.query?.salary?.length) {
@@ -176,13 +177,13 @@ function Pdp({ detail, context }: any) {
     }
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     const calObj = router?.query?.salary ? {
-    annualSalary: router?.query?.salary,
-     totalPackageValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
-      bikeValue: selectColorProduct?.size?.unitSuggestedRetailPrice, 
-      frequency: 12, salarySacrificeTerm: 12 
-    }:{}
-    console.log('====updateRes',data);
-    
+        annualSalary: router?.query?.salary,
+        totalPackageValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
+        bikeValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
+        frequency: 12, salarySacrificeTerm: 12
+    } : {}
+    console.log('====updateRes', data);
+
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <div className='pb-4'>
@@ -215,20 +216,20 @@ function Pdp({ detail, context }: any) {
                                 <div className='priceDetailoffer'>
                                     {
                                         data?.context && Object.keys(data?.context)?.length ?
-                                        host.includes('uk')?
-                                        <>
-                                                <span>{price}</span>
-                                                <p className='cyclePrice'>Cycle to Work price <b>{profile.currencySymbol + handleChangeSalary(Math.round(selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings)))}</b></p>
-                                                <p className='payEmi'>Best Price {profile.currencySymbol + handleChangeSalary(selectColorProduct.size?.offer_price)}</p>
-                                                <p className='saveupto'>Save {profile.currencySymbol + handleChangeSalary(data?.context?.total_savings)} ({data?.context?.total_savings_percentage})</p>
-                                            </>
-                                            :
-                                            <>
-                                                <span>{price}</span>
-                                                <p className='cyclePrice'>Cycle to Work price <b>{profile.currencySymbol + handleChangeSalary(Math.round(selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings)))}</b></p>
-                                                <p className='payEmi'>Pay only {profile.currencySymbol + handleChangeSalary(data?.context?.per_month)} per month</p>
-                                                <p className='saveupto'>Save {profile.currencySymbol + handleChangeSalary(data?.context?.total_savings)} ({data?.context?.saving_percentage})</p>
-                                            </>
+                                            host.includes('uk') ?
+                                                <>
+                                                    <span>{price}</span>
+                                                    <p className='cyclePrice'>Cycle to Work price <b>{profile.currencySymbol + handleChangeSalary(data?.context?.C2W_price)}</b></p>
+                                                    {selectColorProduct.size?.offer_price ? <p className='payEmi'>Best Price {profile.currencySymbol + handleChangeSalary(selectColorProduct.size?.offer_price)}</p> : null}
+                                                    <p className='saveupto'>Save {profile.currencySymbol + handleChangeSalary(data?.context?.saving_C2W)} ({data?.context?.saving_C2W_percentage + '%'})</p>
+                                                </>
+                                                :
+                                                <>
+                                                    <span>{price}</span>
+                                                    <p className='cyclePrice'>Cycle to Work price <b>{profile.currencySymbol + handleChangeSalary(Math.round(selectColorProduct?.size?.unitSuggestedRetailPrice - Number(data?.context?.total_savings)))}</b></p>
+                                                    <p className='payEmi'>Pay only {profile.currencySymbol + handleChangeSalary(data?.context?.per_month)} per month</p>
+                                                    <p className='saveupto'>Save {profile.currencySymbol + handleChangeSalary(data?.context?.total_savings)} ({data?.context?.saving_percentage})</p>
+                                                </>
                                             : <>
                                                 {selectColorProduct.size?.offer_price ? <s className="price-current">{price}</s> : <p className="price-current">{price}</p>}
                                                 {selectColorProduct.size?.offer_price ?
@@ -352,7 +353,7 @@ function Pdp({ detail, context }: any) {
                             {
                                 detail?.related_products?.map((item: any, key: number) => {
                                     return <div className='items' key={key}>
-                                        <div onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${router.query.salary?'?salary='+router.query.salary:''}`)} className='btn-trans w-100 text-start h-100'>
+                                        <div onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${router.query.salary ? '?salary=' + router.query.salary : ''}`)} className='btn-trans w-100 text-start h-100'>
                                             <ProductList item={item} newDesign={true} profile={profile} />
                                         </div>
                                     </div>
