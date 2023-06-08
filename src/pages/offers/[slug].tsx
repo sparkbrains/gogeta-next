@@ -94,7 +94,11 @@ function MyOffers({ partners, offers, context }: any) {
             delete obj.dealerEmail
         }
         let encoded = window.btoa(JSON.stringify(obj));
-        router.push(`/apply-now?params=${encoded}`)
+        if(item.context?.C2W_price){
+            router.push(`/apply-now?params=${encoded}`)
+        }else{
+            window.open('https://www.specializedireland.ie/', '_blank');
+        }
     }
     const formSubmit = (val: any) => { }
     let price = `${'SRP ' + offers?.currencyProduct?.currency?.currencySymbol + offers?.currencyProduct?.unitSuggestedRetailPrice}`
