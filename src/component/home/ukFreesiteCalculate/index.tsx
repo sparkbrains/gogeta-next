@@ -11,7 +11,7 @@ var frequencydata: any = {
     FORTNIGHTLY: 26,
     FOUR_WEEKLY: 13
 }
-function UKFreeSiteCalculate({ data, context,submit=false,formSubmit,srp }: any) {
+function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }: any) {
     const { host, profile } = context
     const router = useRouter()
     const [state, setState] = useState<any>({
@@ -28,6 +28,7 @@ function UKFreeSiteCalculate({ data, context,submit=false,formSubmit,srp }: any)
             ...state,
             [name]: typeof value === 'object' ? value.value : value
         }
+
         handleCycleCalculate(param)
     }
     useEffect(() => {
@@ -46,8 +47,13 @@ function UKFreeSiteCalculate({ data, context,submit=false,formSubmit,srp }: any)
         }
         let valPrice = applyCalculator(param)
         // console.log({ ...param, ...valPrice },'valPrice===');
-        
-        setState({ ...param, ...valPrice })
+        if (srp && +param.bikeValue > +param.SRP_val) {
+            handleNewError({ bike_value: 'SRP Field that it cannot be less than cost of bike' })
+            setState({ ...param })
+        } else {
+            handleNewError({})
+            setState({ ...param, ...valPrice })
+        }
     }
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -58,11 +64,11 @@ function UKFreeSiteCalculate({ data, context,submit=false,formSubmit,srp }: any)
         }
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
-        submit ?formSubmit(state):router.push(`/apply-now?params=${encoded}`)
+        submit ? formSubmit(state) : router.push(`/apply-now?params=${encoded}`)
     }
-    const { errors, handleSubmit } = FormC({
+    const { errors, handleSubmit, handleNewError } = FormC({
         values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
-        onSubmit
+        onSubmit,
     })
     return <section className='schemeCost poreZindex mb-5'>
         <Container>

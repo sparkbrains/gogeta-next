@@ -140,7 +140,7 @@ export const applyCalculator = (obj: any) => {
   if (frequency && sacrifice_repayment && bikeValue) {
     param = {
       ...param,
-      regular_gross: Math.round(totalVal / (Number(frequency) / 12) / Number(sacrifice_repayment)),
+      regular_gross: (totalVal / (Number(frequency) / 12) / Number(sacrifice_repayment)).toFixed(2),
     }
   }
   if (param.regular_gross) {
@@ -173,13 +173,13 @@ export const applyCalculator = (obj: any) => {
     }
   }
   return {
-    C2W_price: Math.round(param.C2W_price),
-net_regular: Math.round(param.net_regular),
-net_total_amount: Math.round(param.net_total_amount),
-regular_gross: Math.round(param.regular_gross),
-saving_C2W: Math.round(param.saving_C2W),
-saving_C2W_percentage: Math.round(param.saving_C2W_percentage) || 0,
-total_savings: Math.round(param.total_savings),
+    C2W_price: param.C2W_price?.toFixed(2),
+net_regular: param.net_regular?.toFixed(2),
+net_total_amount: param.net_total_amount?.toFixed(2),
+regular_gross: param.regular_gross,
+saving_C2W: param.saving_C2W?.toFixed(2),
+saving_C2W_percentage: param.saving_C2W_percentage?.toFixed(2) || 0,
+total_savings: param.total_savings?.toFixed(2),
 total_savings_percentage: param.total_savings_percentage?param.total_savings_percentage:0
   }
 }

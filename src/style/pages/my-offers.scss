@@ -343,7 +343,7 @@
     }
 }
 .inStockNow{
-    margin-top: 110px;
+    margin-top: 60px;
     @media(max-width:767px){
         margin-top: 60px;
     }
@@ -414,7 +414,25 @@
                     }
                 }
             }
+            .offerPrice{
+                p,s {
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    color: var(--p-color-new);
+                    &.primary-color{
+                        font-weight: 700;
+                        font-size: 16px;
+                    }
+                }
+            }
             .detailCont{
+                &.detailContRetail{
+                    width: 70%;
+                    padding-right: 15px;
+                    @include respond-from(lg-md-max){
+                        width: 100%;
+                    }
+                }
                 h4{
                     font-weight: 700;
                     font-size: 24px;

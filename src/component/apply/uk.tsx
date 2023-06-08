@@ -42,7 +42,7 @@ function ApplyNowUK({context}:any) {
             let obj: any = JSON.parse(window.atob(`${router.query.params}`))
             obj =host === 'uk'? {...obj,frequency: frequencydata[obj.paymentFrequency],
             sacrifice_repayment: obj?.salarySacrificeTerm}:obj
-            setState(obj)
+            handleCycleCalculate(obj)
         }
     }, [router])
     const handleCycleCalculate = (param: any) => {
@@ -51,6 +51,7 @@ function ApplyNowUK({context}:any) {
             totalPackageValue:Number(param.bikeValue) + Number(param.accessoriesValue)
         }
         let valPrice = applyCalculator(param)
+        
         setState({...param,...valPrice})
     }
     const onSubmit = (e: FormEvent) => {
