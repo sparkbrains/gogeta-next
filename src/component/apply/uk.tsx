@@ -42,8 +42,6 @@ function ApplyNowUK({context}:any) {
             let obj: any = JSON.parse(window.atob(`${router.query.params}`))
             obj =host === 'uk'? {...obj,frequency: frequencydata[obj.paymentFrequency],
             sacrifice_repayment: obj?.salarySacrificeTerm}:obj
-            console.log(obj,'obj===');
-            
             setState(obj)
         }
     }, [router])

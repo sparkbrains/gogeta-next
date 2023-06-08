@@ -6,9 +6,19 @@ import Image from "next/image";
 import { Col, Row } from "react-bootstrap";
 import ToolTip from "../info";
 
-function UKCalculator({ errors, state, onChange, host }: any) {
+function UKCalculator({ errors, state, onChange, host,srp }: any) {
     return <Row>
         <Col xs={12} sm={6}>
+            {srp ? <div className="calclulate-form pe-0 pe-lg-4">
+                <Row>
+                    <Col xs={12} sm={4}>
+                        <span className="pb-2">SRP:</span>
+                    </Col>
+                    <Col xs={12} sm={8}>
+                        <Input errorText={errors.SRP_val} type="text" className="form-input" name="SRP_val" value={state.SRP_val} onKeyPress={onKeyPress} onChange={onChange} />
+                    </Col>
+                </Row>
+            </div>:null}
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
                     <Col xs={12} sm={4}>

@@ -11,7 +11,7 @@ var frequencydata: any = {
     FORTNIGHTLY: 26,
     FOUR_WEEKLY: 13
 }
-function UKFreeSiteCalculate({ data, context }: any) {
+function UKFreeSiteCalculate({ data, context,submit=false,formSubmit,srp }: any) {
     const { host, profile } = context
     const router = useRouter()
     const [state, setState] = useState<any>({
@@ -45,6 +45,8 @@ function UKFreeSiteCalculate({ data, context }: any) {
             totalPackageValue: Number(param.bikeValue) + Number(param.accessoriesValue)
         }
         let valPrice = applyCalculator(param)
+        // console.log({ ...param, ...valPrice },'valPrice===');
+        
         setState({ ...param, ...valPrice })
     }
     const onSubmit = (e: FormEvent) => {
@@ -56,7 +58,7 @@ function UKFreeSiteCalculate({ data, context }: any) {
         }
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
-        router.push(`/apply-now?params=${encoded}`)
+        submit ?formSubmit(state):router.push(`/apply-now?params=${encoded}`)
     }
     const { errors, handleSubmit } = FormC({
         values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
@@ -71,7 +73,7 @@ function UKFreeSiteCalculate({ data, context }: any) {
                     </div>
                     <div className='applyNow p-5'>
                         <Form onSubmit={handleSubmit}>
-                            <UKCalculator errors={errors} state={state} onChange={onChange} host={host} />
+                            <UKCalculator errors={errors} srp={srp} state={state} onChange={onChange} host={host} />
                             <div className="d-flex justify-content-end">
                                 <button type="submit" className="customSiteBtn btn btn-primary px-4">Apply now <i className="fa-solid fa-angle-right"></i></button>
                             </div>

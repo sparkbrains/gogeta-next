@@ -175,16 +175,21 @@ function Pdp({ detail, context }: any) {
             }
         })
     }
+    const formSubmit = (val:any)=>{
+        setCalculateRes(val)
+    }
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
-    const calObj = router?.query?.salary ? {
-        SRP_val:selectColorProduct?.size?.unitSuggestedRetailPrice,
+    let calObj:any = {
+        SRP_val: selectColorProduct?.size?.unitSuggestedRetailPrice,
+        bikeValue: Math.round(selectColorProduct?.size?.offer_price?selectColorProduct?.size?.offer_price:selectColorProduct?.size?.unitSuggestedRetailPrice),
+    }
+    calObj = router?.query?.salary ? {
+        ...calObj,
         annualSalary: router?.query?.salary,
         totalPackageValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
-        bikeValue: selectColorProduct?.size?.offer_price ? selectColorProduct?.size?.offer_price : selectColorProduct?.size?.unitSuggestedRetailPrice,
         frequency: 12, salarySacrificeTerm: 12
-    } : {}
-    console.log('====updateRes', data);
-
+    } : calObj
+    
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <div className='pb-4'>
@@ -282,13 +287,13 @@ function Pdp({ detail, context }: any) {
                                             :
                                             <>
                                                 <p>{selectColorProduct?.size?.stock_status}</p>
-                                                <button type="button" onClick={() => !host.includes('uk') ? router.push(`/offers/${router?.query?.slug}?${queryParam({
+                                                <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?${queryParam({
                                                     color: selectColorProduct?.colourwayName,
                                                     salary: calculateRes?.salary?.length ? calculateRes?.salary : router?.query?.salary,
                                                     accessories: calculateRes?.accessories_val,
                                                     size: selectColorProduct?.size?.mapped,
                                                     modelYear: data?.productYear
-                                                })?.replace('&', '')}`) : {}} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
+                                                })?.replace('&', '')}`)} className="customSiteBtn btn btn-primary px-4">Find me great offers <i className="fa-solid fa-angle-right"></i></button>
                                             </>
                                     }
                                 </div>
@@ -303,7 +308,7 @@ function Pdp({ detail, context }: any) {
                         <div className='applyNow pt-0'>
                             <Container>
                                 {/* data={{salary:router.query.salary || ''}} */}
-                                <UkFreesiteCalculate data={calObj} />
+                                <UkFreesiteCalculate srp={true} data={calObj} submit={true} formSubmit={formSubmit}/>
                             </Container>
                         </div>
                         :

@@ -4,11 +4,12 @@ import StoreFinder from '<prefix>/component/storefinder';
 import { useEffect, useState } from 'react';
 import TransitionPage from '<prefix>/component/transition';
 import { useRouter } from 'next/router';
-import { priceCalculator } from '<prefix>/common/utilits';
+import { applyCalculator, priceCalculator } from '<prefix>/common/utilits';
 import Calculate from '<prefix>/component/detailOfferCalculator';
 import DealerList from '<prefix>/component/dealerList';
 import Image from 'next/image';
 import { withContext } from '<prefix>/context/appContext';
+import UkFreesiteCalculate from '<prefix>/component/home/ukFreesiteCalculate';
 let size:any = {
     s:'Small',
     l:'Large',
@@ -16,7 +17,7 @@ let size:any = {
     xl:'Extra Large',
 }
 function MyOffers({ partners, offers,context }: any) {
-    const {profile} = context
+    const {profile,host} = context
     const router = useRouter()
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
     const [calculateRes, setCalculateRes] = useState<any>({})
@@ -24,7 +25,23 @@ function MyOffers({ partners, offers,context }: any) {
     const [data, setData] = useState<any>({})
     useEffect(() => {
         if (router.query?.salary?.length) {
+        if (host?.includes('uk')) {
+            console.log(offers,'offers===');
+            const color:any = router?.query?.color || ''
+            const colorSize:any = router?.query?.size || ''
+            let sizePrice = router.query?.color ? offers.colourwaySizes[color][colorSize]:{}
+            // let context = applyCalculator({
+            //     SRP_val: colorObj?.size?.unitSuggestedRetailPrice,
+            //     bikeValue: sizePrice.size.offer_price ? colorObj.size.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
+            //     accessoriesValue: 0,
+            //     annualSalary: router?.query?.salary,
+            //     frequency: 12,
+            //     sacrifice_repayment: 12,
+            //     totalPackageValue: colorObj?.size?.offer_price ? colorObj?.size?.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
+            // })
+        }else{
             setData(priceCalculator(router.query?.salary, [offers],profile.currencyCode)[0])
+        }
         } else {
             setData(offers)
         }
@@ -61,7 +78,18 @@ function MyOffers({ partners, offers,context }: any) {
         let encoded = window.btoa(JSON.stringify(obj));
         router.push(`/apply-now?params=${encoded}`)
     }
+    const formSubmit = (val:any)=>{}
     let price = `${'SRP ' + offers?.currencyProduct?.currency?.currencySymbol + offers?.currencyProduct?.unitSuggestedRetailPrice}`
+    // let calObj:any = {
+    //     SRP_val: selectColorProduct?.size?.unitSuggestedRetailPrice,
+    //     bikeValue: Math.round(selectColorProduct?.size?.offer_price?selectColorProduct?.size?.offer_price:selectColorProduct?.size?.unitSuggestedRetailPrice),
+    // }
+    // calObj = router?.query?.salary ? {
+    //     ...calObj,
+    //     annualSalary: router?.query?.salary,
+    //     totalPackageValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
+    //     frequency: 12, salarySacrificeTerm: 12
+    // } : calObj
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
         <div className='pt-5 pb-4'>
             <Container>
@@ -111,9 +139,17 @@ function MyOffers({ partners, offers,context }: any) {
                 </div>
             </Container>
         </section>
+        {
+                    host.includes('uk') ?
+                        <div className='applyNow pt-0'>
+                            <Container>
+                                <UkFreesiteCalculate data={{}} submit={true} formSubmit={formSubmit}/>
+                            </Container>
+                        </div>:
         <section className='schemeCost poreZindex mb-5'>
             <Calculate handleCalculator={(val: any) => setCalculateRes(val)} detail={{ ...data,bicycleAssisted:data?.listing_type, colorObj: {...selectColorProduct,size:{unitSuggestedRetailPrice:offers?.currencyProduct?.unitSuggestedRetailPrice}} }} />
         </section>
+}
         <section className='inStockNow poreZindex pb-5'>
             <Container>
                 <div className='heading_section'>

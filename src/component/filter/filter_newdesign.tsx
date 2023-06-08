@@ -106,8 +106,6 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
     const replaceFilterArray = (data: any) => {
         let priceR = data?.price_range?.length && data?.price_range[0]
         setMinMaxPrice([priceR?.price_min ? priceR?.price_min : 500, priceR?.price_max ? priceR?.price_max : 15000])
-        console.log(data,'datadw===');
-        
         const orderSet = [
             {
                 name: 'Price',

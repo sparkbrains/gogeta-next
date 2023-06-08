@@ -55,7 +55,7 @@ function EbayPLP({ user, filterRes,context }: any) {
         setSortBy(val?.sort_by || '')
         setParam(data)
         setResult(user, page, data)
-    }, [router.query])
+    }, [router.query,host])
     const fetchAllData = (page: number, search = '') => {
         let searchParams: any = new URLSearchParams(search)
         const val = Object.fromEntries([...searchParams])
@@ -120,8 +120,6 @@ function EbayPLP({ user, filterRes,context }: any) {
         router.replace(`${router.pathname}${val.replace('&', '?')}`)
         fetchAllData(1, val)
     }
-    console.log(productList,'productList===');
-    
     return (
         <Applayout ebay={true} className='m-0 plp-back'>
             <div className='container ebay-plp'>
@@ -181,7 +179,6 @@ export async function getServerSideProps(context: any) {
 }
 async function getProducts(search: string, host: string) {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    console.log(`test-products/?page=${1}${host ? '&portalDomain=gogeta.dev' : ''}&listing_type=ebikes${search?.includes('showCyclePrice') ? search : `&showCyclePrice=${host ? 'on':'off'}`}`);
     const response = await fetch(baseURL + `test-products/?page=${1}${host ? '&portalDomain=gogeta.dev' : ''}&listing_type=ebikes${search?.includes('showCyclePrice') ? search : `&showCyclePrice=${host ? 'on':'off'}`}`, {
         method: "get",
         headers: {

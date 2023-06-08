@@ -169,19 +169,18 @@ export const applyCalculator = (obj: any) => {
   if(param.saving_C2W){
     param = {
       ...param,
-      saving_C2W_percentage:(+param.saving_C2W / SRPVal) * 100,
+      saving_C2W_percentage: (+param.saving_C2W / SRPVal) * 100,
     }
   }
-  // console.log(SRPVal,param,{bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue, SRP_val },totalVal,'param===');
   return {
     C2W_price: Math.round(param.C2W_price),
 net_regular: Math.round(param.net_regular),
 net_total_amount: Math.round(param.net_total_amount),
 regular_gross: Math.round(param.regular_gross),
 saving_C2W: Math.round(param.saving_C2W),
-saving_C2W_percentage: Math.round(param.saving_C2W_percentage),
+saving_C2W_percentage: Math.round(param.saving_C2W_percentage) || 0,
 total_savings: Math.round(param.total_savings),
-total_savings_percentage: param.total_savings_percentage
+total_savings_percentage: param.total_savings_percentage?param.total_savings_percentage:0
   }
 }
 function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: number, sacrifice_repayment: number, country: string = 'England',) {
