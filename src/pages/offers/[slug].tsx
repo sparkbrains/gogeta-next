@@ -188,7 +188,7 @@ function MyOffers({ partners, offers, context }: any) {
 
                 {
                     data?.dealersList?.dealers_in_stock?.map((items: any, key: number) => {
-                        return <DealerList items={items} key={key} handleApply={handleApply} host={host}/>
+                        return <DealerList profile={profile} items={items} key={key} handleApply={handleApply} host={host}/>
                     })
                 }
                 {

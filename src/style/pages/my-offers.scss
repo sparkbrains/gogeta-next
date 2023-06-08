@@ -415,6 +415,7 @@
                 }
             }
             .offerPrice{
+                width: 30%;
                 p,s {
                     margin-bottom: 0;
                     font-size: 14px;
@@ -423,6 +424,13 @@
                         font-weight: 700;
                         font-size: 16px;
                     }
+                }
+                &.offerPriceC2W{
+                p,s {
+                    font-size: 16px;
+                }
+                }
+                @include respond-from(lg-md-max){
                 }
             }
             .detailCont{
