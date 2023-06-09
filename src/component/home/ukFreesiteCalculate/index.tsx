@@ -35,11 +35,13 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
         const dParam = {
             ...state,
             ...data,
-            frequency: host === 'uk' ? frequencydata[data.paymentFrequency] : data?.frequency,
+            frequency: host === 'uk' ? frequencydata[data?.paymentFrequency] : data?.frequency,
             sacrifice_repayment: data?.salarySacrificeTerm, salarySacrificeTerm: data?.salarySacrificeTerm
         }
         handleCycleCalculate(dParam)
     }, [data])
+    console.log(data,'data===');
+    
     const handleCycleCalculate = (param: any) => {
         param = {
             ...param,
@@ -64,7 +66,7 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
         }
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
-        submit ? formSubmit(state) : router.push(`/apply-now?params=${encoded}`)
+        submit ? formSubmit(state) : router.push(`/apply-now${host === 'uk' ? `/${router.query.slug}?params=${encoded}` : `?params=${encoded}`}`)
     }
     const { errors, handleSubmit, handleNewError } = FormC({
         values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },

@@ -13,13 +13,13 @@ export default function Welcome({ host,data }: any) {
             <Row>
                 <Col md={6} >
                     <div className='bannerCont'>
-                        <h2 className='h2'>Welcome to the {host.includes('uk') ? `${host.includes('Market') ? 'Squaretrade':data.companyName} Cycling Scheme` : 'Cycle to Work Scheme'} </h2>
+                        <h2 className='h2'>Welcome to the {host.includes('uk') ? `${host.includes('Market') ? 'Squaretrade':data?.companyName} Cycling Scheme` : 'Cycle to Work Scheme'} </h2>
                         <Image src={`assets/img/${host.includes('uk') ? 'Ebike.svg' : 'Illustration-Unicycle.svg'}`} height={490} width={388} alt="img" className='img-fluid d-block d-sm-none' />
                         <p>{host === 'uk' ? 'This is where you can find your perfect bike, learn more about how the scheme works and apply.' : 'Learn more about how the scheme works and apply for your voucher.'}</p>
                         <div className='d-flex align-items-center'>
                             {
                                 host === 'uk' ?
-                                    <Button type="button" className='customSiteBtn me-2' onClick={() => handleClick(`/apply-now${'?params='+router.query.params}`)}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
+                                    <Button type="button" className='customSiteBtn me-2' onClick={() => handleClick(`/apply-now/${router.query.slug}`)}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
                                     :
                                     <Button type="button" className='customSiteBtn me-2' onClick={() => handleClick(`/bikes?listing_type=ebikes&showCyclePrice=${host.includes('uk') ? 'off':'on'}`)}>Browse bikes <i className="fa-solid fa-angle-right"></i></Button>
                             }
@@ -28,7 +28,7 @@ export default function Welcome({ host,data }: any) {
                                 null
                                     // <Button type="button" className='customSiteBtn transpBtn' onClick={() => {}}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
                                     :
-                                    <Button type="button" className='customSiteBtn transpBtn' onClick={() => handleClick(`/how-it-works${host ==='uk'?'?params='+router.query.params:''}`)}>How it works <i className="fa-solid fa-angle-right"></i></Button>
+                                    <Button type="button" className='customSiteBtn transpBtn' onClick={() => handleClick(`/how-it-works${host ==='uk'?'/'+router.query.slug:''}`)}>How it works <i className="fa-solid fa-angle-right"></i></Button>
                             }
                             {/* <Button type="button" className='customSiteBtn transpBtn' onClick={() => handleClick('/how-it-works')}>How it works <i className="fa-solid fa-angle-right"></i></Button> */}
                         </div>

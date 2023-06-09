@@ -133,9 +133,9 @@ export const submitCalculator = (param: any) => {
 }
 export const applyCalculator = (obj: any) => {
   const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue, SRP_val } = obj
-  const SRPVal = +SRP_val > 0?+SRP_val:bikeValue
   const saving: any = calculate_bike_salary_sacrifice_in_plp(totalPackageValue, annualSalary, sacrifice_repayment)
-  const totalVal = Number(bikeValue) + Number(accessoriesValue)
+  const totalVal = Number(bikeValue) + (Number(accessoriesValue) || 0)
+  const SRPVal = SRP_val > 0? +SRP_val + (Number(accessoriesValue) || 0) :totalVal
   let param: any = {}
   if (frequency && sacrifice_repayment && bikeValue) {
     param = {
@@ -156,7 +156,6 @@ export const applyCalculator = (obj: any) => {
       C2W_price:+param.net_regular * 12
     }
   }
-  
   if (param.total_savings) {
     param = {
       ...param,

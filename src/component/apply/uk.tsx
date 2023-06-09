@@ -12,14 +12,14 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { applyCalculator, onKeyPress } from '../../common/utilits'
 import UKCalculator from "../calculateSchemePackage/ukCalculator";
-var frequencydata:any = {
-    MONTHLY:12,
-    WEEKLY:52,
-    FORTNIGHTLY:26,
-    FOUR_WEEKLY:13
+var frequencydata: any = {
+    MONTHLY: 12,
+    WEEKLY: 52,
+    FORTNIGHTLY: 26,
+    FOUR_WEEKLY: 13
 }
-function ApplyNowUK({context}:any) {
-    const {host} = context
+function ApplyNowUK({ context, data = {} }: any) {
+    const { host } = context
     const router = useRouter()
     const [state, setState] = useState<any>({
         bikeValue: '',
@@ -38,22 +38,28 @@ function ApplyNowUK({context}:any) {
         handleCycleCalculate(param)
     }
     useEffect(() => {
-        if (router.query?.params?.length) {
-            let obj: any = JSON.parse(window.atob(`${router.query.params}`))
-            obj =host === 'uk'? {...obj,frequency: frequencydata[obj.paymentFrequency],
-            sacrifice_repayment: obj?.salarySacrificeTerm}:obj
-            handleCycleCalculate(obj)
+        let obj: any = router.query?.params?.length ? JSON.parse(window.atob(`${router.query?.params}`)) : {}
+        obj = {
+            ...obj,
+            ...data,
         }
-    }, [router])
+        
+        obj = host === 'uk' ? {
+            ...obj, frequency: frequencydata[obj.paymentFrequency],
+            sacrifice_repayment: obj?.salarySacrificeTerm
+        } : obj
+        handleCycleCalculate(obj)
+    }, [router, data])
     const handleCycleCalculate = (param: any) => {
         param = {
             ...param,
-            totalPackageValue:Number(param.bikeValue) + Number(param.accessoriesValue)
+            totalPackageValue: (Number(param.bikeValue) || 0) + (Number(param.accessoriesValue) || 0)
         }
         let valPrice = applyCalculator(param)
-        
-        setState({...param,...valPrice})
+
+        setState({ ...param, ...valPrice })
     }
+    console.log(state.sacrifice_repayment,'obj==');
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         let stateParam: any = { ...state }
@@ -65,7 +71,7 @@ function ApplyNowUK({context}:any) {
         window.location.href = `https://gogeta.bike/portal/sal-sac-form?params=${encoded}`
     }
     const { errors, handleSubmit } = FormC({
-        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary,sacrifice_repayment:state.sacrifice_repayment },
+        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
         onSubmit
     })
     return <>
@@ -98,7 +104,7 @@ function ApplyNowUK({context}:any) {
             <div className="toggle-card mb-5">
                 <div className="p-5 toggle-body">
                     <h4 className="head_apply"> <Image src='/assets/calculation/shopping_cart.svg' width={48} height={48} alt='cart' /> Your package</h4>
-                    <UKCalculator errors={errors} state={state} onChange={onChange} host={host}/>
+                    <UKCalculator errors={errors} state={state} onChange={onChange} host={host} />
                 </div>
             </div>
             <div className="d-flex justify-content-end mb-5">
