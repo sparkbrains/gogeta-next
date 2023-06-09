@@ -118,10 +118,12 @@ input:focus {
 
     &-body {
         border: 0;
-        .brandImg{
+
+        .brandImg {
             width: 80px;
             height: auto;
         }
+
         .price-des {
             font-weight: 400;
         }
@@ -625,11 +627,13 @@ input:focus {
         p {
             color: var(--p-color-two);
         }
-        svg{
-            path{
+
+        svg {
+            path {
                 fill: var(--p-color-two);
             }
         }
+
         h4 {
             color: var(--white);
 
@@ -670,9 +674,10 @@ input:focus {
         z-index: 3;
         white-space: pre-wrap;
         left: 50%;
-        transform:translate(-50%, 0%);
+        transform: translate(-50%, 0%);
         opacity: 1;
-        &:after{
+
+        &:after {
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
             content: "";
@@ -682,6 +687,7 @@ input:focus {
             left: 50%;
             transform: translate(-50%, 0px);
         }
+
         @media(max-width:575px) {
             font-size: 14px;
             padding: 15px;
@@ -689,12 +695,36 @@ input:focus {
         }
     }
 }
-.price-best{
-        color: var(--p-color-new);
-        font-size: 0.9rem;
-        font-weight: bold;
-        line-height: 22px;
-        span{
-            color: var(--primary-new);
+
+.price-best {
+    color: var(--p-color-new);
+    font-size: 0.9rem;
+    font-weight: bold;
+    line-height: 22px;
+
+    span {
+        color: var(--primary-new);
+    }
+}
+
+.errorPage {
+    .error-content {
+        p {
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 auto;
+            max-width: 500px;
         }
+    }
+
+    .btn-error {
+        background-color: #f25d1d;
+        border-radius: 30px;
+        color: #fff;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: 500;
+        margin-top: 30px;
+        padding: 10px 39px;
+    }
 }

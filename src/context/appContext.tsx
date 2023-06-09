@@ -18,7 +18,11 @@ class AppContext extends Component<any> {
         if (typeof window !== "undefined") {
             let host = window.location.host === 'collider.gogeta.bike' ? 'ukMarket' : process.env.NEXT_PUBLIC_APP_ENV
             this.fetchPortal(host)
-            
+            const {asPath,push} =this.props.router
+            console.log(this.props,'props===');
+            if(window.location.host === 'https://dev.gogeta.bike/' && (asPath === '/how-it-works' || asPath === '/' || asPath === '/apply-now' || asPath === '/bikes')){
+                push('/404')
+            }
         }
     }
     fetchPortal = (host: any) => {
