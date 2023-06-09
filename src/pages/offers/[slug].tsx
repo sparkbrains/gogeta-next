@@ -55,8 +55,6 @@ function MyOffers({ partners, offers, context }: any) {
         } else {
             setData(offers)
         }
-        console.log(offers,router.query?.color,'offers===');
-        
         offers?.colourway?.map((items: any) => {
             if (items.colourwayName === router.query?.color) {
                 setselectColorProduct(items)
@@ -97,7 +95,7 @@ function MyOffers({ partners, offers, context }: any) {
         if(item.context?.C2W_price){
             router.push(`/apply-now?params=${encoded}`)
         }else{
-            window.open('https://www.specializedireland.ie/', '_blank');
+            window.open(item.utm_url, '_blank');
         }
     }
     const formSubmit = (val: any) => { }
@@ -112,8 +110,6 @@ function MyOffers({ partners, offers, context }: any) {
     //     totalPackageValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
     //     frequency: 12, salarySacrificeTerm: 12
     // } : calObj
-    console.log(data,'data==');
-    
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
         <div className='pt-5 pb-4'>
             <Container>
@@ -238,7 +234,6 @@ export async function getServerSideProps(context: any) {
             'Content-Type': 'application/json',
         },
     })
-
     const responseOffers = await fetch(baseURL + `dealers/${query.slug}/?${host ? `?portalDomain=${host}` : ''}&colourway=${query.color}&size=${query.size}&model_year=${query.modelYear}`, {
         method: "get",
         headers: {
