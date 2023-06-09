@@ -59,7 +59,6 @@ function ApplyNowUK({ context, data = {} }: any) {
 
         setState({ ...param, ...valPrice })
     }
-    console.log(state.sacrifice_repayment,'obj==');
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         let stateParam: any = { ...state }

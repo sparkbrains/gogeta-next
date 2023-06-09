@@ -18,7 +18,6 @@ class AppContext extends Component<any> {
         if (typeof window !== "undefined") {
             let host = window.location.host === 'collider.gogeta.bike' ? 'ukMarket' : process.env.NEXT_PUBLIC_APP_ENV
             this.fetchPortal(host)
-            console.log(this.props);
             
         }
     }

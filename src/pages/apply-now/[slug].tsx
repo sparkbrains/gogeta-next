@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { Container } from "react-bootstrap";
 function ApplyNow({context:{host},data}:any) {
     const router = useRouter()
-    console.log(router,'props===');
     return <Applayout className='applyNow pt-0'>
         <Container>
             {

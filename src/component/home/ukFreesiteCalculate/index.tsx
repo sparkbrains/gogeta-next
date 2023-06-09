@@ -40,8 +40,6 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
         }
         handleCycleCalculate(dParam)
     }, [data])
-    console.log(data,'data===');
-    
     const handleCycleCalculate = (param: any) => {
         param = {
             ...param,
