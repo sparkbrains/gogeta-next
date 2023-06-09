@@ -141,19 +141,21 @@ export const applyCalculator = (obj: any) => {
     param = {
       ...param,
       regular_gross: (totalVal / (Number(frequency) / 12) / Number(sacrifice_repayment)).toFixed(2),
+      regular_gross_12: (totalVal / (12 / 12) / 12).toFixed(2),
     }
   }
   if (param.regular_gross) {
     param = {
       ...param,
       net_regular: param.regular_gross * (1 - (saving?.tax_percent / 100)),
+      net_regular_12: param.regular_gross_12 * (1 - (saving?.tax_percent / 100)),
     }
   }
   if (param.net_regular?.toString()?.length) {
     param = {
       ...param,
       total_savings: saving?.total_savings,
-      C2W_price:+param.net_regular * 12
+      C2W_price:+param.net_regular_12 * 12
     }
   }
   if (param.total_savings) {
