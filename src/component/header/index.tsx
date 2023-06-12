@@ -32,7 +32,7 @@ function Header({ context }: any) {
     return <header className="header border-0">
         <Navbar expand="lg">
             <Container className='mob_re_non'>
-                <Link href={`/${host === 'uk'?router.query.slug ?router.query.slug:'':''}`}><Image width={145} height={60} className='logo-nav' src={profile.portalLogo} alt="Gogeta Logo" /></Link>
+                <Link href={`/${router.query.companySlug ?router.query.companySlug:''}`}><Image width={145} height={60} className='logo-nav' src={profile?.portalLogo} alt="Gogeta Logo" /></Link>
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
                         className={`me-auto ms-lg-5 my-2 my-lg-0 ${host.includes('uk') ? 'd-flex align-item-center justify-content-between w-100' : ''}`}
@@ -41,18 +41,18 @@ function Header({ context }: any) {
                         {
                             host.includes('uk') ?
                                 <>
-                                    <Link className='nav-link' href={`/how-it-works/${host === 'uk'?router.query.slug ?router.query.slug:'':''}`}>How it works </Link>
+                                    <Link className='nav-link' href={(router.query.companySlug ?'/'+router.query.companySlug:'') + `/how-it-works/`}>How it works </Link>
                                     <div className="d-flex align-item-center">
                                         {
                                             host.includes('Market') ?
                                                 <>
                                                     {/* <Link className='nav-link' href="/">Apply now </Link> */}
-                                                    <Button type="button" className='customSiteBtn text-white' onClick={() => router.push(`/bikes?listing_type=ebikes&showCyclePrice=${host.includes('Market') ? 'off' : 'on'}`)}>Browse bikes <i className="fa-solid fa-angle-right"></i></Button>
+                                                    {/* ${host.includes('Market') ? 'off' : 'on'} */}
+                                                    <Button type="button" className='customSiteBtn text-white' onClick={() => router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/bikes?listing_type=ebikes&showCyclePrice=on`)}>Browse bikes <i className="fa-solid fa-angle-right"></i></Button>
                                                 </>
                                                 :
-                                                <Button type="button" className='customSiteBtn text-white' onClick={() => router.push(`/apply-now/${host === 'uk'?router.query.slug ?router.query.slug:'':''}`)}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
+                                                <Button type="button" className='customSiteBtn text-white' onClick={() => router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/apply-now/`)}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
                                         }
-
                                     </div>
                                 </>
                                 :

@@ -12,24 +12,21 @@ import { useRouter } from 'next/router';
 import { useEffect, useState, FormEvent } from 'react';
 import UKFreeSiteCalculate from '<prefix>/component/home/ukFreesiteCalculate';
 import { MainHead } from '../main-head';
-function Home({ context,dataCal }: any) {
+function Home({ context, dataCal }: any) {
     const host: string = context.host
-    const [data,setData]=useState(dataCal)
+    const [data, setData] = useState(dataCal)
     const router = useRouter()
     const { process, helpinghand, saveUpto } = host.includes('uk') ? homeList.uk : homeList.ebay
     useEffect(() => {
-        if (router.query?.params?.length) {
-            const obj: any = JSON.parse(window.atob(`${router.query.params}`))
-            setData(dataCal)
-        }
-    }, [router])
+        setData(dataCal)
+    }, [dataCal])
     return (
         <Applayout className='ebay w-100 m-0 pt-0'>
             <div className={`main-back ${host.includes('uk') ? 'mainBcLpafbf' : ''}`}>
-                <Welcome host={host} data={data}/>
-                <SaveUp data={saveUpto} host={host}/>
-                <TheProcess data={host.includes('Market') ?homeList.process: process} host={host}/>
-                {helpinghand ? <HelpingHand /> : <UKFreeSiteCalculate data={data}/>}
+                <Welcome host={host} data={data} />
+                <SaveUp data={saveUpto} host={host} />
+                <TheProcess data={host.includes('Market') ? homeList.process : process} host={host} />
+                {helpinghand ? <HelpingHand /> : <UKFreeSiteCalculate data={data} />}
             </div>
             {host.includes('uk') ?
                 <section className='mltSection findlocalBike' id='participating-retailers'>

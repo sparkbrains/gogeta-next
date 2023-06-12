@@ -19,16 +19,17 @@ export default function Welcome({ host,data }: any) {
                         <div className='d-flex align-items-center'>
                             {
                                 host === 'uk' ?
-                                    <Button type="button" className='customSiteBtn me-2' onClick={() => handleClick(`/apply-now/${router.query.slug}`)}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
+                                    <Button type="button" className='customSiteBtn me-2' onClick={() => handleClick((router.query.companySlug ?router.query.companySlug:'') + `/apply-now/`)}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
                                     :
-                                    <Button type="button" className='customSiteBtn me-2' onClick={() => handleClick(`/bikes?listing_type=ebikes&showCyclePrice=${host.includes('uk') ? 'off':'on'}`)}>Browse bikes <i className="fa-solid fa-angle-right"></i></Button>
+                                    // ${host.includes('uk') ? 'off':'on'}
+                                    <Button type="button" className='customSiteBtn me-2' onClick={() => handleClick((router.query.companySlug ?router.query.companySlug:'') + `/bikes?listing_type=ebikes&showCyclePrice=on`)}>Browse bikes <i className="fa-solid fa-angle-right"></i></Button>
                             }
                             {
                                 host.includes('Market') ?
                                 null
                                     // <Button type="button" className='customSiteBtn transpBtn' onClick={() => {}}>Apply now <i className="fa-solid fa-angle-right"></i></Button>
                                     :
-                                    <Button type="button" className='customSiteBtn transpBtn' onClick={() => handleClick(`/how-it-works${host ==='uk'?'/'+router.query.slug:''}`)}>How it works <i className="fa-solid fa-angle-right"></i></Button>
+                                    <Button type="button" className='customSiteBtn transpBtn' onClick={() => handleClick((router.query.companySlug ?router.query.companySlug:'') + `/how-it-works`)}>How it works <i className="fa-solid fa-angle-right"></i></Button>
                             }
                             {/* <Button type="button" className='customSiteBtn transpBtn' onClick={() => handleClick('/how-it-works')}>How it works <i className="fa-solid fa-angle-right"></i></Button> */}
                         </div>

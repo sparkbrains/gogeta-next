@@ -1,17 +1,21 @@
 import axios, { AxiosResponse } from 'axios'
-const baseURL = process.env.NEXT_PUBLIC_API_URL
+const apiUrl = {
+  0: process.env.NEXT_PUBLIC_API_URL,
+  1: process.env.NEXT_PUBLIC_API_URL_UK_Free
+}
 const commonParams = {}
 type Methods = "head" | "options" | "put" | "post" | "patch" | "delete" | "get";
 export default function Fetch(endPoint: any, params: any = {}, option: any = {}) {
-  const method:Methods = option?.method ?? 'get'
-  const inFormData:any = option?.inFormData ?? false // formType === true
-  const isToken:boolean = option?.isToken ?? true;
-  const url:string = option?.url
+  const method: Methods = option?.method ?? 'get'
+  const inFormData: any = option?.inFormData ?? false // formType === true
+  const isToken: boolean = option?.isToken ?? true;
+  const url: string = option?.url
+  const baseURL = option?.baseURL ? apiUrl[1] : apiUrl[0]
   let parameters = {
     ...commonParams,
     ...params,
   }
-  const FetchHeader = (token:any) => {
+  const FetchHeader = (token: any) => {
     const headers = {
       'Content-Type': inFormData ? 'multipart/form-data' : 'application/json',
       // Authorization: `Bearer ${token || ''}`,
@@ -26,9 +30,9 @@ export default function Fetch(endPoint: any, params: any = {}, option: any = {})
   const convertToForm = () => {
     let formData = new FormData()
     for (let name in parameters) {
-      if(typeof parameters[name] === 'object' && !parameters[name]?.type?.length){
+      if (typeof parameters[name] === 'object' && !parameters[name]?.type?.length) {
         formData.append(name, JSON.stringify(parameters[name]))
-      }else{
+      } else {
         formData.append(name, parameters[name])
       }
     }
@@ -43,7 +47,7 @@ export default function Fetch(endPoint: any, params: any = {}, option: any = {})
   //     ? parameters
   //     : FetchHeader('')
   // }
-  const fetch = (token:any) => {
+  const fetch = (token: any) => {
     return axios[method](
       url ? url : baseURL + endPoint,
       inFormData
@@ -53,11 +57,11 @@ export default function Fetch(endPoint: any, params: any = {}, option: any = {})
           : FetchHeader(token),
       FetchHeader(token),
     )
-      .then((d:AxiosResponse) => {
+      .then((d: AxiosResponse) => {
         const dataParse = { data: d.data, status: true }
         return dataParse
       })
-      .catch((err:any) => {
+      .catch((err: any) => {
         return { ...err?.response?.data, status: false }
       })
   }

@@ -10,7 +10,7 @@ export default function TheProcess({data,host}:any){
         if (!targetLink) return;
         e.preventDefault();
         if(targetLink.id){
-            router.push('/' + targetLink.id)
+            router.push((router.query.companySlug ?'/'+router.query.companySlug:'') +'/' + targetLink.id)
         }
     }
     return<Container>

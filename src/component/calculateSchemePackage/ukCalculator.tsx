@@ -71,7 +71,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                     </Col>
                     <Col xs={12} sm={8}>
                         {
-                            host === 'uk' ?
+                            host.includes('uk') ?
                                 <div className="NoCurr form-price-input">
                                     <input type="text" className="form-input" value={state.paymentFrequency} disabled />
                                 </div>
@@ -101,7 +101,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                     </Col>
                     <Col xs={12} sm={8}>
                         {
-                            host === 'uk' ?
+                            host.includes('uk') ?
                                 <div className="form-price-input NoCurr">
                                     <input type="text" className="form-input" value={state.sacrifice_repayment} disabled />
                                 </div>

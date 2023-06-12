@@ -1,16 +1,12 @@
 
-import Input from "<prefix>/common/input";
-import { InputDropDownList, InputSelectDrop } from "<prefix>/common/inputSelectDrop";
 import { FormC } from "<prefix>/common/validate";
 import { MainHead } from "<prefix>/component/main-head";
-import Toggle from "<prefix>/component/toggle";
 import { withContext } from "<prefix>/context/appContext";
-import Applayout from "<prefix>/layout/applayout";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
-import { applyCalculator, onKeyPress } from '../../common/utilits'
+import { FormEvent, useEffect, useState } from "react";
+import { Form, Button } from "react-bootstrap";
+import { applyCalculator } from '../../common/utilits'
 import UKCalculator from "../calculateSchemePackage/ukCalculator";
 var frequencydata: any = {
     MONTHLY: 12,
@@ -19,7 +15,7 @@ var frequencydata: any = {
     FOUR_WEEKLY: 13
 }
 function ApplyNowUK({ context, data = {} }: any) {
-    const { host } = context
+    const { host, tenantDetail } = context
     const router = useRouter()
     const [state, setState] = useState<any>({
         bikeValue: '',
@@ -42,9 +38,9 @@ function ApplyNowUK({ context, data = {} }: any) {
         obj = {
             ...obj,
             ...data,
+            ...tenantDetail
         }
-        
-        obj = host === 'uk' ? {
+        obj = host.includes('uk') ? {
             ...obj, frequency: frequencydata[obj.paymentFrequency],
             sacrifice_repayment: obj?.salarySacrificeTerm
         } : obj
@@ -65,6 +61,7 @@ function ApplyNowUK({ context, data = {} }: any) {
         // stateParam ={
         //     ...stateParam
         // }
+        delete stateParam?.showBack
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
         window.location.href = `https://gogeta.bike/portal/sal-sac-form?params=${encoded}`
@@ -74,6 +71,7 @@ function ApplyNowUK({ context, data = {} }: any) {
         onSubmit
     })
     return <>
+            {state?.showBack ? <Button onClick={() => router.back()} className='backPage nav-link mb-5'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to choose another retailer</Button> : null}
         <ul className="applyNow-steps">
             <li>
                 <Image src='/assets/apply-steps/ic_package.svg' width={48} height={48} alt='Package' />

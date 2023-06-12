@@ -71,7 +71,7 @@ function MyOffers({ partners, offers, context }: any) {
             accessoriesValue: router?.query?.accessories || 0 ,
             annualSalary: router?.query?.salary || 30000,
             sacrifice_repayment:12,
-            frequency:12
+            frequency:12,
         }:{
             bikeValue: data?.currencyProduct?.unitSuggestedRetailPrice,
             accessoriesValue: calculateRes?.accessories_val || router?.query?.accessories,
@@ -86,6 +86,7 @@ function MyOffers({ partners, offers, context }: any) {
         }
         obj = {
             ...obj,
+            showBack:true,
             totalPackageValue: Number(obj.bikeValue) + (Number(obj.accessoriesValue) || 0)
         }
         if (!item) {
@@ -93,7 +94,7 @@ function MyOffers({ partners, offers, context }: any) {
         }
         let encoded = window.btoa(JSON.stringify(obj));
         if(item.context?.C2W_price){
-            router.push(`/apply-now?params=${encoded}`)
+            router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/apply-now?params=${encoded}`)
         }else{
             window.open(item.utm_url, '_blank');
         }

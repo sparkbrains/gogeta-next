@@ -71,7 +71,8 @@ export default function FilterSelected({ param, applyFilterSet }:any) {
     const clearAllFilter = () => {
         applyFilterSet({})
         setStateParam({})
-        router.replace(router.pathname)
+        const slug:any = router.query.companySlug || ''
+        router.replace(router.pathname.replace('[companySlug]', slug))
     }
     return listFilter(stateParam)?.length ? <div className="filter-dropdown">
         <div className="d-flex">

@@ -32,11 +32,13 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
         handleCycleCalculate(param)
     }
     useEffect(() => {
+        const freq = data?.salarySacrificeTerm || data?.sacrifice_repayment
         const dParam = {
             ...state,
             ...data,
-            frequency: host === 'uk' ? frequencydata[data?.paymentFrequency] : data?.frequency,
-            sacrifice_repayment: data?.salarySacrificeTerm, salarySacrificeTerm: data?.salarySacrificeTerm
+            frequency: data?.paymentFrequency ? frequencydata[data?.paymentFrequency] : data?.frequency,
+            sacrifice_repayment: freq,
+            salarySacrificeTerm: freq
         }
         handleCycleCalculate(dParam)
     }, [data])
@@ -46,7 +48,6 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
             totalPackageValue: Number(param.bikeValue) + Number(param.accessoriesValue)
         }
         let valPrice = applyCalculator(param)
-        // console.log({ ...param, ...valPrice },'valPrice===');
         if (srp && +param.bikeValue > +param.SRP_val) {
             handleNewError({ bike_value: 'SRP Field that it cannot be less than cost of bike' })
             setState({ ...param })
@@ -64,7 +65,7 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
         }
         let obj = JSON.stringify(stateParam)
         let encoded = window.btoa(obj);
-        submit ? formSubmit(state) : router.push(`/apply-now${host === 'uk' ? `/${router.query.slug}?params=${encoded}` : `?params=${encoded}`}`)
+        submit ? formSubmit(state) : router.push((router?.query?.companySlug?'/'+router?.query?.companySlug:'')+`/apply-now${host === 'uk' ? `/${router.query.slug}?params=${encoded}` : `?params=${encoded}`}`)
     }
     const { errors, handleSubmit, handleNewError } = FormC({
         values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },

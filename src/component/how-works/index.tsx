@@ -22,7 +22,7 @@ function HowWorks({ context }: any) {
                             <div className='d-flex align-items-center'>
                                 {
                                     host.includes('uk') ?
-                                        <Button onClick={() => router.replace(`/how-it-works/${host === 'uk'?router?.query?.slug:''}#faq`)} type="button" className='customSiteBtn me-2' >FAQs <i className="fa-solid fa-angle-right"></i></Button>
+                                        <Button onClick={() => router.replace((router?.query?.companySlug?'/'+router?.query?.companySlug:'')+`/how-it-works/#faq`)} type="button" className='customSiteBtn me-2' >FAQs <i className="fa-solid fa-angle-right"></i></Button>
                                         :
                                         <>
                                             <Button type="button" className='customSiteBtn me-2'>Speak to an expert <i className="fa-solid fa-angle-right"></i></Button>

@@ -1,6 +1,11 @@
 import { useState } from "react"
 import { useCallback, useEffect } from "react"
-
+var frequencydata: any = {
+  MONTHLY: 12,
+  WEEKLY: 52,
+  FORTNIGHTLY: 26,
+  FOUR_WEEKLY: 13
+}
 export const useMediaQuery = (width: number) => {
   const [targetReached, setTargetReached] = useState(false)
   const updateTarget = useCallback((e: any) => {
@@ -83,7 +88,8 @@ export const calculatEbikePrice = (bike_price: number, grosssalary: number, prod
   };
   return context;
 }
-export const priceCalculator = (salary: any, card: any, currencyCode: string) => {
+
+export const priceCalculator = (salary: any, card: any, currencyCode: string,tenantDetail:any={}) => {
   let context = {}
   let data = card?.map((d: any) => {
     if (currencyCode === 'EUR') {
@@ -98,8 +104,8 @@ export const priceCalculator = (salary: any, card: any, currencyCode: string) =>
         bikeValue:d?.saving_price?.offerPrice ? d?.saving_price?.offerPrice:d?.currencyProduct?.unitSuggestedRetailPrice,
         accessoriesValue:0,
         annualSalary:salary,
-        frequency:12,
-        sacrifice_repayment:12,
+        frequency:frequencydata[tenantDetail?.paymentFrequency] || 12,
+        sacrifice_repayment:tenantDetail?.salarySacrificeTerm || 12,
         totalPackageValue:d?.saving_price?.offerPrice ? d?.saving_price?.offerPrice:d?.currencyProduct?.unitSuggestedRetailPrice,
       }
       if (d.bicycleAssisted === "ebikes" || d.listing_type === "ebikes") {

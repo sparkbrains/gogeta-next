@@ -242,7 +242,8 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
         fetchFilterCount(val)
         applyFilterSet(paramupdate)
         handleFilterMobile()
-        router.replace(`${router.pathname}${val.replace('&', '?')}`);
+        const slug:any = router.query.companySlug || ''
+        router.replace(`${router.pathname.replace('[companySlug]', slug)}${val.replace('&', '?')}`)
     }
     const handleFilterMobile = () => {
         setfilterOpen(!filterOpen)

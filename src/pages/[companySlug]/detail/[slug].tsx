@@ -16,9 +16,14 @@ import Fetch from '<prefix>/common/fetch';
 import { withContext } from '<prefix>/context/appContext';
 import ApplyNowUK from "<prefix>/component/apply/uk";
 import UkFreesiteCalculate from '<prefix>/component/home/ukFreesiteCalculate';
-
+var frequencydata: any = {
+    MONTHLY: 12,
+    WEEKLY: 52,
+    FORTNIGHTLY: 26,
+    FOUR_WEEKLY: 13
+  }
 function Pdp({ detail, context }: any) {
-    const { profile, host } = context
+    const { profile, host,tenantDetail } = context
     const router = useRouter()
     const [calculateRes, setCalculateRes] = useState<any>({})
     const [data, setData] = useState<any>({})
@@ -149,8 +154,8 @@ function Pdp({ detail, context }: any) {
                 bikeValue: colorObj.size.offer_price ? colorObj.size.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
                 accessoriesValue: 0,
                 annualSalary: router?.query?.salary,
-                frequency: 12,
-                sacrifice_repayment: 12,
+                frequency:frequencydata[tenantDetail?.paymentFrequency] || 12,
+                sacrifice_repayment:tenantDetail?.salarySacrificeTerm || 12,
                 totalPackageValue: colorObj?.size?.offer_price ? colorObj?.size?.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
             })
             updateRes = {
@@ -181,14 +186,17 @@ function Pdp({ detail, context }: any) {
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     let calObj:any = {
         SRP_val: selectColorProduct?.size?.unitSuggestedRetailPrice,
+        frequency:frequencydata[tenantDetail?.paymentFrequency] || 12,
+        paymentFrequency:tenantDetail?.paymentFrequency,
+        sacrifice_repayment:tenantDetail?.salarySacrificeTerm || 12,
         bikeValue: Math.round(selectColorProduct?.size?.offer_price?selectColorProduct?.size?.offer_price:selectColorProduct?.size?.unitSuggestedRetailPrice),
     }
     calObj = router?.query?.salary ? {
         ...calObj,
         annualSalary: router?.query?.salary,
         totalPackageValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
-        frequency: 12, salarySacrificeTerm: 12
     } : calObj
+    console.log(calObj,tenantDetail,'calObj===');
     
     return (
         <Applayout className='pdpMain w-100 mt-2'>
@@ -287,7 +295,7 @@ function Pdp({ detail, context }: any) {
                                             :
                                             <>
                                                 <p>{selectColorProduct?.size?.stock_status}</p>
-                                                <button type="button" onClick={() => router.push(`/offers/${router?.query?.slug}?${queryParam({
+                                                <button type="button" onClick={() => router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/offers/${router?.query?.slug}?${queryParam({
                                                     color: selectColorProduct?.colourwayName,
                                                     salary: calculateRes?.salary?.length ? calculateRes?.salary : router?.query?.salary,
                                                     accessories: calculateRes?.accessories_val,
@@ -359,7 +367,7 @@ function Pdp({ detail, context }: any) {
                             {
                                 detail?.related_products?.map((item: any, key: number) => {
                                     return <div className='items' key={key}>
-                                        <div onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${router.query.salary ? '?salary=' + router.query.salary : ''}`)} className='btn-trans w-100 text-start h-100'>
+                                        <div onClick={() => router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${router.query.salary ? '?salary=' + router.query.salary : ''}`)} className='btn-trans w-100 text-start h-100'>
                                             <ProductList item={item} newDesign={true} profile={profile} />
                                         </div>
                                     </div>

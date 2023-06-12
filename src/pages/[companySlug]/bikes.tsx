@@ -1,20 +1,20 @@
 import { useState, useEffect, cache } from 'react';
 import dynamic from 'next/dynamic'
-import Fetch from '../common/fetch';
-import { priceCalculator, queryParam } from '../common/utilits';
+import Fetch from '../../common/fetch';
+import { priceCalculator, queryParam } from '../../common/utilits';
 // import ProductList from '../component/product-list';
-import CircularProgress from '../component/progress';
+import CircularProgress from '../../component/progress';
 // import Applayout from '../layout/applayout';
 // import InfiniteScroll from 'react-infinite-scroll-component';
 import { useRouter } from "next/router";
-import Filter from '../component/filter/filter_newdesign';
-import Filterselected from '../component/filter/filterselected';
+import Filter from '../../component/filter/filter_newdesign';
+import Filterselected from '../../component/filter/filterselected';
 import { withContext } from '<prefix>/context/appContext';
 const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'))
-const ProductList = dynamic(() => import('../component/product-list'))
-const Applayout = dynamic(() => import('../layout/applayout'))
+const ProductList = dynamic(() => import('../../component/product-list'))
+const Applayout = dynamic(() => import('../../layout/applayout'))
 function EbayPLP({ user, filterRes,context }: any) {
-    const {profile,host} = context
+    const {profile,host,tenantDetail} = context
     const router = useRouter()
     const [productList, setProductList] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
@@ -31,7 +31,8 @@ function EbayPLP({ user, filterRes,context }: any) {
         security: [],
         price: [],
         wheel_size: [],
-        showCyclePrice: !host.includes('uk') ? 'on':'off',
+        // showCyclePrice: !host.includes('uk') ? 'on':'off',
+        showCyclePrice: 'on',
         listing_type: 'ebikes',
         salary: ''
     })
@@ -48,7 +49,7 @@ function EbayPLP({ user, filterRes,context }: any) {
             security: val?.security?.split(',') || [],
             wheel_size: val?.wheel_size?.split(',') || [],
             price: val?.price?.split('-') || [],
-            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : !host.includes('uk') ? 'on':'off',
+            showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : 'on',
             listing_type: val?.listing_type?.length ? val?.listing_type : "ebikes",
             salary: val?.salary || "30000",
         }
@@ -72,7 +73,7 @@ function EbayPLP({ user, filterRes,context }: any) {
     const setResult = (d: any, page: number, val: any) => {
         let result = d?.results
         if (Object.keys(val)?.length && val?.showCyclePrice === "on" && val?.salary?.length) {
-            result = priceCalculator(+val?.salary, d?.results,profile.currencyCode)
+            result = priceCalculator(+val?.salary, d?.results,profile.currencyCode,tenantDetail)
         }
         const data = {
             ...d,
@@ -117,7 +118,8 @@ function EbayPLP({ user, filterRes,context }: any) {
         setSortBy(value)
         setHasMore(true)
         const val = queryParam({ ...param, [name]: value?.length ? [value] : [] })
-        router.replace(`${router.pathname}${val.replace('&', '?')}`)
+        const slug:any = router.query.companySlug || ''
+        router.replace(`${router.pathname.replace('[companySlug]', slug)}${val.replace('&', '?')}`)
         fetchAllData(1, val)
     }
     return (
@@ -150,11 +152,12 @@ function EbayPLP({ user, filterRes,context }: any) {
                             scrollableTarget="scrollableDiv"
                         >
                             {
-                                productList?.results?.map((item: any, key: number) => <div className='col-md-4 col-12 mb-4' key={key}>
-                                    <button onClick={() => router.push(`/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${param.showCyclePrice === 'on' ? `?salary=${param.salary}` : ''}`)} className='btn-trans w-100 text-start h-100'>
+                                productList?.results?.map((item: any, key: number) => {
+                                return <div className='col-md-4 col-12 mb-4' key={key}>
+                                    <button onClick={() => router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${param.showCyclePrice === 'on' ? `?salary=${param.salary}` : ''}`)} className='btn-trans w-100 text-start h-100'>
                                         <ProductList profile={profile} item={item} newDesign={true} host={host}/>
                                     </button>
-                                </div>)
+                                </div>})
                             }
                         </InfiniteScroll>
                     </div>
@@ -179,7 +182,8 @@ export async function getServerSideProps(context: any) {
 }
 async function getProducts(search: string, host: string) {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const response = await fetch(baseURL + `test-products/?page=${1}${host ? '&portalDomain=gogeta.dev' : ''}&listing_type=ebikes${search?.includes('showCyclePrice') ? search : `&showCyclePrice=${host ? 'on':'off'}`}`, {
+    // ${host ? 'on':'off'}
+    const response = await fetch(baseURL + `test-products/?page=${1}${host ? '&portalDomain=gogeta.dev' : ''}&listing_type=ebikes${search?.includes('showCyclePrice') ? search : `&showCyclePrice=on`}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',
@@ -190,7 +194,8 @@ async function getProducts(search: string, host: string) {
 }
 async function getFiltersCount(search: string, host: string) {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
-    const res = await fetch(baseURL + `get-filter-count/?${host ? '&portalDomain=gogeta.dev' : ''}${search?.includes('showCyclePrice') ? search : `&showCyclePrice=${host ? 'on':'off'}`}`, {
+    // ${host ? 'on':'off'}
+    const res = await fetch(baseURL + `get-filter-count/?${host ? '&portalDomain=gogeta.dev' : ''}${search?.includes('showCyclePrice') ? search : `&showCyclePrice=on`}`, {
         method: "get",
         headers: {
             'Content-Type': 'application/json',
