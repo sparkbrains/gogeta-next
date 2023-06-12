@@ -1,7 +1,6 @@
 
 import { FormC } from "<prefix>/common/validate";
 import { MainHead } from "<prefix>/component/main-head";
-import { withContext } from "<prefix>/context/appContext";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
@@ -14,7 +13,7 @@ var frequencydata: any = {
     FORTNIGHTLY: 26,
     FOUR_WEEKLY: 13
 }
-function ApplyNowUK({ context, data = {} }: any) {
+function ApplyNowUK({ context}: any) {
     const { host, tenantDetail } = context
     const router = useRouter()
     const [state, setState] = useState<any>({
@@ -34,18 +33,22 @@ function ApplyNowUK({ context, data = {} }: any) {
         handleCycleCalculate(param)
     }
     useEffect(() => {
-        let obj: any = router.query?.params?.length ? JSON.parse(window.atob(`${router.query?.params}`)) : {}
-        obj = {
-            ...obj,
-            ...data,
-            ...tenantDetail
+        var obj: any = {}
+        if(router.query?.params?.length){
+            obj = JSON.parse(window.atob(`${router.query?.params}`))
         }
-        obj = host.includes('uk') ? {
-            ...obj, frequency: frequencydata[obj.paymentFrequency],
-            sacrifice_repayment: obj?.salarySacrificeTerm
-        } : obj
-        handleCycleCalculate(obj)
-    }, [router, data])
+        if(Object.keys(obj).length){
+            obj = {
+                ...obj,
+                ...tenantDetail
+            }
+            obj = host.includes('uk') ? {
+                ...obj, frequency: frequencydata[obj.paymentFrequency],
+                sacrifice_repayment: obj?.salarySacrificeTerm
+            } : obj
+            handleCycleCalculate(obj)
+        }
+    }, [router])
     const handleCycleCalculate = (param: any) => {
         param = {
             ...param,
@@ -55,6 +58,8 @@ function ApplyNowUK({ context, data = {} }: any) {
 
         setState({ ...param, ...valPrice })
     }
+    console.log(state,'state===');
+    
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         let stateParam: any = { ...state }
@@ -110,4 +115,4 @@ function ApplyNowUK({ context, data = {} }: any) {
         </Form>
     </>
 }
-export default withContext(ApplyNowUK)
+export default ApplyNowUK
