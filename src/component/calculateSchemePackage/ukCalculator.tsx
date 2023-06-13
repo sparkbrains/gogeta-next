@@ -46,11 +46,11 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                         <span className="pb-2">Total bike + accessories</span>
                     </Col>
                     <Col xs={12} sm={8}>
-
                         <div className="d-flex align-items-center form-price-input">
                             <div className="currency">£</div>
                             <input type="text" className="form-input" value={state.totalPackageValue} disabled />
                         </div>
+                        <div className="helpText">Total package value cannot be greator then {state.voucherLimit}</div>
                     </Col>
                 </Row>
             </div>

@@ -218,7 +218,7 @@ function MyOffers({ partners, offers, context }: any) {
                 <div className='bikeFindMap poreZindex'>
                     <h3>Find your local bike shop</h3>
                     <div className='mapInner'>
-                        <StoreFinder />
+                        <StoreFinder type={host.includes('uk') ? 'uk':'ireland'}/>
                     </div>
                 </div>
             </Container>
