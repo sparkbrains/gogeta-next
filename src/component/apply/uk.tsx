@@ -69,7 +69,7 @@ function ApplyNowUK({ context }: any) {
         const moment2: any = moment().format('yyyy-MM-DD')
         if(+stateParam.voucherLimit < +stateParam.totalPackageValue){
             handleNewError({message:`This request cannot be processed as your employer has set scheme limit is ${stateParam.voucherLimit}.`})
-        }else if (!moment(moment1).isAfter(moment2)) {
+        }else if (!moment(moment1).isAfter(moment2) && stateParam?.certificateDatePeriodActive) {
             handleNewError({message:'Employer is no longer accept the application now.'})
         } else {
             handleNewError({})
