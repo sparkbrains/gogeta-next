@@ -140,8 +140,9 @@ export const submitCalculator = (param: any) => {
 export const applyCalculator = (obj: any) => {
   const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue, SRP_val } = obj
   const saving: any = calculate_bike_salary_sacrifice_in_plp(totalPackageValue, annualSalary, sacrifice_repayment)
-  const totalVal = Number(bikeValue) + (Number(accessoriesValue) || 0)
-  const SRPVal = SRP_val > 0? +SRP_val + (Number(accessoriesValue) || 0) :totalVal
+  const totalbikeVal = (Number(bikeValue) + (Number(accessoriesValue) || 0))
+  const totalVal = (Number(bikeValue) + (Number(accessoriesValue) || 0)) * 1.04
+  const SRPVal = SRP_val > 0? +SRP_val + (Number(accessoriesValue) || 0) :totalbikeVal
   let param: any = {}
   if (frequency && sacrifice_repayment && bikeValue) {
     param = {
