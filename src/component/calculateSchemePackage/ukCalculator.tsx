@@ -152,7 +152,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                     <p className="d-flex align-items-center">Total savings <ToolTip className='ms-2' des='The amount you will save on the bike and accessories after tax savings' /></p>
                     <Image src='/assets/calculation/percent.svg' width={36} height={36} alt='cal' />
                 </div>
-                <h4>£{state.total_savings ? handleChangeSalary(state.total_savings) : 0} <sub>({state.total_savings_percentage?.toString()?.length ? state.total_savings_percentage : '0%'})</sub></h4>
+                <h4>£{state.saving_C2W ? handleChangeSalary(state.saving_C2W) : 0} <sub>({state.saving_C2W_percentage?.toString()?.length ? state.saving_C2W_percentage+'%' : '0%'})</sub></h4>
             </div>
         </Col>
     </Row>
