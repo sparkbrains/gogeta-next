@@ -1045,7 +1045,8 @@
             margin-top: -15px;
             position: relative;
             background: #C5E2E0;
-
+            z-index: 5;
+            
             @media(max-width:1199px) {
                 margin-top: -14px;
             }
