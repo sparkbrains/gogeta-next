@@ -182,6 +182,14 @@ function Pdp({ detail, context }: any) {
     }
     const formSubmit = (val:any)=>{
         setCalculateRes(val)
+        let stateParam: any = { ...val }
+        if (host === 'uk') {
+            delete stateParam.frequency
+            delete stateParam.sacrifice_repayment
+        }
+        let obj = JSON.stringify(stateParam)
+        let encoded = window.btoa(obj);
+        router.push((router?.query?.companySlug?'/'+router?.query?.companySlug:'')+`/apply-now${`?params=${encoded}`}`)
     }
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     let calObj:any = {

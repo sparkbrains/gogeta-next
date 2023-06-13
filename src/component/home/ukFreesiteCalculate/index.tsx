@@ -12,7 +12,7 @@ var frequencydata: any = {
     FOUR_WEEKLY: 13
 }
 function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }: any) {
-    const { host, profile } = context
+    const { host, tenantDetail } = context
     const router = useRouter()
     const [state, setState] = useState<any>({
         bikeValue: '',
@@ -36,12 +36,13 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
         const dParam = {
             ...state,
             ...data,
+            ...tenantDetail,
             frequency: data?.paymentFrequency ? frequencydata[data?.paymentFrequency] : data?.frequency,
             sacrifice_repayment: freq,
             salarySacrificeTerm: freq
         }
         handleCycleCalculate(dParam)
-    }, [data])
+    }, [data,tenantDetail])
     const handleCycleCalculate = (param: any) => {
         param = {
             ...param,
