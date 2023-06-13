@@ -1,3 +1,4 @@
+import Error from "<prefix>/common/error";
 import Input from "<prefix>/common/input";
 import { InputSelectDrop } from "<prefix>/common/inputSelectDrop";
 import { handleChangeSalary, onKeyPress } from "<prefix>/common/utilits";

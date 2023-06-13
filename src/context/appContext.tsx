@@ -42,7 +42,7 @@ function AppContext(props: IProps) {
                 setProfile({
                     "currencyCode": "GBP",
                     "currencySymbol": "£",
-                    portalLogo: host === 'uk' ? "/assets/logo/logo_without.svg" : '/assets/logo/squaretrade-logo.svg'
+                    portalLogo: "/assets/logo/gogeta_logo_blue.svg"
                 })
             }
         })

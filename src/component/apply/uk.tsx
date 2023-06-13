@@ -5,15 +5,17 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import moment from 'moment'
 import { applyCalculator } from '../../common/utilits'
 import UKCalculator from "../calculateSchemePackage/ukCalculator";
+import Error from "<prefix>/common/error";
 var frequencydata: any = {
     MONTHLY: 12,
     WEEKLY: 52,
     FORTNIGHTLY: 26,
     FOUR_WEEKLY: 13
 }
-function ApplyNowUK({ context}: any) {
+function ApplyNowUK({ context }: any) {
     const { host, tenantDetail } = context
     const router = useRouter()
     const [state, setState] = useState<any>({
@@ -34,10 +36,10 @@ function ApplyNowUK({ context}: any) {
     }
     useEffect(() => {
         var obj: any = {}
-        if(router.query?.params?.length){
+        if (router.query?.params?.length) {
             obj = JSON.parse(window.atob(`${router.query?.params}`))
         }
-        if(Object.keys(obj).length){
+        if (Object.keys(obj).length) {
             obj = {
                 ...obj,
                 ...tenantDetail
@@ -58,25 +60,36 @@ function ApplyNowUK({ context}: any) {
 
         setState({ ...param, ...valPrice })
     }
-    console.log(state,'state===');
-    
+
+
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         let stateParam: any = { ...state }
-        // stateParam ={
-        //     ...stateParam
-        // }
-        delete stateParam?.showBack
-        let obj = JSON.stringify(stateParam)
-        let encoded = window.btoa(obj);
-        window.location.href = `https://gogeta.bike/portal/sal-sac-form?params=${encoded}`
+        const moment1: any = moment(state.certificateDatePeriodEndDate).format('yyyy-MM-DD')
+        const moment2: any = moment().format('yyyy-MM-DD')
+        console.log(moment1, moment2, moment(moment1).isAfter(moment2), 'state===');
+        if (!moment(moment1).isAfter(moment2)) {
+            handleNewError({message:'Employer cannot accept the application now.'})
+        }else if(stateParam.voucherLimit < stateParam.totalPackageValue){
+            handleNewError({message:`This request cannot be processed as your employer has set scheme limit is ${stateParam.voucherLimit}.`})
+        } else {
+            handleNewError({})
+            stateParam ={
+                ...stateParam
+            }
+            delete stateParam?.showBack
+            let obj = JSON.stringify(stateParam)
+            let encoded = window.btoa(obj);
+            window.location.href = `https://gogeta.bike/portal/sal-sac-form?params=${encoded}`
+        }
+
     }
-    const { errors, handleSubmit } = FormC({
+    const { errors, handleSubmit,handleNewError } = FormC({
         values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
         onSubmit
     })
     return <>
-            {state?.showBack ? <Button onClick={() => router.back()} className='backPage nav-link mb-5'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to choose another retailer</Button> : null}
+        {state?.showBack ? <Button onClick={() => router.back()} className='backPage nav-link mb-5'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to choose another retailer</Button> : null}
         <ul className="applyNow-steps">
             <li>
                 <Image src='/assets/apply-steps/ic_package.svg' width={48} height={48} alt='Package' />
@@ -109,7 +122,10 @@ function ApplyNowUK({ context}: any) {
                     <UKCalculator errors={errors} state={state} onChange={onChange} host={host} />
                 </div>
             </div>
-            <div className="d-flex justify-content-end mb-5">
+            <div className="d-flex justify-content-end flex-column align-items-end mb-5">
+                <div className="applyNow-errorMsg mb-3">
+                <Error text={errors.message}/>
+                </div>
                 <button type="submit" className="customSiteBtn btn btn-primary px-4">Submit <i className="fa-solid fa-angle-right"></i></button>
             </div>
         </Form>

@@ -10,6 +10,7 @@ import DealerList from '<prefix>/component/dealerList';
 import Image from 'next/image';
 import { withContext } from '<prefix>/context/appContext';
 import UkFreesiteCalculate from '<prefix>/component/home/ukFreesiteCalculate';
+import LoaderBox from '<prefix>/component/boxLoader';
 let size: any = {
     s: 'Small',
     l: 'Large',
@@ -63,7 +64,7 @@ function MyOffers({ partners, offers, context }: any) {
     }, [offers, router, host])
     useEffect(() => { setTimeout(() => { setTransitionLoading(false) }, 4000) })
     if (isTransitionLoading) {
-        return <TransitionPage partners={partners} />
+        return <LoaderBox />
     }
     const handleApply = (item: any = {}) => {
         let obj: any = host?.includes('uk')?{

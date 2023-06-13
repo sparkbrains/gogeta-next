@@ -6,6 +6,12 @@
         padding-bottom: 50px;
     }
 
+    &-errorMsg {
+        .error {
+            font-size: 16px;
+        }
+    }
+
     &-steps {
         padding: 0;
         margin: 0;
