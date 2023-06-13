@@ -50,7 +50,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                             <div className="currency">£</div>
                             <input type="text" className="form-input" maxLength={10} value={state.totalPackageValue} disabled />
                         </div>
-                        <div className="helpText">Total package value cannot be greator then {state.voucherLimit}</div>
+                        <div className="helpText">The maximum voucher value you can apply for is {state.voucherLimit}</div>
                     </Col>
                 </Row>
             </div>
