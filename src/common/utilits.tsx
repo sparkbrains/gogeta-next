@@ -139,10 +139,10 @@ export const submitCalculator = (param: any) => {
 }
 export const applyCalculator = (obj: any) => {
   const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue, SRP_val } = obj
-  const saving: any = calculate_bike_salary_sacrifice_in_plp(totalPackageValue, annualSalary, sacrifice_repayment)
   const totalbikeVal = (Number(bikeValue) + (Number(accessoriesValue) || 0))
   const totalVal = (Number(bikeValue) + (Number(accessoriesValue) || 0)) * 1.04
   const SRPVal = SRP_val > 0? +SRP_val + (Number(accessoriesValue) || 0) :totalbikeVal
+  const saving: any = calculate_bike_salary_sacrifice_in_plp(SRPVal, annualSalary, sacrifice_repayment)
   let param: any = {}
   if (frequency && sacrifice_repayment && bikeValue) {
     param = {
@@ -187,7 +187,7 @@ net_total_amount: param.net_total_amount?.toFixed(2),
 regular_gross: param.regular_gross,
 saving_C2W: param.saving_C2W?.toFixed(2),
 saving_C2W_percentage: param.saving_C2W_percentage?.toFixed(2) || 0,
-total_savings: param.total_savings?.toFixed(2),
+total_savings: param.total_savings,
 total_savings_percentage: param.total_savings_percentage?param.total_savings_percentage:0
   }
 }
@@ -201,17 +201,17 @@ function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: numb
   let tax1 = value[0];
   let threshold = value[1];
   let value2 = calc_taxes(country, salary - total_bp)?.data;
+  
   let tax2 = value2[0];
   let differenceOverThreshold = tax1 == tax2 ? 0 : threshold;
   let netcost = ((salary - differenceOverThreshold) * tax1) + ((total_bp - (salary - differenceOverThreshold)) * tax2);
-
   let takehomepay = netcost / salary_sacrifice; // The monthly cost with the discount
   let savings = total_bp - netcost;
   let savingsPercent = (savings / total_bp) * 100;
   let context = {
     per_month: Math.round(Number(takehomepay)),
-    total_savings: Math.round(Number(savings)),
-    saving_percentage: Math.round(Number(savingsPercent)) + "%",
+    total_savings: Number(savings).toFixed(2),
+    saving_percentage: (Number(savingsPercent).toFixed(2)) + "%",
     tax_percent: calc_taxes(country, salary)?.tax,
     saving_percentage_number: Math.round(Number(savingsPercent)),
   }
