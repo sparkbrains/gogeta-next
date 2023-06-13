@@ -196,8 +196,6 @@ function Pdp({ detail, context }: any) {
         annualSalary: router?.query?.salary,
         totalPackageValue: selectColorProduct?.size?.unitSuggestedRetailPrice,
     } : calObj
-    console.log(calObj,tenantDetail,'calObj===');
-    
     return (
         <Applayout className='pdpMain w-100 mt-2'>
             <div className='pb-4'>

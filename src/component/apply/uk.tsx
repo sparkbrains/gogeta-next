@@ -67,7 +67,6 @@ function ApplyNowUK({ context }: any) {
         let stateParam: any = { ...state }
         const moment1: any = moment(state.certificateDatePeriodEndDate).format('yyyy-MM-DD')
         const moment2: any = moment().format('yyyy-MM-DD')
-        console.log(moment1, moment2, moment(moment1).isAfter(moment2), 'state===');
         if (!moment(moment1).isAfter(moment2)) {
             handleNewError({message:'Employer cannot accept the application now.'})
         }else if(stateParam.voucherLimit < stateParam.totalPackageValue){
