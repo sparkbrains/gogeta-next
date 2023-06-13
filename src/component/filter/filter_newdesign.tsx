@@ -283,7 +283,7 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
                                             <label className="form-label">Enter your salary for the most accurate prices</label>
                                             <div className="input-group">
                                                 <span className="input-group-text" id="basic-addon1">{profile?.currencySymbol}</span>
-                                                <input onKeyPress={onKeyPress} type="text" id="salary" className="form-control" data-name="salary" defaultValue="30000" name="salary" onChange={onChangeWork} />
+                                                <input onKeyPress={onKeyPress} type="text" id="salary" className="form-control" data-name="salary" defaultValue={stateParam.salary} name="salary" onChange={onChangeWork} />
                                             </div>
                                         </div>
                                    : null}
