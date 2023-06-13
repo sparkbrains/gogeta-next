@@ -8,8 +8,10 @@ import CalculateSchemePackage from '<prefix>/component/calculateSchemePackage';
 import SavingCalculate from '<prefix>/component/home/savingCalculate';
 import { useRouter } from 'next/router';
 function HowWorks({ context }: any) {
-    const host: string = context.host
+    const {host,tenantDetail}: any = context
     const router = useRouter()
+    console.log(tenantDetail,'tenantDetail==');
+    
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
         <section className='gogetaBannerCell mb-3 mt-4 mt-sm-0'>
             <Container>
@@ -72,7 +74,7 @@ function HowWorks({ context }: any) {
                             </div>
                             {
                                 host.includes('uk') ? <>
-                                    <p className='text-white mx-wdt5'>The Cycle to Work Scheme voucher limit set by [companyname] is £[limit].</p>
+                                    <p className='text-white mx-wdt5'>The Cycle to Work Scheme voucher limit set by {tenantDetail.companyName} is £{tenantDetail.voucherLimit}.</p>
                                     <p className='text-white mx-wdt5'>You can get whatever you need to keep you in the saddle and commuting regularly. That includes any type of bike or e-bike and cycling accessories including:</p>
                                     <Row className='mt-4 mt-md-5 mb-4'>
                                         <Col sm={6} className='mb-4 px-0 px-sm-3'>

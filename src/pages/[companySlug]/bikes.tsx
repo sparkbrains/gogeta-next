@@ -51,7 +51,7 @@ function EbayPLP({ user, filterRes,context }: any) {
             price: val?.price?.split('-') || [],
             showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : 'on',
             listing_type: val?.listing_type?.length ? val?.listing_type : "ebikes",
-            salary: val?.salary || "30000",
+            salary: val?.salary || "55000",
         }
         setSortBy(val?.sort_by || '')
         setParam(data)
