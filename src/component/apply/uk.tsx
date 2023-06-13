@@ -70,7 +70,7 @@ function ApplyNowUK({ context }: any) {
         if(+stateParam.voucherLimit < +stateParam.totalPackageValue){
             handleNewError({message:`This request cannot be processed as your employer has set scheme limit is ${stateParam.voucherLimit}.`})
         }else if (!moment(moment1).isAfter(moment2)) {
-            handleNewError({message:'Employer cannot accept the application now.'})
+            handleNewError({message:'Employer is no longer accept the application now.'})
         } else {
             handleNewError({})
             stateParam ={

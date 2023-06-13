@@ -16,7 +16,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                         <span className="pb-2">SRP:</span>
                     </Col>
                     <Col xs={12} sm={8}>
-                        <Input errorText={errors.SRP_val} type="text" className="form-input" name="SRP_val" value={state.SRP_val} onKeyPress={onKeyPress} onChange={onChange} />
+                        <Input errorText={errors.SRP_val} maxLength={10} type="text" className="form-input" name="SRP_val" value={state.SRP_val} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>:null}
@@ -26,7 +26,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                         <span className="pb-2">Cost of bike:</span>
                     </Col>
                     <Col xs={12} sm={8}>
-                        <Input errorText={errors.bike_value} type="text" className="form-input" name="bikeValue" value={state.bikeValue} onKeyPress={onKeyPress} onChange={onChange} />
+                        <Input errorText={errors.bike_value} maxLength={10} type="text" className="form-input" name="bikeValue" value={state.bikeValue} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>
@@ -36,7 +36,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                         <span className="pb-2">Cost of accessories:</span>
                     </Col>
                     <Col xs={12} sm={8}>
-                        <Input errorText={errors.accessories_value} type="text" className="form-input" name="accessoriesValue" value={state.accessoriesValue} onKeyPress={onKeyPress} onChange={onChange} />
+                        <Input errorText={errors.accessories_value} maxLength={10} type="text" className="form-input" name="accessoriesValue" value={state.accessoriesValue} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>
@@ -48,7 +48,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                     <Col xs={12} sm={8}>
                         <div className="d-flex align-items-center form-price-input">
                             <div className="currency">£</div>
-                            <input type="text" className="form-input" value={state.totalPackageValue} disabled />
+                            <input type="text" className="form-input" maxLength={10} value={state.totalPackageValue} disabled />
                         </div>
                         <div className="helpText">Total package value cannot be greator then {state.voucherLimit}</div>
                     </Col>
@@ -60,7 +60,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                         <span className="pb-2">Your salary before tax:</span>
                     </Col>
                     <Col xs={12} sm={8}>
-                        <Input errorText={errors.annual_salary} type="text" className="form-input" name="annualSalary" value={state.annualSalary} onKeyPress={onKeyPress} onChange={onChange} />
+                        <Input errorText={errors.annual_salary} maxLength={10} type="text" className="form-input" name="annualSalary" value={state.annualSalary} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>
