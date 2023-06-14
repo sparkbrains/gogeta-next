@@ -153,11 +153,12 @@ export const applyCalculator = (obj: any) => {
       regular_gross_12: (totalVal / (12 / 12) / 12).toFixed(2),
     }
   }
+  
   if (param.regular_gross) {
     param = {
       ...param,
-      net_regular: param.regular_gross * (1 - (saving?.tax_percent / 100)),
-      net_regular_12: param.regular_gross_12 * (1 - (saving?.tax_percent / 100)),
+      net_regular: param.regular_gross * (1 - (saving?.saving_percentage_number / 100)),
+      net_regular_12: param.regular_gross_12 * (1 - (saving?.saving_percentage_number / 100)),
     }
   }
   if (param.net_regular?.toString()?.length) {
@@ -217,7 +218,7 @@ function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: numb
     total_savings: Number(savings).toFixed(2),
     saving_percentage: (Number(savingsPercent).toFixed(2)) + "%",
     tax_percent: calc_taxes(country, salary)?.tax,
-    saving_percentage_number: Math.round(Number(savingsPercent)),
+    saving_percentage_number:Number(savingsPercent).toFixed(2),
   }
   return context
 }
