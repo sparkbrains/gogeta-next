@@ -22,7 +22,7 @@ function ApplyNowUK({ context }: any) {
         bikeValue: '',
         accessoriesValue: '',
         totalPackageValue: '',
-        annualSalary: '',
+        annualSalary: '55000',
         frequency: '',
         sacrifice_repayment: '',
     })

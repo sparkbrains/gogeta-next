@@ -18,7 +18,7 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
         bikeValue: '',
         accessoriesValue: '',
         totalPackageValue: '',
-        annualSalary: '',
+        annualSalary: '55000',
         frequency: '',
         sacrifice_repayment: ''
     })
