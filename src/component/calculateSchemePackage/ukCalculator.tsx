@@ -12,40 +12,40 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
         <Col xs={12} sm={6}>
             {srp ? <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
-                    <Col xs={12} sm={4}>
+                    <Col xs={12} sm={5}>
                         <span className="pb-2 d-block">SRP: <ToolTip position='right' className='ms-1' des='This is the manufacturer’s Suggested Retail Price'/></span>
                     </Col>
-                    <Col xs={12} sm={8}>
+                    <Col xs={12} sm={7}>
                         <Input errorText={errors.SRP_val} maxLength={10} type="text" className="form-input" name="SRP_val" value={state.SRP_val} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>:null}
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
-                    <Col xs={12} sm={4}>
-                        <span className="pb-2">Cost of bike: <ToolTip position='right' className='ms-1' des='This is the price retailers are offering the bike through the <b>go</b>geta marketplace'/></span>
+                    <Col xs={12} sm={5}>
+                        <span className="pb-2 d-block">{srp ?"Discounted price of bike through gogeta":'Cost of bike:'} <ToolTip position='right' className='ms-1' des='This is the price retailers are offering the bike through the <b>go</b>geta marketplace'/></span>
                     </Col>
-                    <Col xs={12} sm={8}>
+                    <Col xs={12} sm={7}>
                         <Input errorText={errors.bike_value} maxLength={10} type="text" className="form-input" name="bikeValue" value={state.bikeValue} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
-                    <Col xs={12} sm={4}>
+                    <Col xs={12} sm={5}>
                         <span className="pb-2 d-block">Accessories amount: <ToolTip position='right' className='ms-1' des='Please enter an amount for accessories (such as a lock, helmet and lights). We suggest 10% of the voucher amount.'/></span>
                     </Col>
-                    <Col xs={12} sm={8}>
+                    <Col xs={12} sm={7}>
                         <Input errorText={errors.accessories_value} maxLength={10} type="text" className="form-input" name="accessoriesValue" value={state.accessoriesValue} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
-                    <Col xs={12} sm={4}>
+                    <Col xs={12} sm={5}>
                         <span className="pb-2 d-block">Total bike + accessories <ToolTip position='right' className='ms-1' des='This is the amount of the Cycle to Work voucher you will get. It represents the amount of the bike (including available discounts) and accessories.'/></span>
                     </Col>
-                    <Col xs={12} sm={8}>
+                    <Col xs={12} sm={7}>
                         <div className="d-flex align-items-center form-price-input">
                             <div className="currency">£</div>
                             <input type="text" className="form-input" maxLength={10} value={state.totalPackageValue} disabled />
@@ -56,30 +56,30 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
             </div>
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
-                    <Col xs={12} sm={4}>
+                    <Col xs={12} sm={5}>
                         <span className="pb-2 d-block">Salary sacrifice amount <ToolTip position='right' className='ms-1' des='This is the amount you will sacrifice out of your gross, not net, salary. It includes the gogeta 4% platform fee.'/></span>
                     </Col>
-                    <Col xs={12} sm={8}>
+                    <Col xs={12} sm={7}>
                         <Input disabled maxLength={10} type="text" className="form-input" name="salary_sacrifice_amount" value={state.salary_sacrifice_amount} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
-                    <Col xs={12} sm={4}>
+                    <Col xs={12} sm={5}>
                         <span className="pb-2">Your salary before tax:</span>
                     </Col>
-                    <Col xs={12} sm={8}>
+                    <Col xs={12} sm={7}>
                         <Input errorText={errors.annual_salary} maxLength={10} type="text" className="form-input" name="annualSalary" value={state.annualSalary} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
-                    <Col xs={12} sm={4}>
+                    <Col xs={12} sm={5}>
                         <span className="pb-2">Pay frequency:</span>
                     </Col>
-                    <Col xs={12} sm={8}>
+                    <Col xs={12} sm={7}>
                         {
                             host.includes('uk') ?
                                 <div className="NoCurr form-price-input">
@@ -106,10 +106,10 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
             </div>
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
-                    <Col xs={12} sm={4}>
+                    <Col xs={12} sm={5}>
                         <span className="pb-2">Salary sacrifice repayment term:</span>
                     </Col>
-                    <Col xs={12} sm={8}>
+                    <Col xs={12} sm={7}>
                         {
                             host.includes('uk') ?
                                 <div className="form-price-input NoCurr">
