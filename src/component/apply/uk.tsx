@@ -39,7 +39,6 @@ function ApplyNowUK({ context }: any) {
         if (router.query?.params?.length) {
             obj = JSON.parse(window.atob(`${router.query?.params}`))
         }
-        if (Object.keys(obj).length) {
             obj = {
                 ...obj,
                 ...tenantDetail
@@ -49,7 +48,6 @@ function ApplyNowUK({ context }: any) {
                 sacrifice_repayment: obj?.salarySacrificeTerm
             } : obj
             handleCycleCalculate(obj)
-        }
     }, [router])
     const handleCycleCalculate = (param: any) => {
         param = {

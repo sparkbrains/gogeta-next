@@ -10,8 +10,6 @@ import { useRouter } from 'next/router';
 function HowWorks({ context }: any) {
     const {host,tenantDetail}: any = context
     const router = useRouter()
-    console.log(tenantDetail,'tenantDetail==');
-    
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
         <section className='gogetaBannerCell mb-3 mt-4 mt-sm-0'>
             <Container>
