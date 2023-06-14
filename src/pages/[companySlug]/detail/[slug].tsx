@@ -14,7 +14,6 @@ import Calculate from '<prefix>/component/detailOfferCalculator';
 import MainSlider from '<prefix>/component/mainSilder';
 import Fetch from '<prefix>/common/fetch';
 import { withContext } from '<prefix>/context/appContext';
-import ApplyNowUK from "<prefix>/component/apply/uk";
 import UkFreesiteCalculate from '<prefix>/component/home/ukFreesiteCalculate';
 var frequencydata: any = {
     MONTHLY: 12,

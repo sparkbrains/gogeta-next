@@ -24,7 +24,7 @@ function ApplyNowUK({ context }: any) {
         totalPackageValue: '',
         annualSalary: '',
         frequency: '',
-        sacrifice_repayment: ''
+        sacrifice_repayment: '',
     })
     const onChange = (e: any) => {
         const { value, name } = e.target
@@ -57,7 +57,6 @@ function ApplyNowUK({ context }: any) {
             totalPackageValue: (Number(param.bikeValue) || 0) + (Number(param.accessoriesValue) || 0)
         }
         let valPrice = applyCalculator(param)
-
         setState({ ...param, ...valPrice })
     }
 

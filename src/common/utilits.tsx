@@ -141,13 +141,15 @@ export const applyCalculator = (obj: any) => {
   const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue, SRP_val } = obj
   const totalbikeVal = (Number(bikeValue) + (Number(accessoriesValue) || 0))
   const totalVal = (Number(bikeValue) + (Number(accessoriesValue) || 0)) * 1.04
+  const salary_sacrifice_amount:any = totalVal.toFixed(2)
   const SRPVal = SRP_val > 0? +SRP_val + (Number(accessoriesValue) || 0) :totalbikeVal
   const saving: any = calculate_bike_salary_sacrifice_in_plp(SRPVal, annualSalary, sacrifice_repayment)
   let param: any = {}
   if (frequency && sacrifice_repayment && bikeValue) {
     param = {
       ...param,
-      regular_gross: (totalVal / (Number(frequency) / 12) / Number(sacrifice_repayment)).toFixed(2),
+      regular_gross: (salary_sacrifice_amount / 12).toFixed(2),
+      regular_gross_old: (totalVal / (Number(frequency) / 12) / Number(sacrifice_repayment)).toFixed(2),
       regular_gross_12: (totalVal / (12 / 12) / 12).toFixed(2),
     }
   }
@@ -168,7 +170,8 @@ export const applyCalculator = (obj: any) => {
   if (param.total_savings) {
     param = {
       ...param,
-      net_total_amount: totalVal - param?.total_savings,
+      net_total_amount: param?.net_regular * 12,
+      net_total_amount_old: totalVal - param?.total_savings,
       total_savings_percentage: saving?.saving_percentage,
       saving_C2W:SRPVal - param.C2W_price,
     }
@@ -185,6 +188,7 @@ export const applyCalculator = (obj: any) => {
 net_regular: param.net_regular?.toFixed(2),
 net_total_amount: param.net_total_amount?.toFixed(2),
 regular_gross: param.regular_gross,
+salary_sacrifice_amount:salary_sacrifice_amount,
 saving_C2W: param.saving_C2W?.toFixed(2),
 saving_C2W_percentage: param.saving_C2W_percentage?.toFixed(2) || 0,
 total_savings: param.total_savings,

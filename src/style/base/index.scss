@@ -673,20 +673,37 @@ input:focus {
         color: var(--white);
         z-index: 3;
         white-space: pre-wrap;
-        left: 50%;
-        transform: translate(-50%, 0%);
         opacity: 1;
-
-        &:after {
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            content: "";
-            position: absolute;
-            top: -10px;
-            border-bottom: 15px solid var(--p-color-new);
-            left: 50%;
-            transform: translate(-50%, 0px);
+        &.right{
+            top: 50%;
+            left: 30px;
+            transform: translate(10px, -50%);
+            &:after {
+                border-right: 15px solid var(--p-color-new);
+                content: "";
+                position: absolute;
+                top:50%;
+                border-bottom: 15px solid transparent;
+                border-top: 15px solid transparent;
+                left: -12px;
+                transform: translate(0%, -50%);
+            }
         }
+        &.left{
+            left: 50%;
+            transform: translate(-50%, 0%);
+            &:after {
+                border-left: 15px solid transparent;
+                border-right: 15px solid transparent;
+                content: "";
+                position: absolute;
+                top: -10px;
+                border-bottom: 15px solid var(--p-color-new);
+                left: 50%;
+                transform: translate(-50%, 0px);
+            }
+        }
+        
 
         @media(max-width:575px) {
             font-size: 14px;
