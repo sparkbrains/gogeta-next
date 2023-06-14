@@ -23,7 +23,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
                     <Col xs={12} sm={4}>
-                        <span className="pb-2">Cost of bike: <ToolTip position='right' className='ms-1' des='This is the price retailers are offering the bike through the gogeta marketplace'/></span>
+                        <span className="pb-2">Cost of bike: <ToolTip position='right' className='ms-1' des='This is the price retailers are offering the bike through the <b>go</b>geta marketplace'/></span>
                     </Col>
                     <Col xs={12} sm={8}>
                         <Input errorText={errors.bike_value} maxLength={10} type="text" className="form-input" name="bikeValue" value={state.bikeValue} onKeyPress={onKeyPress} onChange={onChange} />
