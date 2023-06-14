@@ -748,3 +748,15 @@ input:focus {
 .helpText{
     font-size: 10px;
 }
+#nprogress  {
+    .bar{
+        background-color: var(--primary-new);
+        height: 3px;
+    }
+    .peg{
+  box-shadow: 0 0 10px var(--primary-new), 0 0 5px var(--primary-new);
+    }
+    .spinner{
+        display: none;
+    }
+}

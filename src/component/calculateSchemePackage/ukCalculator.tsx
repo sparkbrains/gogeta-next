@@ -67,7 +67,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
                     <Col xs={12} sm={5}>
-                        <span className="pb-2">Your salary before tax:</span>
+                        <span className="pb-2">Your salary before tax: <ToolTip position='right' className='ms-1' des='This is your annual gross pay before any bonus or other payments'/></span>
                     </Col>
                     <Col xs={12} sm={7}>
                         <Input errorText={errors.annual_salary} maxLength={10} type="text" className="form-input" name="annualSalary" value={state.annualSalary} onKeyPress={onKeyPress} onChange={onChange} />
