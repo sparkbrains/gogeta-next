@@ -83,7 +83,7 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
                         <Form onSubmit={handleSubmit}>
                             <UKCalculator errors={errors} srp={srp} state={state} onChange={onChange} host={host} />
                             <div className="d-flex justify-content-end">
-                                <button type="submit" className="customSiteBtn btn btn-primary px-4">Apply now <i className="fa-solid fa-angle-right"></i></button>
+                                <button type="submit" className="customSiteBtn btn btn-primary px-4">{submit ? 'Find me great offers':'Apply now'} <i className="fa-solid fa-angle-right"></i></button>
                             </div>
                         </Form>
                     </div>

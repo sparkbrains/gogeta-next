@@ -181,14 +181,13 @@ function Pdp({ detail, context }: any) {
     }
     const formSubmit = (val:any)=>{
         setCalculateRes(val)
-        let stateParam: any = { ...val }
-        if (host === 'uk') {
-            delete stateParam.frequency
-            delete stateParam.sacrifice_repayment
-        }
-        let obj = JSON.stringify(stateParam)
-        let encoded = window.btoa(obj);
-        router.push((router?.query?.companySlug?'/'+router?.query?.companySlug:'')+`/apply-now${`?params=${encoded}`}`)
+        router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/offers/${router?.query?.slug}?${queryParam({
+            color: selectColorProduct?.colourwayName,
+            salary: calculateRes?.salary?.length ? calculateRes?.salary : router?.query?.salary,
+            accessories: calculateRes?.accessories_val,
+            size: selectColorProduct?.size?.mapped,
+            modelYear: data?.productYear
+        })?.replace('&', '')}`)
     }
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
     let calObj:any = {
@@ -238,8 +237,8 @@ function Pdp({ detail, context }: any) {
                                             host.includes('uk') ?
                                                 <>
                                                     <span>{price}</span>
-                                                    {selectColorProduct.size?.offer_price ? <p className='cyclePrice'><b>go</b>geta&apos;s best price {profile.currencySymbol + handleChangeSalary(selectColorProduct.size?.offer_price)}</p> : null}
-                                                    <p className='saveupto'>Salary sacrifice price <b>{profile.currencySymbol + handleChangeSalary(data?.context?.C2W_price)}</b></p>
+                                                    {selectColorProduct.size?.offer_price ? <p className='payEmi'><b>go</b>geta&apos;s best price {profile.currencySymbol + handleChangeSalary(selectColorProduct.size?.offer_price)}</p> : null}
+                                                    <p className='cyclePrice primary-color'>Salary sacrifice price <b>{profile.currencySymbol + handleChangeSalary(data?.context?.C2W_price)}</b></p>
                                                     <p className='payEmi'>Save {profile.currencySymbol + handleChangeSalary(data?.context?.saving_C2W)} ({data?.context?.saving_C2W_percentage + '%'})</p>
                                                 </>
                                                 :

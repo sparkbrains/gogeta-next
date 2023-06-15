@@ -54,7 +54,7 @@ export default function ProductList({ profile, item, host = '' }: any) {
         </div>
         <div className={`card-footer ${!item.stockReport ? 'outStock' : ''}`}>
             {
-                !item.stockReport ? 'ENQUIRE FOR AVAILABILITY' : <>
+                !item.stockReport ? 'OUT OF STOCK' : <>
                     In stock now
                     <Image src='/assets/speedybike_electric.svg' width={25} height={14} alt='speedybike_electric' />
                 </>
