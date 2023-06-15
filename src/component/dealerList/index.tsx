@@ -22,8 +22,8 @@ export default function DealerList({ items,profile, handleApply, host = '' }: an
                     </div>
                     {host.includes('uk') ? <div className={`offerPrice ${!items.context?.C2W_price ? 'offerPriceC2W' : ''}`}>
                         {items.dealer_price?.saving ? <s>SRP {profile?.currencySymbol}{items.dealer_price.dealerPrice + items.dealer_price?.saving}</s> : <p>SRP £{items.dealer_price.dealerPrice}</p>}
-                        {items.dealer_price?.saving ? <p>Offer price {profile?.currencySymbol}{items.dealer_price.dealerPrice}</p> : null}
-                        {items.context?.C2W_price ? <><p className="primary-color">gogeta C2W price {profile?.currencySymbol}{items.context?.C2W_price}</p>
+                        {items.dealer_price?.saving ? <p><b>go</b>geta’s best price {profile?.currencySymbol}{items.dealer_price.dealerPrice}</p> : null}
+                        {items.context?.C2W_price ? <><p className="primary-color">Salary sacrifice price {profile?.currencySymbol}{items.context?.C2W_price}</p>
                             <p>Just 12 monthly payments of {profile?.currencySymbol}{items?.context?.regular_gross} from your gross salary</p></> : null}
                     </div> : null}
                 </div>

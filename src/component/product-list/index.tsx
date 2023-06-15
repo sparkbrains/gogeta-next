@@ -28,13 +28,13 @@ export default function ProductList({ profile, item, host = '' }: any) {
                             item.saving_price.offerPrice ?
                                 <>
                                     <s className="price-current pe-1">{price} </s>
-                                    <p className="price-current">Best price {profile.currencySymbol + handleChangeSalary(item.saving_price.offerPrice)}</p>
+                                    <p className="price-current"><b>go</b>geta's best price {profile.currencySymbol + handleChangeSalary(item.saving_price.offerPrice)}</p>
                                 </>
                                 :
                                 <p className="price-current pe-1">{price} </p>
                         }
 
-                        <p className="primary-color price-des">gogeta C2W price {profile.currencySymbol + handleChangeSalary(item?.context?.C2W_price)}</p>
+                        <p className="primary-color price-des">Salary sacrifice price {profile.currencySymbol + handleChangeSalary(item?.context?.C2W_price)}</p>
                         <p className="pt-3">Save {profile.currencySymbol + handleChangeSalary(item?.context?.saving_C2W)} ({item?.context?.saving_C2W_percentage + '%'})</p>
                     </> : <>
                         <s className="price-current pe-1">{price} </s> <span className="primary-color ml-1">{profile.currencySymbol + handleChangeSalary(Math.round(item.currencyProduct.unitSuggestedRetailPrice - Number(item?.context?.total_savings)))}</span>
