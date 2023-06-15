@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['product.velomatch.dev'],
+    domains: ['product.velomatch.dev','product.velomatch.io'],
   },
 }
 
