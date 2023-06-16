@@ -18,7 +18,7 @@ const logo: any = {
 }
 function Header({ context }: any) {
     // const {context} = props
-    const { host, profile } = context
+    const { host, profile,tenantDetail } = context
     const router = useRouter()
     const isMobile = useMediaQuery(900)
     const [search, setSearch] = useState(false)
@@ -29,10 +29,14 @@ function Header({ context }: any) {
     const handleMenu = () => {
         setMenu(!menu)
     }
+    console.log(tenantDetail,'tenantDetail==');
+    
     return <header className="header border-0">
         <Navbar expand="lg">
             <Container className='mob_re_non'>
-                <Link href={`/${router.query.companySlug ?router.query.companySlug:''}`}><Image width={145} height={60} className='logo-nav' src={profile?.portalLogo} alt="Gogeta Logo" /></Link>
+                <Link href={`/${router.query.companySlug ?router.query.companySlug:''}`}>
+                    <Image width={145} height={60} className='logo-nav' src={profile?.portalLogo} alt="Gogeta Logo" />
+                </Link>
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
                         className={`me-auto ms-lg-5 my-2 my-lg-0 ${host.includes('uk') ? 'd-flex align-item-center justify-content-between w-100' : ''}`}

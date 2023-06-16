@@ -1,17 +1,18 @@
-import React, { useEffect, useState, Component } from "react"
+import React, { useEffect, useState, Component, ChangeEvent } from "react"
 import Fetch from "../../common/fetch"
 import { InputSelectDrop } from "../../common/inputSelectDrop"
 import { queryParam, useMediaQuery } from "../../common/utilits"
 import AccordianCard from "../accordian-card"
 import Button from "../button"
 import Card from "../card"
+import Image from "next/image"
 import { RadioInput } from "../form/inputs"
 //import RangeSlider from "react-range-slider-input";
 import ReactSlider from 'react-slider';
 import { onKeyPress } from '../../common/utilits'
 import { useRouter } from "next/router"
 import { Form } from "react-bootstrap"
-export default function Filter({ param,host, filterRes, applyFilterSet, newDesign = false,profile }: any) {
+export default function Filter({ param, host, filterRes, applyFilterSet, newDesign = false, profile }: any) {
     const isMobile = useMediaQuery(900)
     const [filterOpen, setfilterOpen] = useState(false)
     const [moreFilter, setMoreFilter] = useState(newDesign)
@@ -23,6 +24,14 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
             name: 'Price',
             order: 2,
             data: []
+        },
+        {
+            name: 'Search',
+            order: 3,
+            placeholder: 'Brand, model, keyword',
+            type: 'search',
+            data: [],
+            inputname: 'search'
         },
         {
             name: 'Electric assistance',
@@ -97,12 +106,24 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
         },
     ])
     const [stateParam, setStateParam] = useState(param)
+    const [searchInput,setSearchInput] = useState('')
     useEffect(() => {
         replaceFilterArray(filterRes)
         setStateParam({
             ...param,
         })
     }, [param])
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+                const param = {
+                    ...stateParam,
+                    search: searchInput
+                }
+                setStateParam(param)
+                applyFilter(param)
+        }, 1000)
+        return () => clearTimeout(delayDebounceFn)
+    }, [searchInput])
     const replaceFilterArray = (data: any) => {
         let priceR = data?.price_range?.length && data?.price_range[0]
         setMinMaxPrice([priceR?.price_min ? priceR?.price_min : 500, priceR?.price_max ? priceR?.price_max : 15000])
@@ -114,6 +135,14 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
                 isAlwaysOpen: true,
                 inputname: 'price',
                 data: data.price_range
+            },
+            {
+                name: 'Search',
+                order: 3,
+                placeholder: 'Brand, model, keyword',
+                type: 'search',
+                data: [],
+                inputname: 'search'
             },
             {
                 name: 'Electric assistance',
@@ -242,7 +271,7 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
         fetchFilterCount(val)
         applyFilterSet(paramupdate)
         handleFilterMobile()
-        const slug:any = router.query.companySlug || ''
+        const slug: any = router.query.companySlug || ''
         router.replace(`${router.pathname.replace('[companySlug]', slug)}${val.replace('&', '?')}`)
     }
     const handleFilterMobile = () => {
@@ -255,6 +284,9 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
         }
         setStateParam(param)
     }
+    const onChangeSearch = (e:ChangeEvent<HTMLInputElement>)=>{
+        setSearchInput(e.target.value)
+    }
     return <div className={`col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 filter`}>
         {isMobile ? <Button onClick={handleFilterMobile} className="filter-selectlist">Filters</Button> : null}
         <div className={isMobile ? `filter-mobile ${filterOpen ? 'show' : 'hide'}` : ''}>
@@ -265,28 +297,37 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
                         return <>
                             {key === 0 ? <Card key={key + 'buy'} className='like-buy mb-3'>
                                 <h5>Cycle to Work Scheme</h5>
-                                    <div className="d-flex align-items-center justify-content-between like-buy-switch">
-                                        <p>Buy outright</p>
-                                        <Form.Check
-                                            type="switch"
-                                            id="custom-switch"
-                                            name='showCyclePrice'
-                                            value={stateParam.showCyclePrice === "on" ? 'off':'on'}
-                                            checked={stateParam.showCyclePrice === "on"}
-                                            onChange={onChangeWork}
-                                        />
-                                        <p> Cycle to Work</p>
-                                    </div>
-                                    {/* <RadioInput title='Cash/Card' id='showCyclePrice' value='off' checked={stateParam.showCyclePrice === "off"} name='showCyclePrice' onChange={onChangeWork} />
+                                <div className="d-flex align-items-center justify-content-between like-buy-switch">
+                                    <p>Buy outright</p>
+                                    <Form.Check
+                                        type="switch"
+                                        id="custom-switch"
+                                        name='showCyclePrice'
+                                        value={stateParam.showCyclePrice === "on" ? 'off' : 'on'}
+                                        checked={stateParam.showCyclePrice === "on"}
+                                        onChange={onChangeWork}
+                                    />
+                                    <p> Cycle to Work</p>
+                                </div>
+                                {/* <RadioInput title='Cash/Card' id='showCyclePrice' value='off' checked={stateParam.showCyclePrice === "off"} name='showCyclePrice' onChange={onChangeWork} />
                                     <RadioInput title='Cycle to Work scheme' id='showCyclePrice_work' checked={stateParam.showCyclePrice === "on"} value='on' name='showCyclePrice' onChange={onChangeWork} /> */}
-                                    {stateParam.showCyclePrice === 'on' ?<div className="form-group">
-                                            <label className="form-label">Enter your salary for the most accurate prices</label>
-                                            <div className="input-group">
-                                                <span className="input-group-text" id="basic-addon1">{profile?.currencySymbol}</span>
-                                                <input onKeyPress={onKeyPress} type="text" id="salary" className="form-control" data-name="salary" defaultValue={stateParam.salary} name="salary" onChange={onChangeWork} />
-                                            </div>
-                                        </div>
-                                   : null}
+                                {stateParam.showCyclePrice === 'on' ? <div className="form-group">
+                                    <label className="form-label">Enter your salary for the most accurate prices</label>
+                                    <div className="input-group">
+                                        <span className="input-group-text" id="basic-addon1">{profile?.currencySymbol}</span>
+                                        <input onKeyPress={onKeyPress} type="text" id="salary" className="form-control" data-name="salary" defaultValue={stateParam.salary} name="salary" onChange={onChangeWork} />
+                                    </div>
+                                </div>
+                                    : null}
+                            </Card> : null}
+                            {item.type === 'search' ? <Card key={key + 'buy'} className='like-buy mb-3 searchList calclulate-form'>
+                                <h5>Search</h5>
+                                <div className="d-flex align-items-center form-price-input">
+                                    <input type='text' onChange={onChangeSearch} className='form-input' placeholder={item.placeholder} defaultValue={stateParam[item.inputname] ? stateParam[item.inputname] : ''} name={item.inputname} />
+                                    <div className="currency">
+                                        <Image src='/Interface_search.svg' alt='Interface search' width={12} height={12} />
+                                    </div>
+                                </div>
                             </Card> : null}
                             {
                                 moreFilter && key >= 5 ?
@@ -332,7 +373,7 @@ export default function Filter({ param,host, filterRes, applyFilterSet, newDesig
 
 
 
-                                                        <div className="d-flex align-item-center justify-content-between pt-2"><div>{profile.currencySymbol+minMaxPrice[0]}</div><div>{profile.currencySymbol+minMaxPrice[1]}</div></div>
+                                                        <div className="d-flex align-item-center justify-content-between pt-2"><div>{profile.currencySymbol + minMaxPrice[0]}</div><div>{profile.currencySymbol + minMaxPrice[1]}</div></div>
                                                         <div className="d-flex align-item-center justify-content-between pt-3">
                                                             <div className="d-flex align-item-center"><label>Min</label>  <div className="slider-range-input">{profile.currencySymbol + (stateParam[item.inputname]?.length ? stateParam[item.inputname][0] : minMaxPrice[0])}</div></div>
                                                             <div className="d-flex align-item-center"><label>Max</label> <div className="slider-range-input">{profile.currencySymbol + (stateParam[item.inputname]?.length ? stateParam[item.inputname][1] : minMaxPrice[1])}</div></div>

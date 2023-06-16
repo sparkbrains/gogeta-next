@@ -24,7 +24,7 @@ export default function DealerList({ items,profile, handleApply, host = '' }: an
                         {items.dealer_price?.saving ? <s>SRP {profile?.currencySymbol}{items.dealer_price.dealerPrice + items.dealer_price?.saving}</s> : <p>SRP £{items.dealer_price.dealerPrice}</p>}
                         {items.dealer_price?.saving ? <p><b>go</b>geta&apos;s best price {profile?.currencySymbol}{items.dealer_price.dealerPrice}</p> : null}
                         {items.context?.C2W_price ? <><p className="primary-color">Salary sacrifice price {profile?.currencySymbol}{items.context?.C2W_price}</p>
-                            <p>Just 12 monthly payments of {profile?.currencySymbol}{items?.context?.regular_gross} from your gross salary</p></> : null}
+                            <p>Just 12 monthly payments of {profile?.currencySymbol}{items?.context?.net_regular} from your net pay</p></> : null}
                     </div> : null}
                 </div>
             </Col>

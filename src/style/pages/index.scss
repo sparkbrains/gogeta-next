@@ -304,6 +304,21 @@
 }
 
 .like-buy {
+    &.searchList{
+    h5 {
+        background: var(--secondary-new-two);
+        color: var(--p-color-new);
+    }
+    .form-price-input{
+        padding: 20px 25px;
+        .form-input{
+            border-radius: 15px 0px 0px 15px;
+        }
+        .currency{
+            border-radius: 0px 15px 15px 0px;
+        }
+    }
+    }
     h5 {
         background: var(--backColor);
         color: var(--white);

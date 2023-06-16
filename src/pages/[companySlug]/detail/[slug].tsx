@@ -278,7 +278,7 @@ function Pdp({ detail, context }: any) {
                                         </select>
                                     </div>
                                     <div className='form-field col-md-6 mb-4 mb-md-0'>
-                                        <label>What is my height?</label>
+                                        <label>Need help finding your size?</label>
                                         <select name='height' onChange={handleHeight} value={selectedHeight}>
                                             <option value='' selected disabled>Enter your height</option>
                                             {

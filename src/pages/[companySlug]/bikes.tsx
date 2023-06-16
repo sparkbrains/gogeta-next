@@ -34,7 +34,8 @@ function EbayPLP({ user, filterRes,context }: any) {
         // showCyclePrice: !host.includes('uk') ? 'on':'off',
         showCyclePrice: 'on',
         listing_type: 'ebikes',
-        salary: ''
+        salary: '',
+        search:''
     })
     useEffect(() => {
         setHasMore(true)
@@ -52,6 +53,7 @@ function EbayPLP({ user, filterRes,context }: any) {
             showCyclePrice: val?.showCyclePrice?.length ? val?.showCyclePrice : 'on',
             listing_type: val?.listing_type?.length ? val?.listing_type : "ebikes",
             salary: val?.salary || "55000",
+            search: val?.search || "",
         }
         setSortBy(val?.sort_by || '')
         setParam(data)
@@ -99,6 +101,7 @@ function EbayPLP({ user, filterRes,context }: any) {
             showCyclePrice: !host.includes('uk') ? 'on':'off',
             listing_type: "ebikes",
             salary: "",
+            search:''
         })
         setHasMore(true)
         fetchAllData(1, val)
