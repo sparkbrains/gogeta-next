@@ -69,7 +69,7 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
         submit ? formSubmit(state) : router.push((router?.query?.companySlug?'/'+router?.query?.companySlug:'')+`/apply-now${host === 'uk' ? `/${router.query.slug}?params=${encoded}` : `?params=${encoded}`}`)
     }
     const { errors, handleSubmit, handleNewError } = FormC({
-        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
+        values: { bike_value: state.bikeValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
         onSubmit,
     })
     return <section className='schemeCost poreZindex mb-5'>

@@ -81,7 +81,7 @@ function ApplyNowUK({ context }: any) {
 
     }
     const { errors, handleSubmit,handleNewError } = FormC({
-        values: { bike_value: state.bikeValue, accessories_value: state.accessoriesValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
+        values: { bike_value: state.bikeValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
         onSubmit
     })
     return <>

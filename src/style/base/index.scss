@@ -624,6 +624,9 @@ color: var(--p-color-new);
         font-size: 48px;
         line-height: 26px;
         color: var(--p-color-new);
+        sub {
+            font-size: 24px;
+        }
     }
 
     &.secondBlue {
@@ -772,5 +775,8 @@ color: var(--p-color-new);
         path{
             fill: var(--primary-new);
         }
+    }
+    .tooltipCell_des{
+        min-width: 300px;
     }
 }
