@@ -77,7 +77,7 @@ function UKFreeSiteCalculate({ data, context, submit = false, formSubmit, srp }:
             <div className='toggleSchemeCost calcCyclSchPack'>
                 <div className='workScheme'>
                     <div className="d-flex align-items-center justify-content-between schemeHead">
-                        <h5>Calculate your Cycling Scheme package</h5>
+                        <h5>See your savings</h5>
                     </div>
                     <div className='applyNow p-5'>
                         <Form onSubmit={handleSubmit}>

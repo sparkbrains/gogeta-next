@@ -371,12 +371,14 @@
     header {
         background-color: transparent;
         position: static;
-        .header-logo{
+
+        .header-logo {
             font-weight: 700;
-font-size: 22px;
-line-height: 20px;
-color: var(--p-color-new);
+            font-size: 22px;
+            line-height: 20px;
+            color: var(--p-color-new);
         }
+
         .mob_re_non {
             @media(max-width:991px) {
                 position: static;
@@ -1052,7 +1054,7 @@ color: var(--p-color-new);
             position: relative;
             background: #C5E2E0;
             z-index: 5;
-            
+
             @media(max-width:1199px) {
                 margin-top: -14px;
             }
@@ -1158,7 +1160,8 @@ button.customSiteBtn {
     height: 44px;
     font-weight: 600;
     font-size: 16px;
-    color:var(--white);
+    color: var(--white);
+
     @media(max-width:991px) {
         min-width: 150px;
         height: 40px;

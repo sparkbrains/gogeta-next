@@ -172,7 +172,7 @@ function EbayPLP({ user, filterRes,context }: any) {
 export async function getServerSideProps(context: any) {
     let host = context.req.headers.host
     host = host === 'gogeta.dev' ? host : null
-    const search = context?.resolvedUrl.replace('/bikes?', '&')
+    const search = context?.resolvedUrl.replace(`/${context?.query?.companySlug}/bikes?`, '&')
     let data = await getProducts(search, host)
     let dataFilter = await getFiltersCount(search, host)
     return {
