@@ -325,7 +325,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                                 <div className="d-flex align-items-center form-price-input">
                                     <input type='text' onChange={onChangeSearch} className='form-input' placeholder={item.placeholder} defaultValue={stateParam[item.inputname] ? stateParam[item.inputname] : ''} name={item.inputname} />
                                     <div className="currency">
-                                        <Image src='/Interface_search.svg' alt='Interface search' width={12} height={12} />
+                                        <Image src='/go/Interface_search.svg' alt='Interface search' width={12} height={12} />
                                     </div>
                                 </div>
                             </Card> : null}

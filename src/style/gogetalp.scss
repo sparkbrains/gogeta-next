@@ -371,7 +371,12 @@
     header {
         background-color: transparent;
         position: static;
-
+        .header-logo{
+            font-weight: 700;
+font-size: 22px;
+line-height: 20px;
+color: var(--p-color-new);
+        }
         .mob_re_non {
             @media(max-width:991px) {
                 position: static;

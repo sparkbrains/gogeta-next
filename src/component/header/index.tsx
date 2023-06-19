@@ -34,8 +34,11 @@ function Header({ context }: any) {
     return <header className="header border-0">
         <Navbar expand="lg">
             <Container className='mob_re_non'>
-                <Link href={`/${router.query.companySlug ?router.query.companySlug:''}`}>
+                <Link href={`/${router.query.companySlug ?router.query.companySlug:''}`} className='header-logo'>
+                    {
+                        tenantDetail?.companyKnownAs ? tenantDetail?.companyKnownAs:
                     <Image width={145} height={60} className='logo-nav' src={profile?.portalLogo} alt="Gogeta Logo" />
+                    }
                 </Link>
                 <Navbar.Collapse id="navbarScroll">
                     <Nav

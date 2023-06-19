@@ -19,7 +19,9 @@ function AppContext(props: IProps) {
     }, [])
     useEffect(() => {
         const slug: any = router.query.companySlug || ''
+        if(slug){
         fetchTenant(slug)
+    }
     }, [router.query.companySlug])
     const fetchTenant = (slug: any) => {
         Fetch(`tenant/invitation-settings?accountNumber=${slug}`,null,{baseURL:1}).then(res => {
