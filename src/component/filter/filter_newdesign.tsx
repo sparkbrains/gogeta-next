@@ -345,9 +345,9 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                                                         <div className="text-center pb-3">
                                                             {
                                                                 newDesign ?
-                                                                    <img className="graph" src="/assets/price_bars.svg" style={{ width: '100%' }} alt="Graph" />
+                                                                    <img className="graph" src="/go/assets/price_bars.svg" style={{ width: '100%' }} alt="Graph" />
                                                                     :
-                                                                    <img className="graph" src="/assets/graph.png" style={{ width: '100%' }} alt="Graph" />
+                                                                    <img className="graph" src="/go/assets/graph.png" style={{ width: '100%' }} alt="Graph" />
                                                             }
                                                         </div>
 

@@ -14,7 +14,7 @@ export default function Welcome({ host,data }: any) {
                 <Col md={6} >
                     <div className='bannerCont'>
                         <h2 className='h2'>Welcome to the {host.includes('uk') ? `${data?.companyName} Cycling Scheme` : 'Cycle to Work Scheme'} </h2>
-                        <Image src={`assets/img/${host.includes('uk') ? 'Ebike.svg' : 'Illustration-Unicycle.svg'}`} height={490} width={388} alt="img" className='img-fluid d-block d-sm-none' />
+                        <Image src={`/go/assets/img/${host.includes('uk') ? 'Ebike.svg' : 'Illustration-Unicycle.svg'}`} height={490} width={388} alt="img" className='img-fluid d-block d-sm-none' />
                         <p>{host === 'uk' ? 'This is where you can find your perfect bike, learn more about how the scheme works and apply.' : 'Learn more about how the scheme works and apply for your voucher.'}</p>
                         <div className='d-flex align-items-center'>
                             {
@@ -38,7 +38,7 @@ export default function Welcome({ host,data }: any) {
                 <Col md={6} >
                     <div className={`bannerImg d-none d-sm-block ${host.includes('uk') ? 'lpasd' : ''} `}>
                         <div className='imgcell'>
-                            <Image src={`assets/img/${host.includes('uk') ? 'Ebike.svg' : 'Illustration-Unicycle.svg'}`} height={490} width={388} alt="img" className='img-fluid' />
+                            <Image src={`/go/assets/img/${host.includes('uk') ? 'Ebike.svg' : 'Illustration-Unicycle.svg'}`} height={490} width={388} alt="img" className='img-fluid' />
                         </div>
                     </div>
                 </Col>

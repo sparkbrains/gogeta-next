@@ -25,7 +25,7 @@ export default function SaveUp({ data, host }: iProps) {
 const SaveDes = ({ data }: any) => {
     return <Row className="align-items-center">
         <Col md={6} >
-            <Image width={461} height={374} alt="img" src='/assets/img/Illustration-Piggybank.svg' />
+            <Image width={461} height={374} alt="img" src='/go/assets/img/Illustration-Piggybank.svg' />
         </Col>
         <Col md={6} >
             <MainHead title={data.title} />

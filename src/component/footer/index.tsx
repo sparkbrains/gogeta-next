@@ -4,9 +4,9 @@ import Col from 'react-bootstrap/Col';
 import { withContext } from '<prefix>/context/appContext';
 import Link from 'next/link';
 const logo:any = {
-    uk:'/assets/logo/logo_without.svg',
-    ukMarket:'/assets/logo/logo_without.svg',
-    ebay:'/assets/logo/eBay_logo.svg'
+    uk:'/go/assets/logo/logo_without.svg',
+    ukMarket:'/go/assets/logo/logo_without.svg',
+    ebay:'/go/assets/logo/eBay_logo.svg'
 }
 function Footer({context:{host}}:any){
     return<footer className='footer'>
@@ -70,10 +70,10 @@ function Footer({context:{host}}:any){
                     <div className='footer-col socialIcons'>
                         <ul className='list-unstyled d-flex align-items-center'>
                             <li className="nav-leisure-ebike"><Link href="/">
-                                <img src="/assets/img/sm-instagram.svg" alt="img" className='img-fluid' /></Link></li>
-                            <li className="nav-endurance-ebike"><Link href="mailto:hello@gogeta.bike"><img src="/assets/img/sm-youtube.svg" alt="img" className='img-fluid' /></Link></li>
+                                <img src="/go/assets/img/sm-instagram.svg" alt="img" className='img-fluid' /></Link></li>
+                            <li className="nav-endurance-ebike"><Link href="mailto:hello@gogeta.bike"><img src="/go/assets/img/sm-youtube.svg" alt="img" className='img-fluid' /></Link></li>
                             <li className="nav-cargo-ebike"><Link href="/">
-                                <img src="/assets/img/sm-strava.svg" alt="img" className='img-fluid' /></Link></li>
+                                <img src="/go/assets/img/sm-strava.svg" alt="img" className='img-fluid' /></Link></li>
                         </ul>
                     </div>
                 </Col>

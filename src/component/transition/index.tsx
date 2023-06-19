@@ -8,7 +8,7 @@ return (
             <div className="row mb-4">
                <div className="col-xs-12">
                   <div className="animation">
-                     <img src="/assets/transition-img/face.gif" alt="Animation"/>
+                     <img src="/go/assets/transition-img/face.gif" alt="Animation"/>
                   </div>
                </div>
             </div>

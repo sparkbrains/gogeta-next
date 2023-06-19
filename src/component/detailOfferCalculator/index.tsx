@@ -138,7 +138,7 @@ export default function Calculate({ detail,handleCalculator }: any) {
                                 <Col md={5} lg={4}>
                                     <div className='scmRight'>
                                         <div className='singleSaving'>
-                                            <img src="/assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
+                                            <img src="/go/assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
                                             <div className='savingSrc'>
                                                 <div className='bxts'>
                                                     <p>Income tax saving</p>
@@ -155,7 +155,7 @@ export default function Calculate({ detail,handleCalculator }: any) {
                                             </div>
                                         </div>
                                         <div className='singleSaving blueBx mt-3'>
-                                            <img src="/assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
+                                            <img src="/go/assets/img/ic_saving-kit.svg" alt="img" className='img-fluid' />
                                             <div className='savingSrc'>
                                                 <div className='bxts'>
                                                     <h5>Total savings</h5>

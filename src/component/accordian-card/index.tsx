@@ -19,9 +19,9 @@ export default function AccordianCard({ title='',handleTab, children, toggleOpen
                 <h5>{title}</h5>
                 {
                     !open ?
-                        <Image src='/Icon-Expand.svg' alt='' width={13} height={13} />
+                        <Image src='/go/Icon-Expand.svg' alt='' width={13} height={13} />
                         :
-                        <Image src='/Icon-Collapse.svg' alt='' width={13} height={12} />
+                        <Image src='/go/Icon-Collapse.svg' alt='' width={13} height={12} />
                 }
             </div>
         </Button>

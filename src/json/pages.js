@@ -7,17 +7,17 @@ export const homeList = {
         process:[
             {
                 title:'1. Choose',
-                img:'/assets/img/process-choose.svg',
+                img:'/go/assets/img/process-choose.svg',
                 des:'<p>Find your bike and accessories from one of our partner bike shops, check your savings and then apply.</p>'
             },
             {
                 title:'2. Approval',
-                img:'/assets/img/process-approval.svg',
+                img:'/go/assets/img/process-approval.svg',
                 des:'<p>Your HR team will review and approve your application, and set-up your salary sacrifice</p>'
             },
             {
                 title:'3. Ride',
-                img:'/assets/img/process-ride.svg',
+                img:'/go/assets/img/process-ride.svg',
                 des:'<p>As soon as you are approved you will receive your gogeta voucher to enable you to get your new bike.</p>'
             }
         ],
@@ -31,22 +31,22 @@ export const homeList = {
         process:[
             {
                 title:'1. Browse',
-                img:'/assets/img/browse-process.svg',
+                img:'/go/assets/img/browse-process.svg',
                 des:'<p>Find your bike or ebike. You can use our <a id="bikes">marketplace</a> to explore an extensive range from the best brands and retailers. Or visit any of our <a>participating retailers</a> to get a quote.</p>'
             },
             {
                 title:'2. Choose',
-                img:'/assets/img/process-choose.svg',
+                img:'/go/assets/img/process-choose.svg',
                 des:'<p>Choose an offer from your preferred bike retailer and complete the salary sacrifice agreement, or <a id="apply-now">apply now</a> if you are using a local bike shop.</p>'
             },
             {
                 title:'2. Approval',
-                img:'/assets/img/process-approval.svg',
+                img:'/go/assets/img/process-approval.svg',
                 des:'<p>The eBay People team will review and approve your application, and set-up your salary sacrifice</p>'
             },
             {
                 title:'4. Ride',
-                img:'/assets/img/process-ride.svg',
+                img:'/go/assets/img/process-ride.svg',
                 des:'<p>As soon as you are approved you will receive your gogeta voucher to enable you to get your new bike.</p>'
             }
         ],
@@ -55,22 +55,22 @@ export const homeList = {
     process:[
         {
             title:'1. Browse',
-            img:'/assets/img/browse-process.svg',
+            img:'/go/assets/img/browse-process.svg',
             des:'<p>Find your bike or ebike. You can use our <a id="bikes">marketplace</a> to explore an extensive range from the best brands and retailers. Or visit any of our <a id="#participating-retailers">participating retailers</a> to get a quote.</p>'
         },
         {
             title:'2. Choose',
-            img:'/assets/img/process-choose.svg',
+            img:'/go/assets/img/process-choose.svg',
             des:'<p>Choose an offer from your preferred bike retailer and complete the salary sacrifice agreement, or <a id="apply-now">apply now</a> if you are using a local bike shop.</p>'
         },
         {
             title:'2. Approval',
-            img:'/assets/img/process-approval.svg',
+            img:'/go/assets/img/process-approval.svg',
             des:"<p>Your employer's HR/People team will review and approve your application, and set up your salary sacrifice.</p>"
         },
         {
             title:'4. Ride',
-            img:'/assets/img/process-ride.svg',
+            img:'/go/assets/img/process-ride.svg',
             des:'<p>As soon as you are approved you will receive your gogeta voucher to enable you to get your new bike.</p>'
         }
     ],

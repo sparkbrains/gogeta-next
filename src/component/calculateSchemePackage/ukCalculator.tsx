@@ -138,28 +138,28 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
             <div className="price-calculate">
                 <div className="d-flex align-items-center justify-content-between flex-wrap">
                     <p className="d-flex align-items-center">Regular gross salary sacrifice <ToolTip className='ms-2' des='This is the amount of take-home pay that you will sacrifice from each pay packet for the duration of your Cycle to Work agreement' /></p>
-                    <Image src='/assets/calculation/calendar_date_month.svg' width={36} height={36} alt='cal' />
+                    <Image src='/go/assets/calculation/calendar_date_month.svg' width={36} height={36} alt='cal' />
                 </div>
                 <h4>£{state.regular_gross ? handleChangeSalary(state.regular_gross) : 0}</h4>
             </div>
             <div className="price-calculate">
                 <div className="d-flex align-items-center justify-content-between flex-wrap">
                     <p className="d-flex align-items-center">Net regular amount <ToolTip className='ms-2' des='This is the amount that you will pay (eg, monthly) after the tax savings.' /></p>
-                    <Image src='/assets/calculation/pound.svg' width={36} height={36} alt='cal' />
+                    <Image src='/go/assets/calculation/pound.svg' width={36} height={36} alt='cal' />
                 </div>
                 <h4>£{state.net_regular ? handleChangeSalary(state.net_regular) : 0}</h4>
             </div>
             <div className="price-calculate">
                 <div className="d-flex align-items-center justify-content-between flex-wrap">
                     <p className="d-flex align-items-center">Net total amount <ToolTip className='ms-2' des='This is the total amount that you will pay for your bike and accessories over the duration of your Cycle to Work agreement' /></p>
-                    <Image src='/assets/calculation/pound.svg' width={36} height={36} alt='cal' />
+                    <Image src='/go/assets/calculation/pound.svg' width={36} height={36} alt='cal' />
                 </div>
                 <h4>£{state.net_total_amount ? handleChangeSalary(state.net_total_amount) : 0}</h4>
             </div>
             <div className="price-calculate secondBlue">
                 <div className="d-flex align-items-center justify-content-between flex-wrap">
                     <p className="d-flex align-items-center">Total savings <ToolTip className='ms-2' des='The amount you will save on the bike and accessories after tax savings' /></p>
-                    <Image src='/assets/calculation/percent.svg' width={36} height={36} alt='cal' />
+                    <Image src='/go/assets/calculation/percent.svg' width={36} height={36} alt='cal' />
                 </div>
                 <h4>£{state.saving_C2W ? handleChangeSalary(state.saving_C2W) : 0} <sub>({state.saving_C2W_percentage?.toString()?.length ? state.saving_C2W_percentage+'%' : '0%'})</sub></h4>
             </div>

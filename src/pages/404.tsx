@@ -9,7 +9,7 @@ function Error404() {
                 <Container>
                     <div className='errorPage pb-5'>
                         <div className="text-center mb-5">
-                        <Image src="/assets/img/404errorimg.png" width={676} height={280} alt="404" className='img-fluid' />
+                        <Image src="/go/assets/img/404errorimg.png" width={676} height={280} alt="404" className='img-fluid' />
                         </div>
                         <div className="error-content text-center">
                             <h2 className="text-center">Oops!</h2>

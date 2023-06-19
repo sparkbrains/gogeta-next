@@ -252,7 +252,7 @@ export default function Filter({ param, applyFilterSet }:any) {
                                         item.type === 'range' ?
                                             <div className='slider-range'>
                                                 <div className="text-center pb-3">
-                                                    <img className="graph" src="/assets/graph.png" style={{ width: '100%' }} alt="Graph" />
+                                                    <img className="graph" src="/go/assets/graph.png" style={{ width: '100%' }} alt="Graph" />
                                                 </div>
                                                 {/* <RangeSlider min={minMaxPrice[0]} max={minMaxPrice[1]} value={stateParam[item.inputname]?.length ? stateParam[item.inputname]:minMaxPrice} onInput={(val:any) => setStateParam({
                                                     ...stateParam,
