@@ -169,7 +169,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
             </div>
             <div className="price-calculate">
                 <div className="d-flex align-items-center justify-content-between flex-wrap">
-                    <p className="d-flex align-items-center">Effective cost of the bike 
+                    <p className="d-flex align-items-center">Effective cost
                     {/* <ToolTip className='ms-2' des='This is the total amount that you will pay for your bike and accessories over the duration of your Cycle to Work agreement' /> */}
                     </p>
                     <Image src='/go/assets/calculation/price_tag_percent.svg' width={36} height={36} alt='cal' />
