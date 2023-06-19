@@ -39,7 +39,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                         <span className="pb-2 align-items-start"><ToolTip position='right' className='me-1 calInfo' des='<p>The platform fee of 4% allows gogeta to maintain our marketplace, finding you the widest range of bikes and the best deals, as well as running our support teams.</p><p>The platform fee is applied to your salary sacrifice amount, which means the net effective cost is just 2.3% for a higher rate taxpayer and 2.7% for a basic rate taxpayer.</p>'/> Platform fee: </span>
                     </Col>
                     <Col xs={12} sm={7}>
-                        <Input errorText={errors.bike_value} maxLength={10} type="text" className="form-input" name="bikeValue" value={state.bikeValue} onKeyPress={onKeyPress} onChange={onChange} />
+                        <Input maxLength={10} type="text" className="form-input" name="bikeValue" value={state.gogeta_Fee} disabled onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
             </div>

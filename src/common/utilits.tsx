@@ -141,10 +141,13 @@ export const applyCalculator = (obj: any) => {
   const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue, SRP_val } = obj
   const totalbikeVal = (Number(bikeValue) + (Number(accessoriesValue) || 0))
   const totalVal = (Number(bikeValue) + (Number(accessoriesValue) || 0)) * 1.04
-  const salary_sacrifice_amount:any = totalVal ? totalVal.toFixed(2) : 0
+  const gogeta_Fee = Math.round((Number(bikeValue) + (Number(accessoriesValue) || 0)) * 0.04)
+  const salary_sacrifice_amount:any = totalVal ? totalbikeVal + gogeta_Fee  : 0
   const SRPVal = SRP_val > 0? +SRP_val + (Number(accessoriesValue) || 0) :totalbikeVal
   const saving: any = calculate_bike_salary_sacrifice_in_plp(SRPVal, annualSalary, sacrifice_repayment)
   let param: any = {}
+  console.log(totalVal,'totalVal===');
+  
   if (frequency && sacrifice_repayment && bikeValue && annualSalary) {
     param = {
       ...param,
@@ -186,12 +189,13 @@ export const applyCalculator = (obj: any) => {
   }
   return {
     C2W_price: param.C2W_price?.toFixed(2),
-net_regular: param.net_regular?.toFixed(2),
-net_total_amount: param.net_total_amount?.toFixed(2),
+net_regular: Math.round(param.net_regular),
+gogeta_Fee:gogeta_Fee,
+net_total_amount: Math.round(param.net_total_amount),
 regular_gross: param.regular_gross,
 salary_sacrifice_amount:salary_sacrifice_amount,
-saving_C2W: param.saving_C2W?.toFixed(2),
-saving_C2W_percentage: param.saving_C2W_percentage?.toFixed(2) || 0,
+saving_C2W: Math.round(param.saving_C2W),
+saving_C2W_percentage: Math.round(param.saving_C2W_percentage)   || 0,
 total_savings: param.total_savings,
 total_savings_percentage: param.total_savings_percentage?param.total_savings_percentage:0
   }
