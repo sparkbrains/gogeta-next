@@ -82,24 +82,24 @@ export default function FilterSelected({ param, applyFilterSet }:any) {
                         {item.label === 'showCyclePrice' ? 'Cycle to Work' :item.name === 'listing_type' ? 'Electric assistance' : item.label}
                         {
                             !open[key] ?
-                                <Image src='/Icon-Expand.svg' alt='' width={13} height={13} />
+                                <Image src='/go/Icon-Expand.svg' alt='' width={13} height={13} />
                                 :
-                                <Image src='/Icon-Collapse.svg' alt='' width={13} height={12} />
+                                <Image src='/go/Icon-Collapse.svg' alt='' width={13} height={12} />
                         }
                         {open[key] ? <div className="filter-dropdown-menu">
                             <ul>
                                 {
                                         item.name === "listing_type" ? 
-                                        <li><Button onClick={() => removeFilter(null, 'listing_type')}>{item.data} <Image className='close' src='/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
+                                        <li><Button onClick={() => removeFilter(null, 'listing_type')}>{item.data} <Image className='close' src='/go/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
                                         :
                                         item.label === 'showCyclePrice' ? 
-                                        <li><Button onClick={() => removeFilter(null, 'showCyclePrice')}>Cycle to Work <Image className='close' src='/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
+                                        <li><Button onClick={() => removeFilter(null, 'showCyclePrice')}>Cycle to Work <Image className='close' src='/go/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
                                         :
                                         item.label === "price" ? 
-                                        <li><Button onClick={() => removeFilter(null, 'price')}>{item?.data.join(' - ')} <Image className='close' src='/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
+                                        <li><Button onClick={() => removeFilter(null, 'price')}>{item?.data.join(' - ')} <Image className='close' src='/go/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
                                         :
                                     item?.data?.map((items:any, i:number) => {
-                                        return <li key={i} ><Button onClick={() => removeFilter(i, item.name)}>{items === 'in_stock' ? 'In Stock' : items} <Image className='close' src='/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
+                                        return <li key={i} ><Button onClick={() => removeFilter(i, item.name)}>{items === 'in_stock' ? 'In Stock' : items} <Image className='close' src='/go/assets/plus.svg' alt='' width={13} height={13} /></Button></li>
                                     })
                                 }
                             </ul>

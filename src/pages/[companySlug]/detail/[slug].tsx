@@ -206,7 +206,7 @@ function Pdp({ detail, context }: any) {
         <Applayout className='pdpMain w-100 mt-2'>
             <div className='pb-4'>
                 <Container>
-                    <Button onClick={() => router.back()} className='backPage nav-link'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to the bikes</Button>
+                    <Button onClick={() => router.back()} className='backPage nav-link'><Image width={7} height={12} src='/go/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to the bikes</Button>
                 </Container>
             </div>
             <section className='turboBnr porezid'>

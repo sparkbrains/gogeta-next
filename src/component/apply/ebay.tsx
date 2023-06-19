@@ -64,7 +64,7 @@ export default function ApplyNowEbay() {
                 <MainHead title='Apply for your Cycle to Work voucher now' />
                 <p className="pt-3">We make it easy to find your perfect match, in stock at the best retailers across Ireland. But if you’d prefer to simply head in to your local bike shop with a voucher, that’s easy too!</p>
                 <p className="pt-2 pb-5">Just fill out the form below and we’ll get things rolling. We’ll ask your employer to set up the salary sacrifice arrangement, and then we’ll send you a voucher that you can redeem in any of your local bike shops, for whatever bike you choose.</p>
-                <Image src='/ctw-bike-image.png' width={841} height={376} alt='Bikes' />
+                <Image src='/go/ctw-bike-image.png' width={841} height={376} alt='Bikes' />
             </div>
             <Form onSubmit={handleSubmit}>
                 <div className="toggle-card mb-5">

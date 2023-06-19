@@ -158,13 +158,13 @@ function SavingCalculate({context}:any){
                 <Row>
                     <Col md={4} className='mb-4 mb-md-0'>
                         <div className='list listEmmi'>
-                            {isMobile ? null : <Image width={66} height={66} alt='ico' src="/assets/img/nature_ecology_leaf.svg" className="mb-4" />}
+                            {isMobile ? null : <Image width={66} height={66} alt='ico' src="/go/assets/img/nature_ecology_leaf.svg" className="mb-4" />}
                             <div className='d-flex justify-content-between'>
                                 <div>
                                     <p>CO2 emissions saved:</p>
                                     <h3>{handleChangeSalary(data.cal_co2)}<sub>kg</sub></h3>
                                 </div>
-                                {!isMobile ? null : <Image width={36} height={36} alt='ico' src="/assets/img/nature_ecology_leaf.svg" className="mb-4" />}
+                                {!isMobile ? null : <Image width={36} height={36} alt='ico' src="/go/assets/img/nature_ecology_leaf.svg" className="mb-4" />}
                             </div>
                             <div className='mobile-align'>
                                 <div>
@@ -178,13 +178,13 @@ function SavingCalculate({context}:any){
                     </Col>
                     <Col md={4} className='mb-4 mb-md-0'>
                         <div className='list listBurned'>
-                            {isMobile ? null : <Image width={66} height={66} alt='ico' src="/assets/img/health_medical_heart_rate.svg" className="mb-4" />}
+                            {isMobile ? null : <Image width={66} height={66} alt='ico' src="/go/assets/img/health_medical_heart_rate.svg" className="mb-4" />}
                             <div className='d-flex justify-content-between'>
                                 <div>
                                     <p>Calories burned</p>
                                     <h3>{handleChangeSalary(data.cal_calories)}<sub>kcal</sub></h3>
                                 </div>
-                                {!isMobile ? null : <Image width={36} alt='ico' height={36} src="/assets/img/health_medical_heart_rate.svg" className="mb-4" />}
+                                {!isMobile ? null : <Image width={36} alt='ico' height={36} src="/go/assets/img/health_medical_heart_rate.svg" className="mb-4" />}
                             </div>
                             <div className='mobile-align'>
                                 <div>
@@ -198,13 +198,13 @@ function SavingCalculate({context}:any){
                     </Col>
                     <Col md={4} className='mb-4 mb-md-0'>
                         <div className='list listSaved'>
-                            {isMobile ? null : <Image width={66} height={66} alt='ico' src="/assets/img/money_cash_bag_euro.svg" className="mb-4" />}
+                            {isMobile ? null : <Image width={66} height={66} alt='ico' src="/go/assets/img/money_cash_bag_euro.svg" className="mb-4" />}
                             <div className='d-flex justify-content-between'>
                                 <div>
                                     <p>Money saved:</p>
                                     <h3>{profile.currencySymbol}{handleChangeSalary(data.cal_money)}</h3>
                                 </div>
-                                {!isMobile ? null : <Image width={36} height={36} alt='ico' src="/assets/img/money_cash_bag_euro.svg" className="mb-4" />}
+                                {!isMobile ? null : <Image width={36} height={36} alt='ico' src="/go/assets/img/money_cash_bag_euro.svg" className="mb-4" />}
                             </div>
                             <div className='mobile-align'>
                                 <div>

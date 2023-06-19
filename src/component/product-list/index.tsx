@@ -56,7 +56,7 @@ export default function ProductList({ profile, item, host = '' }: any) {
             {
                 !item.stockReport ? 'OUT OF STOCK' : <>
                     In stock now
-                    <Image src='/assets/speedybike_electric.svg' width={25} height={14} alt='speedybike_electric' />
+                    <Image src='/go/assets/speedybike_electric.svg' width={25} height={14} alt='speedybike_electric' />
                 </>
             }
 

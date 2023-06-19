@@ -12,9 +12,9 @@ import Link from "next/link";
 import { withContext } from "<prefix>/context/appContext";
 import { useRouter } from "next/router";
 const logo: any = {
-    uk: '/assets/logo/logo_without.svg',
-    ukMarket: '/assets/logo/logo_without.svg',
-    ebay: '/assets/logo/eBay_logo.svg'
+    uk: '/go/assets/logo/logo_without.svg',
+    ukMarket: '/go/assets/logo/logo_without.svg',
+    ebay: '/go/assets/logo/eBay_logo.svg'
 }
 function Header({ context }: any) {
     // const {context} = props
@@ -58,8 +58,8 @@ function Header({ context }: any) {
                                 :
                                 <>
                                     <div className='d-flex align-items-center d-block d-lg-none'>
-                                        <Nav.Link href="#action4"><Image width={45} height={44} alt="search_ico" src='/assets/img/interface_search_square.svg' /></Nav.Link>
-                                        <Nav.Link href="#action4"><Image width={45} height={44} alt="profile_ico" src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
+                                        <Nav.Link href="#action4"><Image width={45} height={44} alt="search_ico" src='/go/assets/img/interface_search_square.svg' /></Nav.Link>
+                                        <Nav.Link href="#action4"><Image width={45} height={44} alt="profile_ico" src='/go/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
                                     </div>
                                     <Link className='d-block d-lg-none nav-link' href={`/bikes?listing_type=ebikes&showCyclePrice=${host === 'ukMarket' ? 'off' : 'on'}`}>Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
                                     <Link className='d-block d-lg-none nav-link' href="">Help <i className="fa-solid fa-angle-right"></i></Link>
@@ -72,8 +72,8 @@ function Header({ context }: any) {
                             <Link className='d-none d-lg-block nav-link' href={`/bikes?listing_type=ebikes&showCyclePrice=${host === 'ukMarket' ? 'off' : 'on'}`}>Find Bikes <i className="fa-solid fa-angle-right"></i></Link>
                             <Link className='d-none d-lg-block nav-link' href="">Help <i className="fa-solid fa-angle-right"></i></Link>
                             <Link className='d-none d-lg-block nav-link' href={host === 'ukMarket' ? "" : "/apply-now"}>Apply for your voucher now <i className="fa-solid fa-angle-right"></i></Link>
-                            <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="search_ico" src='/assets/img/interface_search_square.svg' /></Nav.Link>
-                            <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="profile_ico" src='/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
+                            <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="search_ico" src='/go/assets/img/interface_search_square.svg' /></Nav.Link>
+                            <Nav.Link className='d-none d-lg-block' href="#action4"><Image width={45} height={44} alt="profile_ico" src='/go/assets/img/interface_user_square_alternate.svg' /></Nav.Link>
                         </div> : null}
                 </Navbar.Collapse>
                 <div className='mbo_lef d-flex align-items-center'>

@@ -94,28 +94,28 @@ export default function CalculateSchemePackage(){
                 {Object.keys(context)?.length ? <Row>
                         <Col xs={6} md={6} lg={3} className='mb-4 mb-sm-3'>
                             <div className='list listpack'>
-                                <Image width={48} alt='ico' height={48} src="/assets/img/Money_cashier_price_tag_euro.svg" className="mb-4" />
+                                <Image width={48} alt='ico' height={48} src="/go/assets/img/Money_cashier_price_tag_euro.svg" className="mb-4" />
                                 <p>Total package value</p>
                                 <h3>£{handleChangeSalary(context?.total_savings)}</h3>
                             </div>
                         </Col>
                         <Col xs={6} md={6} lg={3} className='mb-4 mb-sm-3'>
                             <div className='list listOnepay'>
-                                <Image width={48} alt='ico' height={48} src="/assets/img/money_currency_euro_circle.svg" className="mb-4" />
+                                <Image width={48} alt='ico' height={48} src="/go/assets/img/money_currency_euro_circle.svg" className="mb-4" />
                                 <p>One-off initial payment</p>
                                 <h3>£{handleChangeSalary(context?.initial_payment)}</h3>
                             </div>
                         </Col>
                         <Col xs={6} md={6} lg={3} className='mb-4 mb-sm-3'>
                             <div className='list listMonthPay'>
-                                <Image width={48} alt='ico' height={48} src="/assets/img/interface_calendar_mark.svg" className="mb-4" />
+                                <Image width={48} alt='ico' height={48} src="/go/assets/img/interface_calendar_mark.svg" className="mb-4" />
                                 <p>Your monthly payments</p>
                                 <h3>£{handleChangeSalary(context?.per_month)}</h3>
                             </div>
                         </Col>
                         <Col xs={6} md={6} lg={3} className='mb-4 mb-sm-3'>
                             <div className='list listEffSav'>
-                                <Image width={48} alt='ico' height={48} src="/assets/img/shopping_store_discount_percent_bag.svg" className="mb-4" />
+                                <Image width={48} alt='ico' height={48} src="/go/assets/img/shopping_store_discount_percent_bag.svg" className="mb-4" />
                                 <p>Effective saving</p>
                                 <h3>{context.saving_percentage}</h3>
                             </div>

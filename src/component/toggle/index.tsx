@@ -9,9 +9,9 @@ export default function Toggle({ title,children,open }:any) {
             <h3>{title}</h3>
             {
                 openToggle ?
-                    <Image src='/assets/toggle_close.svg' width={35} height={35} alt='toggle' />
+                    <Image src='/go/assets/toggle_close.svg' width={35} height={35} alt='toggle' />
                     :
-                    <Image src='/assets/toggle_open.svg' width={35} height={35} alt='toggle' />
+                    <Image src='/go/assets/toggle_open.svg' width={35} height={35} alt='toggle' />
             }
 
         </Button>

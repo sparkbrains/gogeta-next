@@ -74,7 +74,7 @@ export const InputSelectDrop = ({ selectParam = 'name',className, onChangeSearch
                     <>
                         {isLoading ? 'loading....' : null}
                         <div className={`${className?.length?'icoArr':''} ${listShow ? 'rotate' : ''}`} onClick={() => setlistShow(true)}>
-                            {selectArrow ? <Image src='/assets/header/chevron-blue.svg' width={12} height={12} alt='search' /> : null}
+                            {selectArrow ? <Image src='/go/assets/header/chevron-blue.svg' width={12} height={12} alt='search' /> : null}
                         </div>
                     </>
                 )

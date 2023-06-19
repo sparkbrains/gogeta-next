@@ -85,26 +85,26 @@ function ApplyNowUK({ context }: any) {
         onSubmit
     })
     return <>
-        {state?.showBack ? <Button onClick={() => router.back()} className='backPage nav-link mb-5'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to choose another retailer</Button> : null}
+        {state?.showBack ? <Button onClick={() => router.back()} className='backPage nav-link mb-5'><Image width={7} height={12} src='/go/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to choose another retailer</Button> : null}
         <ul className="applyNow-steps">
             <li>
-                <Image src='/assets/apply-steps/ic_package.svg' width={48} height={48} alt='Package' />
+                <Image src='/go/assets/apply-steps/ic_package.svg' width={48} height={48} alt='Package' />
                 <p>Package</p>
             </li>
             <li>
-                <Image src='/assets/apply-steps/personal_details.svg' width={48} height={48} alt='Personal details' />
+                <Image src='/go/assets/apply-steps/personal_details.svg' width={48} height={48} alt='Personal details' />
                 <p>Personal details</p>
             </li>
             <li>
-                <Image src='/assets/apply-steps/salary_sacrifice.svg' width={48} height={48} alt='Salary sacrifice' />
+                <Image src='/go/assets/apply-steps/salary_sacrifice.svg' width={48} height={48} alt='Salary sacrifice' />
                 <p>Salary sacrifice</p>
             </li>
             <li>
-                <Image src='/assets/apply-steps/salary_sacrifice.svg' width={48} height={48} alt='Hire agreement' />
+                <Image src='/go/assets/apply-steps/salary_sacrifice.svg' width={48} height={48} alt='Hire agreement' />
                 <p>Hire agreement</p>
             </li>
             <li>
-                <Image src='/assets/apply-steps/confirmation.svg' width={48} height={48} alt='Confirmation' />
+                <Image src='/go/assets/apply-steps/confirmation.svg' width={48} height={48} alt='Confirmation' />
                 <p>Confirmation</p>
             </li>
         </ul>
@@ -114,7 +114,7 @@ function ApplyNowUK({ context }: any) {
         <Form onSubmit={handleSubmit}>
             <div className="toggle-card mb-5">
                 <div className="p-5 toggle-body">
-                    <h4 className="head_apply"> <Image src='/assets/calculation/shopping_cart.svg' width={48} height={48} alt='cart' /> Your package</h4>
+                    <h4 className="head_apply"> <Image src='/go/assets/calculation/shopping_cart.svg' width={48} height={48} alt='cart' /> Your package</h4>
                     <UKCalculator errors={errors} state={state} onChange={onChange} host={host} />
                 </div>
             </div>

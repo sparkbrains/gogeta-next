@@ -17,7 +17,7 @@ function HowWorks({ context }: any) {
                     <Col md={6} >
                         <div className='bannerCont'>
                             <h2 className='h2'>How it works</h2>
-                            <Image src="/assets/how-it-works-ebay.svg" height={490} width={388} alt="img" className='img-fluid d-block d-sm-none mb-3' />
+                            <Image src="/go/assets/how-it-works-ebay.svg" height={490} width={388} alt="img" className='img-fluid d-block d-sm-none mb-3' />
                             <p>The Cycle to Work Scheme is a tax incentive aimed at getting more people active, by providing unbeatable savings on the cost of a new bike, or e-bike as well as cycling accessories such as a helmet, lights or a lock. </p>
                             <div className='d-flex align-items-center'>
                                 {
@@ -36,7 +36,7 @@ function HowWorks({ context }: any) {
                     <Col md={6} >
                         <div className='hitweb'>
                             <div className='imgcell'>
-                                <Image src="/assets/how-it-works-ebay.svg" height={606} width={547} alt="img" className='img-fluid d-none d-sm-block' />
+                                <Image src="/go/assets/how-it-works-ebay.svg" height={606} width={547} alt="img" className='img-fluid d-none d-sm-block' />
                             </div>
                         </div>
                     </Col>
@@ -50,7 +50,7 @@ function HowWorks({ context }: any) {
                         <div className='d-block d-sm-none mb-4'>
                             <MainHead title='Save up to 48%' />
                         </div>
-                        <Image src='/assets/img/Illustration-Piggybank.svg' />
+                        <Image src='/go/assets/img/Illustration-Piggybank.svg' />
                     </Col>
                     <Col md={6} >
                         <div className='d-none d-sm-block'>
@@ -77,37 +77,37 @@ function HowWorks({ context }: any) {
                                     <Row className='mt-4 mt-md-5 mb-4'>
                                         <Col sm={6} className='mb-4 px-0 px-sm-3'>
                                             <div className='realtimeBike d-flex align-items-start text-white'>
-                                                <img src="/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <img src="/go/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
                                                 <span>Cycle clothing</span>
                                             </div>
                                         </Col>
                                         <Col sm={6} className='mb-4 px-0 px-sm-3'>
                                             <div className='realtimeBike d-flex align-items-start text-white'>
-                                                <img src="/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <img src="/go/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
                                                 <span>Lights</span>
                                             </div>
                                         </Col>
                                         <Col sm={6} className='mb-4 px-0 px-sm-3'>
                                             <div className='realtimeBike d-flex align-items-start text-white'>
-                                                <img src="/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <img src="/go/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
                                                 <span>Helmets</span>
                                             </div>
                                         </Col>
                                         <Col sm={6} className='mb-4 px-0 px-sm-3'>
                                             <div className='realtimeBike d-flex align-items-start text-white'>
-                                                <img src="/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <img src="/go/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
                                                 <span>Child seats</span>
                                             </div>
                                         </Col>
                                         <Col sm={6} className='mb-4 px-0 px-sm-3'>
                                             <div className='realtimeBike d-flex align-items-start text-white'>
-                                                <img src="/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <img src="/go/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
                                                 <span>Locks</span>
                                             </div>
                                         </Col>
                                         <Col sm={6} className='mb-4 px-0 px-sm-3'>
                                             <div className='realtimeBike d-flex align-items-start text-white'>
-                                                <img src="/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
+                                                <img src="/go/assets/img/ic_Bullet-Point-nw-Icon.svg" alt="img" className='img-fluid mt-1 me-2' />
                                                 <span>Bags</span>
                                             </div>
                                         </Col>
@@ -132,7 +132,7 @@ function HowWorks({ context }: any) {
                                 <MainHead title='What can you get?' />
                             </div>
                             <div className='bgSvcontant my-4 mt-md-0 text-center'>
-                                <img src="/assets/market-place.svg" alt="img" className='img-fluid' />
+                                <img src="/go/assets/market-place.svg" alt="img" className='img-fluid' />
                             </div>
                         </Col>
                     </Row>
@@ -149,22 +149,22 @@ function HowWorks({ context }: any) {
                     <MainHead title='The process' />
                     <Row className='rowLineBef mt-5'>
                         <Col lg={3} md={4} xs={6} className='mb-4 mb-lg-0'>
-                            <Image src="/assets/img/browse-process.svg" className='mb-3' />
+                            <Image src="/go/assets/img/browse-process.svg" className='mb-3' />
                             <MainHeadSub title="1. Browse" />
                             <p>Find your bike or ebike. You can use our <a>marketplace</a> to explore an extensive range from the best brands and retailers. Or visit any of our <a>participating retailers</a> to get a quote.</p>
                         </Col>
                         <Col lg={3} md={4} xs={6} className='mb-4 mb-lg-0'>
-                            <Image src="/assets/img/process-choose.svg" className='mb-3' />
+                            <Image src="/go/assets/img/process-choose.svg" className='mb-3' />
                             <MainHeadSub title="2. Choose" />
                             <p>Choose an offer from your preferred bike retailer and complete the salary sacrifice agreement, or <a>apply now</a> if you are using a local bike shop.</p>
                         </Col>
                         <Col lg={3} md={4} xs={6} className='mb-4 mb-lg-0'>
-                            <Image src="/assets/img/process-approval.svg" className='mb-3' />
+                            <Image src="/go/assets/img/process-approval.svg" className='mb-3' />
                             <MainHeadSub title="3. Approval" />
                             <p>The eBay People team will review and approve your application, and set-up your salary sacrifice</p>
                         </Col>
                         <Col lg={3} md={4} xs={6} className='mb-4 mb-lg-0'>
-                            <Image src="/assets/img/process-ride.svg" className='mb-3' />
+                            <Image src="/go/assets/img/process-ride.svg" className='mb-3' />
                             <MainHeadSub title="4. Ride" />
                             <p>As soon as you are approved you will receive your gogeta voucher to enable you to get your new bike.</p>
                         </Col>

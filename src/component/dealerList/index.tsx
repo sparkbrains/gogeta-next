@@ -7,7 +7,7 @@ export default function DealerList({ items,profile, handleApply, host = '' }: an
             <Col md={8} lg={8}>
                 <div className='retailerDetail'>
                     {!host.includes('uk') ? <div className='retImgCell'>
-                        <Image width={130} height={130} alt='name' src='/assets/img/ic_Retailer-Logo.svg' className="img-fluid" />
+                        <Image width={130} height={130} alt='name' src='/go/assets/img/ic_Retailer-Logo.svg' className="img-fluid" />
                     </div> : null}
                     <div className={`detailCont ${host.includes('uk') ? 'detailContRetail' : ''}`}>
                         <h4>{items.dealerName}</h4>
@@ -30,7 +30,7 @@ export default function DealerList({ items,profile, handleApply, host = '' }: an
             </Col>
             <Col md={4} lg={4}>
                 <div className='rightCellStock'>
-                    <p className={host.includes('uk') ? "text-uppercase" : ''}>In stock <Image width={24} height={24} alt='name' src='/assets/img/ic_instock.svg' className="img-fluid" /></p>
+                    <p className={host.includes('uk') ? "text-uppercase" : ''}>In stock <Image width={24} height={24} alt='name' src='/go/assets/img/ic_instock.svg' className="img-fluid" /></p>
                     <button type="button" onClick={() => handleApply(items)} className="customSiteBtn btn btn-primary px-4">{host.includes('uk') ? !items.context?.C2W_price ? 'View offer' : 'Apply for your voucher' : 'Choose this bike shop'} <i className="fa-solid fa-angle-right"></i></button>
                 </div>
             </Col>

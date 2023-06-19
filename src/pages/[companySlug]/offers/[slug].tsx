@@ -115,7 +115,7 @@ function MyOffers({ partners, offers, context }: any) {
     return <Applayout className='ebay-howWorks w-100 m-0 pt-0'>
         <div className='pt-5 pb-4'>
             <Container>
-                <Button onClick={() => router.back()} className='backPage nav-link'><Image width={7} height={12} src='/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to the bike</Button>
+                <Button onClick={() => router.back()} className='backPage nav-link'><Image width={7} height={12} src='/go/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to the bike</Button>
             </Container>
         </div>
         <section className='cycleOfferBanner poreZindex mb-5'>
@@ -184,7 +184,7 @@ function MyOffers({ partners, offers, context }: any) {
         <section className='inStockNow poreZindex pb-5'>
             <Container>
                 <div className='heading_section'>
-                    <h3 className='mainHeadSub'>In stock now <Image width={39} height={44} alt='ok' src='/assets/img/ic_instock-now.svg' className="img-fluid" /></h3>
+                    <h3 className='mainHeadSub'>In stock now <Image width={39} height={44} alt='ok' src='/go/assets/img/ic_instock-now.svg' className="img-fluid" /></h3>
                     <p>{host.includes('uk') ?'The shops below all currently have stock of the bike you’re looking for. Please remember that stock information is real-time and may change.' :'We checked with all of our bike shops. Here are your offers. Please remember that stock information is real-time and may change.'}</p>
                 </div>
 

@@ -42,7 +42,7 @@ function AppContext(props: IProps) {
                 setProfile({
                     "currencyCode": "GBP",
                     "currencySymbol": "£",
-                    portalLogo: "/assets/logo/gogeta_logo_blue.svg"
+                    portalLogo: "/go/assets/logo/gogeta_logo_blue.svg"
                 })
             }
         })
