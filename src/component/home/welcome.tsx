@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Col, Container, Row } from "react-bootstrap"
 import Button from "../button"
 
-export default function Welcome({ host,data }: any) {
+export default function Welcome({ host,data,des }: any) {
     const router = useRouter();
     const handleClick = (pageName: string) => {
         router.push(pageName);
@@ -15,7 +15,7 @@ export default function Welcome({ host,data }: any) {
                     <div className='bannerCont'>
                         <h2 className='h2'>Welcome to the {host.includes('uk') ? `${data?.companyName} Cycling Scheme` : 'Cycle to Work Scheme'} </h2>
                         <Image src={`/go/assets/img/${host.includes('uk') ? 'Ebike.svg' : 'Illustration-Unicycle.svg'}`} height={490} width={388} alt="img" className='img-fluid d-block d-sm-none' />
-                        <p>{host === 'uk' ? 'This is where you can find your perfect bike, learn more about how the scheme works and apply.' : 'Learn more about how the scheme works and apply for your voucher.'}</p>
+                        <p>{host.includes('uk') ? des : 'Learn more about how the scheme works and apply for your voucher.'}</p>
                         <div className='d-flex align-items-center'>
                             {
                                 host === 'uk' ?
