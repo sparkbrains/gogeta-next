@@ -188,12 +188,12 @@ export const applyCalculator = (obj: any) => {
     }
   }
   return {
-    C2W_price: param.C2W_price?.toFixed(2),
+    C2W_price: Math.round(param.C2W_price),
 net_regular: Math.round(param.net_regular),
 gogeta_Fee:gogeta_Fee,
 net_total_amount: Math.round(param.net_total_amount),
 regular_gross: param.regular_gross,
-salary_sacrifice_amount:salary_sacrifice_amount,
+salary_sacrifice_amount:Math.round(salary_sacrifice_amount),
 saving_C2W: Math.round(param.saving_C2W),
 saving_C2W_percentage: Math.round(param.saving_C2W_percentage)   || 0,
 total_savings: param.total_savings,
