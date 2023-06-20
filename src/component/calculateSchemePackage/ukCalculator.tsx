@@ -165,7 +165,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                     </p>
                     <Image src='/go/assets/calculation/coin.svg' width={36} height={36} alt='cal' />
                 </div>
-                <h4>£{state.net_regular ? handleChangeSalary(state.net_regular) : 0} <sub>(for 12 months)</sub></h4>
+                <h4>£{state.net_regular ? handleChangeSalary(state.net_regular) : 0} <sub>(for {state.salarySacrificeTerm} months)</sub></h4>
             </div>
             <div className="price-calculate">
                 <div className="d-flex align-items-center justify-content-between flex-wrap">
