@@ -146,8 +146,6 @@ export const applyCalculator = (obj: any) => {
   const SRPVal = SRP_val > 0? +SRP_val + (Number(accessoriesValue) || 0) :totalbikeVal
   const saving: any = calculate_bike_salary_sacrifice_in_plp(SRPVal, annualSalary, sacrifice_repayment)
   let param: any = {}
-  console.log(totalVal,'totalVal===');
-  
   if (frequency && sacrifice_repayment && bikeValue && annualSalary) {
     param = {
       ...param,
@@ -196,8 +194,8 @@ regular_gross: param.regular_gross,
 salary_sacrifice_amount:Math.round(salary_sacrifice_amount),
 saving_C2W: Math.round(param.saving_C2W),
 saving_C2W_percentage: Math.round(param.saving_C2W_percentage)   || 0,
-total_savings: param.total_savings,
-total_savings_percentage: param.total_savings_percentage?param.total_savings_percentage:0
+// total_savings: param.total_savings,
+// total_savings_percentage: param.total_savings_percentage?param.total_savings_percentage:0
   }
 }
 function calculate_bike_salary_sacrifice_in_plp(bike_price: number, salary: number, sacrifice_repayment: number, country: string = 'England',) {

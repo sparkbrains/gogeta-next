@@ -74,6 +74,8 @@ function ApplyNowUK({ context }: any) {
                 ...stateParam
             }
             delete stateParam?.showBack
+            delete stateParam?.frequency
+            delete stateParam?.sacrifice_repayment
             let obj = JSON.stringify(stateParam)
             let encoded = window.btoa(obj);
             window.location.href = `https://gogeta.bike/portal/sal-sac-form?params=${encoded}`
