@@ -146,6 +146,7 @@ export const applyCalculator = (obj: any) => {
   const SRPVal = SRP_val > 0? +SRP_val + (Number(accessoriesValue) || 0) :totalbikeVal
   const saving: any = calculate_bike_salary_sacrifice_in_plp(SRPVal, annualSalary, sacrifice_repayment)
   let param: any = {}
+  
   if (frequency && sacrifice_repayment && bikeValue && annualSalary) {
     param = {
       ...param,
@@ -154,7 +155,6 @@ export const applyCalculator = (obj: any) => {
       regular_gross_12: (totalVal / (12 / 12) / 12).toFixed(2),
     }
   }
-  
   if (param.regular_gross) {
     param = {
       ...param,

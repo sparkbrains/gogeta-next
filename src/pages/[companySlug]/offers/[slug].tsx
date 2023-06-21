@@ -17,25 +17,32 @@ let size: any = {
     m: 'Medium',
     xl: 'Extra Large',
 }
+var frequencydata: any = {
+    MONTHLY: 12,
+    WEEKLY: 52,
+    FORTNIGHTLY: 26,
+    FOUR_WEEKLY: 13
+}
 function MyOffers({ partners, offers, context }: any) {
-    const { profile, host } = context
+    const { profile, host,tenantDetail } = context
     const router = useRouter()
     const [selectColorProduct, setselectColorProduct] = useState<any>({})
     const [calculateRes, setCalculateRes] = useState<any>({})
     const [isTransitionLoading, setTransitionLoading] = useState(true)
     const [data, setData] = useState<any>({})
+    
     useEffect(() => {
         if (router.query?.salary?.length) {
             if (host?.includes('uk')) {
                 let dealers:any = []
                 offers?.dealersList?.dealers_in_stock?.map((items:any)=>{
                     let context = applyCalculator({
-                        SRP_val: items?.dealer_price?.dealerPrice,
+                        SRP_val: items?.dealer_price?.dealerPrice + items.dealer_price?.saving,
                         bikeValue: items?.dealer_price?.dealerPrice,
                         accessoriesValue: 0,
                         annualSalary: router?.query?.salary || 30000,
-                        frequency: 12,
-                        sacrifice_repayment: 12,
+                        frequency: frequencydata[tenantDetail.paymentFrequency],
+                        sacrifice_repayment: tenantDetail.salarySacrificeTerm,
                         totalPackageValue: items?.dealer_price?.dealerPrice,
                     })
                     dealers.push({
@@ -61,7 +68,7 @@ function MyOffers({ partners, offers, context }: any) {
                 setselectColorProduct(items)
             }
         })
-    }, [offers, router, host])
+    }, [offers, router, host, tenantDetail])
     useEffect(() => { setTimeout(() => { setTransitionLoading(false) }, 4000) })
     if (isTransitionLoading) {
         return <LoaderBox />
@@ -71,8 +78,8 @@ function MyOffers({ partners, offers, context }: any) {
             bikeValue: item?.dealer_price?.dealerPrice,
             accessoriesValue: router?.query?.accessories || 0 ,
             annualSalary: router?.query?.salary || 30000,
-            sacrifice_repayment:12,
-            frequency:12,
+            frequency: frequencydata[tenantDetail.paymentFrequency],
+            sacrifice_repayment: tenantDetail.salarySacrificeTerm,
         }:{
             bikeValue: data?.currencyProduct?.unitSuggestedRetailPrice,
             accessoriesValue: calculateRes?.accessories_val || router?.query?.accessories,
