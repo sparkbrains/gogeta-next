@@ -20,8 +20,6 @@ function Home({ context, dataCal }: any) {
     useEffect(() => {
         setData(dataCal)
     }, [dataCal])
-    console.log(tenantDetail,'tenantDetail===');
-    
     return (
         <Applayout className='ebay w-100 m-0 pt-0'>
             <div className={`main-back ${host.includes('uk') ? 'mainBcLpafbf' : ''}`}>

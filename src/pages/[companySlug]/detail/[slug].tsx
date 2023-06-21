@@ -20,9 +20,9 @@ var frequencydata: any = {
     WEEKLY: 52,
     FORTNIGHTLY: 26,
     FOUR_WEEKLY: 13
-  }
+}
 function Pdp({ detail, context }: any) {
-    const { profile, host,tenantDetail } = context
+    const { profile, host, tenantDetail } = context
     const router = useRouter()
     const [calculateRes, setCalculateRes] = useState<any>({})
     const [data, setData] = useState<any>({})
@@ -92,13 +92,13 @@ function Pdp({ detail, context }: any) {
         setHeightList(list)
         let colorWay = {}
         if (detail?.filter_size) {
-            detail?.colourway?.map((d: any) => {
+            detail?.colourway_list?.map((d: any) => {
                 if (d.colourwayName === detail?.filter_size?.colourway) {
                     colorWay = d
                 }
             })
         } else if (firstTime) {
-            detail?.colourway?.map((d: any) => {
+            detail?.colourway_list?.map((d: any) => {
                 if (d.colourwayName === detail?.initProductDetails?.colourway) {
                     colorWay = d
                 }
@@ -121,9 +121,9 @@ function Pdp({ detail, context }: any) {
         let sizeFilter = data?.filter_size && Object?.keys(data?.filter_size).length
         const name = sizeFilter ? data?.filter_size?.colourway : item.colourwayName
         let colorObj: any = {}
-        if (data.colourwaySizes[name]) {
-            if (Object.values(data.colourwaySizes[item.colourwayName]).every((size: any) => size.stock_status !== 'In stock now')) {
-                let val = sizeFilter ? data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped] : Object.values(data.colourwaySizes[item.colourwayName])[0]
+        if(item){
+            if (Object.values(item.sizes).every((size: any) => size.stock_status !== 'In stock now')) {
+                let val = sizeFilter ? item.sizes[data?.filter_size?.mapped] : Object.values(item.sizes)[0]
                 colorObj = {
                     size: val,
                     ...item
@@ -131,11 +131,11 @@ function Pdp({ detail, context }: any) {
             } else {
                 if (sizeFilter) {
                     colorObj = {
-                        size: data.colourwaySizes[item.colourwayName][data?.filter_size?.mapped],
+                        size: item.sizes[data?.filter_size?.mapped],
                         ...item
                     }
                 } else {
-                    Object.values(data.colourwaySizes[name])?.map((itemSize: any) => {
+                    Object.values(item.sizes)?.map((itemSize: any) => {
                         if (itemSize.stock_status === 'In stock now') {
                             colorObj = {
                                 size: itemSize,
@@ -150,11 +150,11 @@ function Pdp({ detail, context }: any) {
         if (host?.includes('uk') && data?.bicycleAssisted?.length) {
             let context = applyCalculator({
                 SRP_val: colorObj?.size?.unitSuggestedRetailPrice,
-                bikeValue: colorObj.size.offer_price ? colorObj.size.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
+                bikeValue: colorObj?.size?.offer_price ? colorObj.size.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
                 accessoriesValue: 0,
                 annualSalary: router?.query?.salary,
-                frequency:frequencydata[tenantDetail?.paymentFrequency] || 12,
-                sacrifice_repayment:tenantDetail?.salarySacrificeTerm || 12,
+                frequency: frequencydata[tenantDetail?.paymentFrequency] || 12,
+                sacrifice_repayment: tenantDetail?.salarySacrificeTerm || 12,
                 totalPackageValue: colorObj?.size?.offer_price ? colorObj?.size?.offer_price : colorObj?.size?.unitSuggestedRetailPrice,
             })
             updateRes = {
@@ -179,9 +179,9 @@ function Pdp({ detail, context }: any) {
             }
         })
     }
-    const formSubmit = (val:any)=>{
+    const formSubmit = (val: any) => {
         setCalculateRes(val)
-        router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/offers/${router?.query?.slug}?${queryParam({
+        router.push((router.query.companySlug ? '/' + router.query.companySlug : '') + `/offers/${router?.query?.slug}?${queryParam({
             color: selectColorProduct?.colourwayName,
             salary: calculateRes?.salary?.length ? calculateRes?.salary : router?.query?.salary,
             accessories: calculateRes?.accessories_val,
@@ -190,12 +190,12 @@ function Pdp({ detail, context }: any) {
         })?.replace('&', '')}`)
     }
     let price = `${'SRP ' + detail?.currencyProduct?.currency?.currencySymbol + selectColorProduct?.size?.unitSuggestedRetailPrice}`
-    let calObj:any = {
+    let calObj: any = {
         SRP_val: selectColorProduct?.size?.unitSuggestedRetailPrice,
-        frequency:frequencydata[tenantDetail?.paymentFrequency] || 12,
-        paymentFrequency:tenantDetail?.paymentFrequency,
-        sacrifice_repayment:tenantDetail?.salarySacrificeTerm || 12,
-        bikeValue: Math.round(selectColorProduct?.size?.offer_price?selectColorProduct?.size?.offer_price:selectColorProduct?.size?.unitSuggestedRetailPrice),
+        frequency: frequencydata[tenantDetail?.paymentFrequency] || 12,
+        paymentFrequency: tenantDetail?.paymentFrequency,
+        sacrifice_repayment: tenantDetail?.salarySacrificeTerm || 12,
+        bikeValue: Math.round(selectColorProduct?.size?.offer_price ? selectColorProduct?.size?.offer_price : selectColorProduct?.size?.unitSuggestedRetailPrice),
     }
     calObj = router?.query?.salary ? {
         ...calObj,
@@ -271,7 +271,7 @@ function Pdp({ detail, context }: any) {
                                         <select onChange={handleSize} value={JSON.stringify(selectColorProduct.size)}>
                                             <option selected disabled>Select your size</option>
                                             {
-                                                data?.colourwaySizes && Object.values(data?.colourwaySizes[selectColorProduct?.colourwayName])?.map((item: any, key: number) => {
+                                                selectColorProduct?.sizes && Object.values(selectColorProduct?.sizes)?.map((item: any, key: number) => {
                                                     return <option key={key} value={JSON.stringify(item)}>{item.mapped} - {item.stock_status}</option>
                                                 })
                                             }
@@ -299,7 +299,7 @@ function Pdp({ detail, context }: any) {
                                             :
                                             <>
                                                 <p>{selectColorProduct?.size?.stock_status}</p>
-                                                <button type="button" onClick={() => router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/offers/${router?.query?.slug}?${queryParam({
+                                                <button type="button" onClick={() => router.push((router.query.companySlug ? '/' + router.query.companySlug : '') + `/offers/${router?.query?.slug}?${queryParam({
                                                     color: selectColorProduct?.colourwayName,
                                                     salary: calculateRes?.salary?.length ? calculateRes?.salary : router?.query?.salary,
                                                     accessories: calculateRes?.accessories_val,
@@ -320,7 +320,7 @@ function Pdp({ detail, context }: any) {
                         <div className='applyNow pt-0'>
                             <Container>
                                 {/* data={{salary:router.query.salary || ''}} */}
-                                <UkFreesiteCalculate srp={true} data={calObj} submit={true} formSubmit={formSubmit}/>
+                                <UkFreesiteCalculate srp={true} data={calObj} submit={true} formSubmit={formSubmit} />
                             </Container>
                         </div>
                         :
@@ -371,7 +371,7 @@ function Pdp({ detail, context }: any) {
                             {
                                 detail?.related_products?.map((item: any, key: number) => {
                                     return <div className='items' key={key}>
-                                        <div onClick={() => router.push((router.query.companySlug ?'/'+router.query.companySlug:'') + `/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${router.query.salary ? '?salary=' + router.query.salary : ''}`)} className='btn-trans w-100 text-start h-100'>
+                                        <div onClick={() => router.push((router.query.companySlug ? '/' + router.query.companySlug : '') + `/detail/${item.brandName.toLowerCase() + '-' + item.productNameSlug}${router.query.salary ? '?salary=' + router.query.salary : ''}`)} className='btn-trans w-100 text-start h-100'>
                                             <ProductList item={item} newDesign={true} profile={profile} />
                                         </div>
                                     </div>

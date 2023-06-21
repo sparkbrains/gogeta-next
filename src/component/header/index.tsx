@@ -29,8 +29,6 @@ function Header({ context }: any) {
     const handleMenu = () => {
         setMenu(!menu)
     }
-    console.log(tenantDetail,'tenantDetail==');
-    
     return <header className="header border-0">
         <Navbar expand="lg">
             <Container className='mob_re_non'>
