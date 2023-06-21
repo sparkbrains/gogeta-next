@@ -12,6 +12,7 @@ import ReactSlider from 'react-slider';
 import { onKeyPress } from '../../common/utilits'
 import { useRouter } from "next/router"
 import { Form } from "react-bootstrap"
+import Graph from "../graph"
 export default function Filter({ param, host, filterRes, applyFilterSet, newDesign = false, profile }: any) {
     const isMobile = useMediaQuery(900)
     const [filterOpen, setfilterOpen] = useState(false)
@@ -106,7 +107,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
         },
     ])
     const [stateParam, setStateParam] = useState(param)
-    const [searchInput,setSearchInput] = useState('')
+    const [searchInput, setSearchInput] = useState('')
     useEffect(() => {
         replaceFilterArray(filterRes)
         setStateParam({
@@ -115,12 +116,12 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
     }, [param])
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
-                const param = {
-                    ...stateParam,
-                    search: searchInput
-                }
-                setStateParam(param)
-                applyFilter(param)
+            const param = {
+                ...stateParam,
+                search: searchInput
+            }
+            setStateParam(param)
+            applyFilter(param)
         }, 1000)
         return () => clearTimeout(delayDebounceFn)
     }, [searchInput])
@@ -134,7 +135,8 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                 type: 'range',
                 isAlwaysOpen: true,
                 inputname: 'price',
-                data: data.price_range
+                data: data.price_range,
+                priceList: data.price_list?.map((d: any) => d.price)
             },
             {
                 name: 'Search',
@@ -284,7 +286,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
         }
         setStateParam(param)
     }
-    const onChangeSearch = (e:ChangeEvent<HTMLInputElement>)=>{
+    const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchInput(e.target.value)
     }
     return <div className={`col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 filter`}>
@@ -342,22 +344,23 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                                             {
                                                 item.type === 'range' ?
                                                     <div className='slider-range'>
-                                                        <div className="text-center pb-3">
+                                                        {/* <div className="text-center pb-3">
                                                             {
                                                                 newDesign ?
                                                                     <img className="graph" src="/go/assets/price_bars.svg" style={{ width: '100%' }} alt="Graph" />
                                                                     :
                                                                     <img className="graph" src="/go/assets/graph.png" style={{ width: '100%' }} alt="Graph" />
                                                             }
-                                                        </div>
-
+                                                        </div> */}
                                                         {/***<RangeSlider min={minMaxPrice[0]} max={minMaxPrice[1]} value={stateParam[item.inputname]?.length ? stateParam[item.inputname] : minMaxPrice} onInput={(val:any) => rangeFilter(val, item)} onThumbDragEnd={() => applyFilter(stateParam)} onRangeDragEnd={() => applyFilter(stateParam)} />
                                                       <Slider
                                                             value={stateParam[item.inputname]?.length ? stateParam[item.inputname] : minMaxPrice}
                                                             orientation="vertical"
                                                             onChange={this.handleOnChange}
                                                         /> */}
-
+                                                        <div className="mb-3">
+                                                            <Graph dataPrice={item.priceList} val={stateParam[item.inputname]} />
+                                                        </div>
                                                         <ReactSlider
                                                             className="range-slider"
                                                             thumbClassName="range-slider__thumb"

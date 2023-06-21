@@ -28,7 +28,7 @@ export default function ProductList({ profile, item, host = '' }: any) {
                             item.saving_price.offerPrice ?
                                 <>
                                     <s className="price-current pe-1">{price} </s>
-                                    <p className="price-current">retailer&apos;s best price {profile.currencySymbol + handleChangeSalary(item.saving_price.offerPrice)}</p>
+                                    <p className="price-current"><b>go</b>geta&apos;s best price {profile.currencySymbol + handleChangeSalary(item.saving_price.offerPrice)}</p>
                                 </>
                                 :
                                 <p className="price-current pe-1">{price} </p>
