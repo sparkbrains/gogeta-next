@@ -365,7 +365,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                                                         
                                                         
                                                         <div className="mb-3">
-                                                            <Graph dataPrice={item.priceList} colorArray={priceList?.map((d: any) => +stateParam[item.inputname][0] >= d.price ? '#f5f4f1' : '#c0d2b6')} />
+                                                            <Graph dataPrice={item.priceList} colorArray={priceList?.map((d: any) => +stateParam[item.inputname][0] >= d.price || +stateParam[item.inputname][1] <= d.price ? '#f5f4f1' : '#c0d2b6')} />
                                                         </div>
                                                         <ReactSlider
                                                             className="range-slider"
