@@ -682,6 +682,9 @@ color: var(--p-color-new);
         z-index: 3;
         white-space: pre-wrap;
         opacity: 1;
+        p{
+            color: var(--white);
+        }
         &.right{
             top: 50%;
             left: 30px;
