@@ -141,7 +141,7 @@ export const applyCalculator = (obj: any) => {
   const { bikeValue, accessoriesValue, annualSalary, frequency, sacrifice_repayment, totalPackageValue, SRP_val } = obj
   const totalbikeVal = (Number(bikeValue) + (Number(accessoriesValue) || 0))
   const totalVal = (Number(bikeValue) + (Number(accessoriesValue) || 0)) * 1.04
-  const gogeta_Fee = Math.round((Number(bikeValue) + (Number(accessoriesValue) || 0)) * 0.04)
+  const gogeta_Fee = Math.round(((Number(bikeValue) || 0) + (Number(accessoriesValue) || 0)) * 0.04)
   const salary_sacrifice_amount:any = totalVal ? totalbikeVal + gogeta_Fee  : 0
   const SRPVal = SRP_val > 0? +SRP_val + (Number(accessoriesValue) || 0) :totalbikeVal
   const saving: any = calculate_bike_salary_sacrifice_in_plp(SRPVal, annualSalary, sacrifice_repayment)

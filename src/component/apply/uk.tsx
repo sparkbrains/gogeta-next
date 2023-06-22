@@ -86,6 +86,7 @@ function ApplyNowUK({ context }: any) {
         values: { bike_value: state.bikeValue, annual_salary: state.annualSalary, sacrifice_repayment: state.sacrifice_repayment },
         onSubmit
     })
+    console.log(state,tenantDetail,'calObj==');
     return <>
         {state?.showBack ? <Button onClick={() => router.back()} className='backPage nav-link mb-5'><Image width={7} height={12} src='/go/assets/img/ic_left-Stroke.svg' className="img-fluid" alt='back' /> Back to choose another retailer</Button> : null}
         <ul className="applyNow-steps">
