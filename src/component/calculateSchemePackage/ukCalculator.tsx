@@ -176,7 +176,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                     </p>
                     <Image src='/go/assets/calculation/price_tag_percent.svg' width={36} height={36} alt='cal' />
                 </div>
-                <h4>£{state.net_total_amount ? handleChangeSalary(state.net_total_amount) : 0} <sub><s>{srp ?  state.SRP_val ? `(£${handleChangeSalary(state.SRP_val)})`:null : state.bikeValue ? `(£${handleChangeSalary(state.bikeValue)})`:null}</s></sub></h4>
+                <h4>£{state.net_total_amount ? handleChangeSalary(state.net_total_amount) : 0} <sub><s>{state.SRP_val ? `(£${handleChangeSalary(state.SRP_val)})`: state.bikeValue ? `(£${handleChangeSalary(state.bikeValue)})`:null}</s></sub></h4>
             </div>
             <div className="price-calculate secondBlue">
                 <div className="d-flex align-items-center justify-content-between flex-wrap">
