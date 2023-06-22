@@ -24,7 +24,7 @@ ChartJS.register(
   Legend
 );
 
-export default function Graph({ dataPrice, val }: any) {
+export default function Graph({ dataPrice,colorArray, val }: any) {
   const [data, setData] = useState({
     labels: [],
     datasets: [
@@ -46,7 +46,7 @@ export default function Graph({ dataPrice, val }: any) {
           data: dataPrice,
           borderRadius: 20,
           borderSkipped: false,
-          backgroundColor: dataPrice?.map((d: number) => val[0] >= d ? '#f5f4f1' : '#c0d2b6'),
+          backgroundColor: colorArray,
         },
       ],
     })

@@ -19,6 +19,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
     const [moreFilter, setMoreFilter] = useState(newDesign)
     const [moreFilterCount, setMoreFilterCount] = useState(6)
     const router = useRouter()
+    const [priceList,setPriceList] =  useState([])
     const [minMaxPrice, setMinMaxPrice] = useState([500, 15000])
     const [filterData, setfilterData] = useState<any>([
         {
@@ -108,6 +109,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
     ])
     const [stateParam, setStateParam] = useState(param)
     const [searchInput, setSearchInput] = useState('')
+    const [priceValCount, setPriceValCount] = useState('')
     useEffect(() => {
         replaceFilterArray(filterRes)
         setStateParam({
@@ -128,6 +130,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
     const replaceFilterArray = (data: any) => {
         let priceR = data?.price_range?.length && data?.price_range[0]
         setMinMaxPrice([priceR?.price_min ? priceR?.price_min : 500, priceR?.price_max ? priceR?.price_max : 15000])
+        setPriceList(data.price_list)
         const orderSet = [
             {
                 name: 'Price',
@@ -136,7 +139,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                 isAlwaysOpen: true,
                 inputname: 'price',
                 data: data.price_range,
-                priceList: data.price_list?.map((d: any) => d.price)
+                priceList: data.price_list?.map((d: any) => d.count)
             },
             {
                 name: 'Search',
@@ -220,6 +223,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
         ]
         setfilterData(orderSet)
     }
+    
     const fetchFilterCount = (val: string) => {
         Fetch(`get-filter-count/?portalDomain=gogeta.dev${!val?.includes('listing_type') ? val + `listing_type=ebikes` : val}`).then(d => {
             if (d.status) {
@@ -358,8 +362,10 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                                                             orientation="vertical"
                                                             onChange={this.handleOnChange}
                                                         /> */}
+                                                        
+                                                        
                                                         <div className="mb-3">
-                                                            <Graph dataPrice={item.priceList} val={stateParam[item.inputname]} />
+                                                            <Graph dataPrice={item.priceList} colorArray={priceList?.map((d: any) => +stateParam[item.inputname][0] >= d.price ? '#f5f4f1' : '#c0d2b6')} />
                                                         </div>
                                                         <ReactSlider
                                                             className="range-slider"
