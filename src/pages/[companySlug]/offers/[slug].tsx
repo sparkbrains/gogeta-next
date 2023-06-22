@@ -75,6 +75,7 @@ function MyOffers({ partners, offers, context }: any) {
     }
     const handleApply = (item: any = {}) => {
         let obj: any = host?.includes('uk')?{
+            SRP_val: item?.dealer_price?.dealerPrice + item?.dealer_price?.saving,
             bikeValue: item?.dealer_price?.dealerPrice,
             accessoriesValue: router?.query?.accessories || 0 ,
             annualSalary: router?.query?.salary || 30000,

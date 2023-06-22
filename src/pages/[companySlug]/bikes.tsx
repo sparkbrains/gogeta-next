@@ -2,10 +2,7 @@ import { useState, useEffect, cache } from 'react';
 import dynamic from 'next/dynamic'
 import Fetch from '../../common/fetch';
 import { priceCalculator, queryParam } from '../../common/utilits';
-// import ProductList from '../component/product-list';
 import CircularProgress from '../../component/progress';
-// import Applayout from '../layout/applayout';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 import { useRouter } from "next/router";
 import Filter from '../../component/filter/filter_newdesign';
 import Filterselected from '../../component/filter/filterselected';

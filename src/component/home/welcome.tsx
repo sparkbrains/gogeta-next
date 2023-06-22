@@ -13,7 +13,7 @@ export default function Welcome({ host,data,des }: any) {
             <Row>
                 <Col md={6} >
                     <div className='bannerCont'>
-                        <h2 className='h2'>Welcome to the {host.includes('uk') ? `${data?.companyName} Cycling Scheme` : 'Cycle to Work Scheme'} </h2>
+                        <h2 className='h2'>Welcome to the {host.includes('uk') ? `${data?.companyKnownAs} Cycling Scheme` : 'Cycle to Work Scheme'} </h2>
                         <Image src={`/go/assets/img/${host.includes('uk') ? 'Ebike.svg' : 'Illustration-Unicycle.svg'}`} height={490} width={388} alt="img" className='img-fluid d-block d-sm-none' />
                         <p>{host.includes('uk') ? des : 'Learn more about how the scheme works and apply for your voucher.'}</p>
                         <div className='d-flex align-items-center'>

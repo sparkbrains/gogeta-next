@@ -22,16 +22,18 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                     </Col>
                 </Row>
             </div>:null} */}
-            {srp ? <div className="calclulate-form pe-0 pe-lg-4">
+            {state?.SRP_val && !srp? 
+            <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
                     <Col xs={12} sm={5}>
-                        <span className="pb-2 d-block"><ToolTip position='right' className='ms-1 calInfo' des='Please enter an amount for accessories (such as a lock, helmet and lights). We suggest 10% of the voucher amount.'/> Additional accessories: </span>
+                        <span className="pb-2 d-block"><ToolTip position='right' className='ms-1 calInfo' des='Please enter an amount for accessories (such as a lock, helmet and lights). We suggest 10% of the voucher amount.'/> Would you like to add accessories?</span>
                     </Col>
                     <Col xs={12} sm={7}>
                         <Input errorText={errors.accessories_value} maxLength={10} type="text" className="form-input" name="accessoriesValue" value={state.accessoriesValue} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
-            </div>:<div className="calclulate-form pe-0 pe-lg-4">
+            </div>
+            :!srp ? <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>
                     <Col xs={12} sm={5}>
                         <span className="pb-2 align-items-start"><ToolTip position='right' className='me-1 calInfo' des='We recommend spending around 10% of the voucher amount on items like a good lock, helmet and lights. Like the bike, you get the salary sacrifice tax savings, and pay for them over 12 months.'/> Bike and accessories total: </span>
@@ -40,7 +42,7 @@ function UKCalculator({ errors, state, onChange, host,srp }: any) {
                         <Input errorText={errors.bike_value} maxLength={10} type="text" className="form-input" name="bikeValue" value={state.bikeValue} onKeyPress={onKeyPress} onChange={onChange} />
                     </Col>
                 </Row>
-            </div>}
+            </div>:null}
             
             <div className="calclulate-form pe-0 pe-lg-4">
                 <Row>

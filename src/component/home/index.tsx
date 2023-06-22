@@ -23,7 +23,7 @@ function Home({ context, dataCal }: any) {
     return (
         <Applayout className='ebay w-100 m-0 pt-0'>
             <div className={`main-back ${host.includes('uk') ? 'mainBcLpafbf' : ''}`}>
-                <Welcome host={host} data={data} des={tenantDetail?.companyDescription}/>
+                <Welcome host={host} data={tenantDetail} des={tenantDetail?.companyDescription}/>
                 <SaveUp data={saveUpto} host={host} />
                 <TheProcess data={host.includes('Market') ? homeList.process : process} host={host} />
                 {helpinghand ? <HelpingHand /> : <UKFreeSiteCalculate data={data} />}

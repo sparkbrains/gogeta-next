@@ -109,6 +109,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
     ])
     const [stateParam, setStateParam] = useState(param)
     const [searchInput, setSearchInput] = useState('')
+    const [searchInputStart, setSearchInputStart] = useState(false)
     const [priceValCount, setPriceValCount] = useState('')
     useEffect(() => {
         replaceFilterArray(filterRes)
@@ -122,8 +123,10 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                 ...stateParam,
                 search: searchInput
             }
-            setStateParam(param)
-            applyFilter(param)
+            if(searchInputStart){
+                setStateParam(param)
+                applyFilter(param)
+            }
         }, 1000)
         return () => clearTimeout(delayDebounceFn)
     }, [searchInput])
@@ -292,6 +295,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
     }
     const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchInput(e.target.value)
+        setSearchInputStart(true)
     }
     return <div className={`col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 filter`}>
         {isMobile ? <Button onClick={handleFilterMobile} className="filter-selectlist">Filters</Button> : null}
@@ -348,22 +352,6 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                                             {
                                                 item.type === 'range' ?
                                                     <div className='slider-range'>
-                                                        {/* <div className="text-center pb-3">
-                                                            {
-                                                                newDesign ?
-                                                                    <img className="graph" src="/go/assets/price_bars.svg" style={{ width: '100%' }} alt="Graph" />
-                                                                    :
-                                                                    <img className="graph" src="/go/assets/graph.png" style={{ width: '100%' }} alt="Graph" />
-                                                            }
-                                                        </div> */}
-                                                        {/***<RangeSlider min={minMaxPrice[0]} max={minMaxPrice[1]} value={stateParam[item.inputname]?.length ? stateParam[item.inputname] : minMaxPrice} onInput={(val:any) => rangeFilter(val, item)} onThumbDragEnd={() => applyFilter(stateParam)} onRangeDragEnd={() => applyFilter(stateParam)} />
-                                                      <Slider
-                                                            value={stateParam[item.inputname]?.length ? stateParam[item.inputname] : minMaxPrice}
-                                                            orientation="vertical"
-                                                            onChange={this.handleOnChange}
-                                                        /> */}
-                                                        
-                                                        
                                                         <div className="mb-3">
                                                             <Graph dataPrice={item.priceList} colorArray={priceList?.map((d: any) => +stateParam[item.inputname][0] >= d.price || +stateParam[item.inputname][1] <= d.price ? '#f5f4f1' : '#c0d2b6')} />
                                                         </div>
@@ -379,14 +367,7 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                                                             onChange={(val) => rangeFilter(val, item)}
                                                             onAfterChange={() => applyFilter(stateParam)}
                                                         />
-
-
-
                                                         <div className="d-flex align-item-center justify-content-between pt-2"><div>{profile.currencySymbol + (stateParam[item.inputname]?.length ? stateParam[item.inputname][0] : minMaxPrice[0])}</div><div>{profile.currencySymbol + (stateParam[item.inputname]?.length ? stateParam[item.inputname][1] : minMaxPrice[1])}</div></div>
-                                                        {/* <div className="d-flex align-item-center justify-content-between pt-3">
-                                                            <div className="d-flex align-item-center"><label>Min</label>  <div className="slider-range-input">{profile.currencySymbol + (stateParam[item.inputname]?.length ? stateParam[item.inputname][0] : minMaxPrice[0])}</div></div>
-                                                            <div className="d-flex align-item-center"><label>Max</label> <div className="slider-range-input">{profile.currencySymbol + (stateParam[item.inputname]?.length ? stateParam[item.inputname][1] : minMaxPrice[1])}</div></div>
-                                                        </div> */}
                                                     </div>
                                                     :
                                                     item.type === 'select' ?
@@ -409,7 +390,6 @@ export default function Filter({ param, host, filterRes, applyFilterSet, newDesi
                         </>
                     })
                 }
-                {/* <Button type='button' onClick={() => applyFilter(stateParam)} className='btn btn-secondary apply_btn'>Apply</Button> */}
             </div>
         </div>
     </div>

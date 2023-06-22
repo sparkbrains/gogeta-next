@@ -183,8 +183,8 @@ function Pdp({ detail, context }: any) {
         setCalculateRes(val)
         router.push((router.query.companySlug ? '/' + router.query.companySlug : '') + `/offers/${router?.query?.slug}?${queryParam({
             color: selectColorProduct?.colourwayName,
-            salary: calculateRes?.salary?.length ? calculateRes?.salary : router?.query?.salary,
-            accessories: calculateRes?.accessories_val,
+            salary: val?.annualSalary?.length ? val?.annualSalary : router?.query?.salary,
+            accessories: val?.accessoriesValue,
             size: selectColorProduct?.size?.mapped,
             modelYear: data?.productYear
         })?.replace('&', '')}`)

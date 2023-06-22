@@ -100,6 +100,9 @@
             height: 44px;
             padding: 5px 10px;
             width: 100%;
+            &:disabled {
+                background: rgba(198, 226, 224, 0.29);
+            }
         }
 
         &.NoCurr {
